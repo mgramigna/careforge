@@ -1,5 +1,5 @@
 {
-  "name": "@acme/expo",
+  "name": "@canvas-challenge/expo",
   "version": "0.1.0",
   "private": true,
   "main": "expo-router/entry",
@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@expo/metro-config": "^0.10.7",
-    "@shopify/flash-list": "1.4.3",
     "@tanstack/react-query": "^5.8.7",
     "@trpc/client": "next",
     "@trpc/react-query": "next",
@@ -38,11 +37,11 @@
     "superjson": "2.2.0"
   },
   "devDependencies": {
-    "@acme/api": "workspace:^0.1.0",
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tailwind-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@canvas-challenge/api": "workspace:*",
+    "@canvas-challenge/eslint-config": "workspace:*",
+    "@canvas-challenge/prettier-config": "workspace:*",
+    "@canvas-challenge/tailwind-config": "workspace:*",
+    "@canvas-challenge/tsconfig": "workspace:*",
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "@babel/runtime": "^7.23.2",
@@ -57,12 +56,12 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
+      "@canvas-challenge/eslint-config/base",
+      "@canvas-challenge/eslint-config/react"
     ],
     "ignorePatterns": [
       "expo-plugins/**"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@canvas-challenge/prettier-config"
 }

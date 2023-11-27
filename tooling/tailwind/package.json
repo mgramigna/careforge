@@ -1,5 +1,5 @@
 {
-  "name": "@acme/tailwind-config",
+  "name": "@canvas-challenge/tailwind-config",
   "version": "0.1.0",
   "private": true,
   "main": "index.ts",
@@ -18,9 +18,9 @@
     "tailwindcss": "3.3.5"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@canvas-challenge/eslint-config": "workspace:*",
+    "@canvas-challenge/prettier-config": "workspace:*",
+    "@canvas-challenge/tsconfig": "workspace:*",
     "eslint": "^8.53.0",
     "prettier": "^3.1.0",
     "typescript": "^5.2.2"
@@ -28,8 +28,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base"
+      "@canvas-challenge/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@canvas-challenge/prettier-config"
 }

@@ -1,20 +1,12 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["**/.env"],
   "pipeline": {
     "topo": {
       "dependsOn": ["^topo"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "next-env.d.ts",
-        ".expo/**",
-        ".output/**",
-        ".vercel/output/**"
-      ]
+      "outputs": [".expo/**", ".output/**", ".vercel/output/**"]
     },
     "dev": {
       "persistent": true,
@@ -38,13 +30,5 @@
     "//#clean": {
       "cache": false
     }
-  },
-  "globalEnv": [
-    "DATABASE_URL",
-    "AUTH_DISCORD_ID",
-    "AUTH_DISCORD_SECRET",
-    "AUTH_REDIRECT_PROXY_URL",
-    "AUTH_SECRET",
-    "AUTH_URL"
-  ]
+  }
 }
