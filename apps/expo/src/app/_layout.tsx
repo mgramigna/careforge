@@ -1,9 +1,9 @@
-import React from "react";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { TRPCProvider } from "@/utils/api";
+import React from 'react';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { TRPCProvider } from '@/utils/api';
 
-import "../styles.css";
+import '../styles.css';
 
 const RootLayout = () => {
   return (

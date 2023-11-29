@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const AuthTokenResponseBodySchema = z.object({
   access_token: z.string(),
@@ -9,23 +9,15 @@ const AuthTokenResponseBodySchema = z.object({
 });
 
 export async function getAuthToken(
-  {
-    clientId,
-    clientSecret,
-    baseUrl,
-  }: {
-    clientId: string;
-    clientSecret: string;
-    baseUrl: string;
-  },
+  { clientId, clientSecret, baseUrl }: { clientId: string; clientSecret: string; baseUrl: string },
 ): Promise<string> {
   const response = await fetch(`${baseUrl}/auth/token/`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: new URLSearchParams({
-      grant_type: "client_credentials",
+      grant_type: 'client_credentials',
       client_id: clientId,
       client_secret: clientSecret,
     }),
