@@ -27,7 +27,7 @@ const config = {
       { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
     ],
     '@typescript-eslint/no-misused-promises': [2, { checksVoidReturn: { attributes: false } }],
-    'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+    'import/consistent-type-specifier-style': ['error', 'prefer-inline'],
   },
   ignorePatterns: [
     '**/.eslintrc.cjs',

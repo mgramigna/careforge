@@ -1,6 +1,6 @@
 // @ts-expect-error - no types
 import nativewind from 'nativewind/preset';
-import type { Config } from 'tailwindcss';
+import { type Config } from 'tailwindcss';
 
 import baseConfig from '@canvas-challenge/tailwind-config';
 

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "dotenv": "^16.3.1",
+    "neverthrow": "^6.1.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
