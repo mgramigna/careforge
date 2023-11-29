@@ -8,9 +8,15 @@ const AuthTokenResponseBodySchema = z.object({
   smart_style_url: z.string(),
 });
 
-export async function getAuthToken(
-  { clientId, clientSecret, baseUrl }: { clientId: string; clientSecret: string; baseUrl: string },
-): Promise<string> {
+export async function getAuthToken({
+  clientId,
+  clientSecret,
+  baseUrl,
+}: {
+  clientId: string;
+  clientSecret: string;
+  baseUrl: string;
+}): Promise<string> {
   const response = await fetch(`${baseUrl}/auth/token/`, {
     method: 'POST',
     headers: {

@@ -17,14 +17,27 @@
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
-    "typecheck": "turbo typecheck"
+    "lint-staged": "lint-staged",
+    "typecheck": "turbo typecheck",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@canvas-challenge/prettier-config": "workspace:*",
     "@turbo/gen": "^1.10.16",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
     "turbo": "^1.10.16",
     "typescript": "^5.2.2"
   },
-  "prettier": "@canvas-challenge/prettier-config"
+  "prettier": "@canvas-challenge/prettier-config",
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "pnpm format:fix --",
+      "pnpm lint:fix --"
+    ],
+    "*.json": [
+      "pnpm format:fix"
+    ]
+  }
 }
