@@ -1,5 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
+  "globalDependencies": ["**/.env"],
   "pipeline": {
     "topo": {
       "dependsOn": ["^topo"]
@@ -30,5 +31,11 @@
     "//#clean": {
       "cache": false
     }
-  }
+  },
+  "globalEnv": [
+    "CANVAS_CLIENT_ID",
+    "CANVAS_CLIENT_SECRET",
+    "CANVAS_FHIR_BASE_URL",
+    "CANVAS_EMR_BASE_URL"
+  ]
 }

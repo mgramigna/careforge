@@ -1,6 +1,12 @@
+import path from "path";
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import dotenv from "dotenv";
 
 import { appRouter } from "./src/root";
+
+dotenv.config({
+  path: path.join(__dirname, "../../.env"),
+});
 
 createHTTPServer({
   router: appRouter,

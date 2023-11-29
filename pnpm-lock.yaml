@@ -135,12 +135,18 @@ importers:
 
   packages/api:
     dependencies:
+      '@canvas-challenge/canvas':
+        specifier: workspace:*
+        version: link:../canvas
       '@trpc/client':
         specifier: next
         version: 11.0.0-alpha-next-2023-10-26-15-15-56.93(@trpc/server@11.0.0-alpha-next-2023-10-26-15-15-56.93)
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-10-26-15-15-56.93
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
       superjson:
         specifier: 2.2.0
         version: 2.2.0
@@ -166,6 +172,34 @@ importers:
       tsx:
         specifier: ^4.6.0
         version: 4.6.0
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  packages/canvas:
+    dependencies:
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
+      zod:
+        specifier: ^3.22.2
+        version: 3.22.2
+    devDependencies:
+      '@canvas-challenge/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@canvas-challenge/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@canvas-challenge/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.53.0
+        version: 8.53.0
+      prettier:
+        specifier: ^3.1.0
+        version: 3.1.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -4684,6 +4718,11 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /dotenv@16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
+    engines: {node: '>=12'}
+    dev: false
+
   /ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
@@ -5090,6 +5129,7 @@ packages:
   /eslint@8.53.0:
     resolution: {integrity: sha512-N4VuiPjXDUa4xVeV/GC/RV3hQW9Nw+Y463lkWaKKXKYMvmRiRDAtfpuPFLN+E1/6ZhyR8J2ig+eVREnYgUsiag==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    hasBin: true
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.53.0)
       '@eslint-community/regexpp': 4.6.2
@@ -8343,11 +8383,13 @@ packages:
   /prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: false
 
   /prettier@3.1.0:
     resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
     engines: {node: '>=14'}
+    hasBin: true
 
   /pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
@@ -8975,6 +9017,7 @@ packages:
 
   /rimraf@2.4.5:
     resolution: {integrity: sha512-J5xnxTyqaiw06JjMftq7L9ouA448dw/E7dKghkP9WpKNuwmARNNg+Gk8/u5ryb9N/Yo2+z3MCwuqFK/+qPOPfQ==}
+    hasBin: true
     requiresBuild: true
     dependencies:
       glob: 6.0.4
@@ -8983,6 +9026,7 @@ packages:
 
   /rimraf@2.6.3:
     resolution: {integrity: sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==}
+    hasBin: true
     dependencies:
       glob: 7.2.3
     dev: false
@@ -8995,6 +9039,7 @@ packages:
 
   /rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    hasBin: true
     dependencies:
       glob: 7.2.3
 
@@ -10258,6 +10303,7 @@ packages:
 
   /which@1.3.1:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
+    hasBin: true
     dependencies:
       isexe: 2.0.0
     dev: false

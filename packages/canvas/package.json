@@ -1,5 +1,5 @@
 {
-  "name": "@canvas-challenge/api",
+  "name": "@canvas-challenge/canvas",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -7,17 +7,12 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "dev": "tsx watch ./server.ts",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@canvas-challenge/canvas": "workspace:*",
-    "@trpc/client": "next",
-    "@trpc/server": "next",
     "dotenv": "^16.3.1",
-    "superjson": "2.2.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
@@ -26,7 +21,6 @@
     "@canvas-challenge/tsconfig": "workspace:*",
     "eslint": "^8.53.0",
     "prettier": "^3.1.0",
-    "tsx": "^4.6.0",
     "typescript": "^5.2.2"
   },
   "eslintConfig": {
