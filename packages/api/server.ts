@@ -2,6 +2,7 @@ import path from 'path';
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import dotenv from 'dotenv';
 
+import { createTRPCContext } from '.';
 import { appRouter } from './src/root';
 
 dotenv.config({
@@ -10,10 +11,7 @@ dotenv.config({
 
 createHTTPServer({
   router: appRouter,
-  createContext() {
-    // TODO: create session
-    return { session: null };
-  },
+  createContext: createTRPCContext,
 }).listen(3000, () => {
   console.log('Server listening on port 3000');
 });

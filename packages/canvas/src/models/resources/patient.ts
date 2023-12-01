@@ -15,9 +15,9 @@ export const PatientSchema = z.object({
         .enum(['usual', 'official', 'temp', 'nickname', 'anonymous', 'old', 'maiden'])
         .optional(),
       family: z.string().optional(),
-      given: z.array(z.string()),
-      prefix: z.array(z.string()),
-      suffix: z.array(z.string()),
+      given: z.array(z.string()).optional(),
+      prefix: z.array(z.string()).optional(),
+      suffix: z.array(z.string()).optional(),
       // TODO: period
     }),
   ),
