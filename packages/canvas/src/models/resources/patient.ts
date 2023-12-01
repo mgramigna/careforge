@@ -33,7 +33,7 @@ export const PatientSchema = createDomainResourceSchema('Patient').extend({
         relationship: CodeableConceptSchema.array().optional(),
         name: HumanNameSchema.optional(),
         address: AddressSchema.optional(),
-        gender: z.enum(['male', 'female', 'other', 'unknown']),
+        gender: z.enum(['male', 'female', 'other', 'unknown']).optional(),
         telecom: ContactPointSchema.array().optional(),
         organization: ReferenceSchema.optional(),
         period: PeriodSchema.optional(),
