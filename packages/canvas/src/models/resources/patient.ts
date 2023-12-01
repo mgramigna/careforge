@@ -1,31 +1,56 @@
 import { z } from 'zod';
 
 import { IdentifierSchema } from '..';
+import { AddressSchema } from '../core/address';
+import { AttachmentSchema } from '../core/attachment';
+import { CodeableConceptSchema } from '../core/codeableconcept';
 import { ContactPointSchema } from '../core/contactpoint';
 import { DateSchema } from '../core/date';
 import { ExtensionSchema } from '../core/extension';
+import { HumanNameSchema } from '../core/humanname';
+import { PeriodSchema } from '../core/period';
+import { ReferenceSchema } from '../core/reference';
+import { createDomainResourceSchema } from '../util/domainresource';
 
-// https://hl7.org/fhir/us/core/STU3.1.1/StructureDefinition-us-core-patient.html
-export const PatientSchema = z.object({
+export const PatientSchema = createDomainResourceSchema('Patient').extend({
   resourceType: z.literal('Patient'),
   id: z.string(),
   identifier: z.array(IdentifierSchema),
   extension: z.array(ExtensionSchema).optional(),
-  name: z.array(
-    z.object({
-      use: z
-        .enum(['usual', 'official', 'temp', 'nickname', 'anonymous', 'old', 'maiden'])
-        .optional(),
-      family: z.string().optional(),
-      given: z.array(z.string()).optional(),
-      prefix: z.array(z.string()).optional(),
-      suffix: z.array(z.string()).optional(),
-      // TODO: period
-    }),
-  ),
+  name: HumanNameSchema.array(),
   gender: z.enum(['male', 'female', 'other', 'unknown']),
   birthDate: DateSchema.optional(),
   telecom: z.array(ContactPointSchema).optional(),
+  deceasedBoolean: z.boolean().optional(),
+  address: AddressSchema.array().optional(),
+  photo: AttachmentSchema.array().optional(),
+  contact: z
+    .array(
+      z.object({
+        id: z.string().optional(),
+        extension: z.array(ExtensionSchema).optional(),
+        modifierExtension: z.array(ExtensionSchema).optional(),
+        relationship: CodeableConceptSchema.array().optional(),
+        name: HumanNameSchema.optional(),
+        address: AddressSchema.optional(),
+        gender: z.enum(['male', 'female', 'other', 'unknown']),
+        telecom: ContactPointSchema.array().optional(),
+        organization: ReferenceSchema.optional(),
+        period: PeriodSchema.optional(),
+      }),
+    )
+    .optional(),
+  communication: z
+    .array(
+      z.object({
+        id: z.string().optional(),
+        extension: z.array(ExtensionSchema).optional(),
+        modifierExtension: z.array(ExtensionSchema).optional(),
+        language: CodeableConceptSchema,
+        preferred: z.boolean().optional(),
+      }),
+    )
+    .optional(),
 });
 
 export type Patient = z.infer<typeof PatientSchema>;

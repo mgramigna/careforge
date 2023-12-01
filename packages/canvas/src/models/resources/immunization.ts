@@ -1,0 +1,17 @@
+import { z } from 'zod';
+
+import { CodeableConceptSchema } from '../core/codeableconcept';
+import { DateSchema } from '../core/date';
+import { ReferenceSchema } from '../core/reference';
+import { createDomainResourceSchema } from '../util/domainresource';
+
+export const ImmunizationSchema = createDomainResourceSchema('Immunization').extend({
+  status: z.enum(['completed', 'not-done', 'entered-in-error']),
+  statusReason: CodeableConceptSchema.optional(),
+  vaccineCode: CodeableConceptSchema,
+  patient: ReferenceSchema,
+  occurrenceDateTime: DateSchema,
+  primarySource: z.boolean(),
+});
+
+export type Immunization = z.infer<typeof ImmunizationSchema>;

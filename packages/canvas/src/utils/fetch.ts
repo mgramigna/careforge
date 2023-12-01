@@ -34,13 +34,11 @@ export async function makeFhirGetRequest<T>(
   }
 }
 
-export async function makeFhirCreateRequest<T>(
-  args: {
-    path: string;
-    token: string;
-    body?: T;
-  },
-): Promise<Result<string, string>> {
+export async function makeFhirCreateRequest<T>(args: {
+  path: string;
+  token: string;
+  body?: T;
+}): Promise<Result<string, string>> {
   try {
     const response = await fetch(args.path, {
       headers: {
