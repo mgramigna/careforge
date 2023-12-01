@@ -10,6 +10,7 @@ const config = {
   env: {
     es2022: true,
     node: true,
+    'jest/globals': true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {

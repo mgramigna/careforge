@@ -7,7 +7,7 @@ import { RatioSchema } from './ratio';
 import { TimingSchema } from './timing';
 
 export const DosageSchema = z.object({
-  sequence: z.number(),
+  sequence: z.number().optional(),
   text: z.string(),
   additionalInformation: CodeableConceptSchema.array().optional(),
   patientInstructions: z.string().optional(),

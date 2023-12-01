@@ -36,15 +36,17 @@ export const ObservationSchema = createDomainResourceSchema('Observation')
     issued: InstantSchema.optional(),
     hasMember: ReferenceSchema.array().optional(),
     derivedFrom: ReferenceSchema.array().optional(),
-    component: z.array(
-      z
-        .object({
-          code: CodeableConceptSchema,
-          dataAbsentReason: CodeableConceptSchema.optional(),
-          interpretation: CodeableConceptSchema.array().optional(),
-        })
-        .merge(ValueXSchema),
-    ),
+    component: z
+      .array(
+        z
+          .object({
+            code: CodeableConceptSchema,
+            dataAbsentReason: CodeableConceptSchema.optional(),
+            interpretation: CodeableConceptSchema.array().optional(),
+          })
+          .merge(ValueXSchema),
+      )
+      .optional(),
   })
   .merge(ValueXSchema);
 

@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
+import { IdentifierSchema } from '../core/identifier';
 import { MoneySchema } from '../core/money';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
@@ -15,8 +16,8 @@ export const CoverageEligibilityResponseSchema = createDomainResourceSchema(
   patient: ReferenceSchema,
   created: DateTimeSchema,
   request: ReferenceSchema,
-  oucome: z.enum(['queued', 'complete', 'error', 'partial']),
-  insurer: ReferenceSchema,
+  oucome: z.enum(['queued', 'complete', 'error', 'partial']).optional(),
+  insurer: z.union([IdentifierSchema, ReferenceSchema]),
   insurance: z
     .array(
       z.object({
@@ -29,7 +30,7 @@ export const CoverageEligibilityResponseSchema = createDomainResourceSchema(
             productOrService: CodeableConceptSchema.optional(),
             modifier: CodeableConceptSchema.array().optional(),
             provider: ReferenceSchema.optional(),
-            excluded: z.boolean(),
+            excluded: z.boolean().optional(),
             name: z.string().optional(),
             description: z.string().optional(),
             network: CodeableConceptSchema.optional(),

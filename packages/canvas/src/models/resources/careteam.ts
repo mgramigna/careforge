@@ -10,7 +10,7 @@ export const CareTeamSchema = createDomainResourceSchema('CareTeam').extend({
   subject: ReferenceSchema,
   participant: z.array(
     z.object({
-      role: CodeableConceptSchema,
+      role: CodeableConceptSchema.array(),
       member: ReferenceSchema,
     }),
   ),

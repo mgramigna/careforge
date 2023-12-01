@@ -9,10 +9,8 @@ import { createDomainResourceSchema } from '../util/domainresource';
 
 export const AllergyIntoleranceSchema = createDomainResourceSchema('AllergyIntolerance').extend({
   id: z.string(),
-  clinicalStatus: z.enum(['active', 'inactive', 'resolved']).optional(),
-  verificationStatus: z
-    .enum(['unconfirmed', 'confirmed', 'refuted', 'entered-in-error'])
-    .optional(),
+  clinicalStatus: CodeableConceptSchema.optional(),
+  verificationStatus: CodeableConceptSchema.optional(),
   type: z.enum(['allergy', 'intolerance']).optional(),
   code: CodeableConceptSchema,
   patient: ReferenceSchema,

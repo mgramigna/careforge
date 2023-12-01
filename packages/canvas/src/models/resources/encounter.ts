@@ -51,7 +51,7 @@ export const EncounterSchema = createDomainResourceSchema('Encounter').extend({
     .array(
       z.object({
         location: ReferenceSchema,
-        status: z.enum(['planned', 'active', 'reserved', 'completed']),
+        status: z.enum(['planned', 'active', 'reserved', 'completed']).optional(),
         physicalType: CodeableConceptSchema.optional(),
         period: PeriodSchema.optional(),
       }),

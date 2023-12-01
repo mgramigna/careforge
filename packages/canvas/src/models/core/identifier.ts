@@ -1,8 +1,13 @@
 import { z } from 'zod';
 
+import { OrganizationSchema } from '..';
+import { CodeableConceptSchema } from './codeableconcept';
+import { PeriodSchema } from './period';
+
 export const IdentifierSchema = z.object({
   use: z.enum(['usual', 'official', 'temp', 'secondary', 'old']).optional(),
-  system: z.string(),
-  value: z.string(),
-  // TODO: period, assigner
+  type: CodeableConceptSchema.optional(),
+  system: z.string().optional(),
+  value: z.string().optional(),
+  period: PeriodSchema.optional(),
 });

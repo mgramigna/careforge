@@ -10,7 +10,7 @@ export const CommunicationSchema = createDomainResourceSchema('Communication').e
   sent: DateTimeSchema.optional(),
   received: DateTimeSchema.optional(),
   recipient: ReferenceSchema.array(),
-  sender: ReferenceSchema.array(),
+  sender: ReferenceSchema,
   payload: z.array(
     z.union([
       z.object({

@@ -24,7 +24,24 @@ const QuestionnaireItemSchema = z.object({
   code: CodingSchema.array().optional(),
   prefix: z.string().optional(),
   text: z.string().optional(),
-  type: z.enum(['group', 'display', 'boolean', 'decimal', 'integer', 'date', 'dateTime']),
+  type: z.enum([
+    'group',
+    'display',
+    'boolean',
+    'decimal',
+    'integer',
+    'date',
+    'dateTime',
+    'time',
+    'string',
+    'text',
+    'url',
+    'choice',
+    'open-choice',
+    'attachment',
+    'reference',
+    'quantity',
+  ]),
   enableWhen: z
     .array(
       z.union([
@@ -66,7 +83,7 @@ const QuestionnaireItemSchema = z.object({
   repeats: z.boolean().optional(),
   readOnly: z.boolean().optional(),
   maxLength: z.null().optional(),
-  answerValueSet: z.string().url(),
+  answerValueSet: z.string().url().optional(),
   answerOption: z
     .array(
       z.union([

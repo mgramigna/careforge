@@ -11,7 +11,7 @@ import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
 
 const BaseSubstitutionSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   extension: ExtensionSchema.array().optional(),
   modifierExtension: ExtensionSchema.array().optional(),
 });
@@ -48,7 +48,7 @@ export const MedicationRequestSchema = createDomainResourceSchema('MedicationReq
   dosageInstruction: DosageSchema.array().optional(),
   dispenseRequest: z
     .object({
-      id: z.string(),
+      id: z.string().optional(),
       extension: ExtensionSchema.array().optional(),
       modifierExtension: ExtensionSchema.array().optional(),
       initialFill: z
@@ -73,7 +73,7 @@ export const MedicationRequestSchema = createDomainResourceSchema('MedicationReq
       allowedBoolean: z.boolean(),
     }),
     BaseSubstitutionSchema.extend({
-      allowedCodeableConcept: CodeableConceptSchema,
+      allowedCodeableConcept: CodeableConceptSchema.optional(),
     }),
   ]),
 });

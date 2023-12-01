@@ -14,7 +14,7 @@ export const DeviceSchema = createDomainResourceSchema('Device').extend({
         jurisdiction: z.string().optional(),
         carrierAIDC: z.string().optional(),
         carrierHRF: z.string().optional(),
-        entryType: z.enum(['barcode', 'rfid', 'manual']),
+        entryType: z.enum(['barcode', 'rfid', 'manual']).optional(),
       }),
     )
     .optional(),

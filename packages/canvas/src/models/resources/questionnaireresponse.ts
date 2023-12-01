@@ -14,7 +14,7 @@ export const QuestionnaireResponseSchema = createDomainResourceSchema(
   'QuestionnaireResponse',
 ).extend({
   extension: ExtensionSchema.array().optional(),
-  questionnaire: z.string().url().optional(),
+  questionnaire: z.string().optional(),
   status: z.enum(['in-progress', 'completed', 'amended', 'entered-in-error', 'stopped']),
   subject: ReferenceSchema.optional(),
   encounter: ReferenceSchema.optional(),

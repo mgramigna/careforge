@@ -16,7 +16,7 @@ export const CoverageEligibilityRequestSchema = createDomainResourceSchema(
     z.object({
       focal: z.boolean(),
       coverage: ReferenceSchema,
-      businessArrangement: z.string(),
+      businessArrangement: z.string().optional(),
     }),
   ),
 });

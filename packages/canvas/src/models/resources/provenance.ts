@@ -12,7 +12,7 @@ export const ProvenanceSchema = createDomainResourceSchema('Provenance').extend(
   agent: z
     .array(
       z.object({
-        id: z.string(),
+        id: z.string().optional(),
         type: CodeableConceptSchema,
         who: ReferenceSchema,
         onBehalfOf: ReferenceSchema,

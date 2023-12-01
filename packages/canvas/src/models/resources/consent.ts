@@ -11,24 +11,28 @@ import { createDomainResourceSchema } from '../util/domainresource';
 const BaseConsentProvisionSchema = z.object({
   type: z.enum(['deny', 'permit']).optional(),
   period: PeriodSchema.optional(),
-  actor: z.array(
-    z.object({
-      role: CodeableConceptSchema,
-      reference: ReferenceSchema,
-    }),
-  ),
+  actor: z
+    .array(
+      z.object({
+        role: CodeableConceptSchema,
+        reference: ReferenceSchema,
+      }),
+    )
+    .optional(),
   action: CodeableConceptSchema.array().optional(),
   securityLabel: CodingSchema.array().optional(),
   purpose: CodingSchema.array().optional(),
   class: CodingSchema.array().optional(),
   code: CodeableConceptSchema.array().optional(),
   dataPeriod: PeriodSchema.optional(),
-  data: z.array(
-    z.object({
-      meaning: z.enum(['instance', 'related', 'dependents', 'authoredby']),
-      reference: ReferenceSchema,
-    }),
-  ),
+  data: z
+    .array(
+      z.object({
+        meaning: z.enum(['instance', 'related', 'dependents', 'authoredby']),
+        reference: ReferenceSchema,
+      }),
+    )
+    .optional(),
 });
 
 export const ConsentProvisionSchema = BaseConsentProvisionSchema.extend({
