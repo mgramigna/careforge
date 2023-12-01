@@ -16,7 +16,7 @@ export async function getAuthToken({
   clientId: string;
   clientSecret: string;
   baseUrl: string;
-}): Promise<string> {
+}): Promise<{ token: string; expiresInSeconds: number }> {
   const response = await fetch(`${baseUrl}/auth/token/`, {
     method: 'POST',
     headers: {
@@ -31,5 +31,5 @@ export async function getAuthToken({
 
   const json = AuthTokenResponseBodySchema.parse(await response.json());
 
-  return json.access_token;
+  return { token: json.access_token, expiresInSeconds: json.expires_in };
 }

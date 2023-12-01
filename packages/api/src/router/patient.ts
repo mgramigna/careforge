@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { PatientSchema, type PatientService } from '@canvas-challenge/canvas';
+import { PatientSchema, type PatientServiceType } from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
-export const createPatientRouter = ({ patientService }: { patientService: PatientService }) => {
+export const createPatientRouter = ({ patientService }: { patientService: PatientServiceType }) => {
   return createTRPCRouter({
     me: authedProcedure.query(async ({ ctx }) => {
       const result = await patientService.read({
@@ -20,7 +20,6 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
       return result.value;
     }),
     get: authedProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
-      console.log(patientService, ctx);
       const result = await patientService.read({
         id: input.id,
         accessToken: ctx.accessToken,

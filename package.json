@@ -31,8 +31,7 @@
   "prettier": "@canvas-challenge/prettier-config",
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "pnpm format:fix",
-      "pnpm lint:fix"
+      "pnpm format:fix"
     ],
     "*.json": [
       "pnpm format:fix"

@@ -10,7 +10,7 @@ dotenv.config({
   path: path.join(__dirname, '../../../.env'),
 });
 
-const patientService = new PatientService(process.env.CANVAS_FHIR_BASE_URL!);
+const patientService = PatientService({ baseUrl: process.env.CANVAS_FHIR_BASE_URL! });
 
 export const appRouter = createTRPCRouter({
   patient: createPatientRouter({ patientService }),

@@ -1,12 +1,18 @@
 import { type Result } from 'neverthrow';
 
-export abstract class Service<T> {
-  constructor(public baseUrl: string) {}
+interface BaseArgs {
+  accessToken: string;
+}
 
-  abstract read(
-    { id, accessToken }: { id: string; accessToken: string },
-  ): Promise<Result<T, string>>;
-  abstract create(
-    { resource, accessToken }: { resource: T; accessToken: string },
-  ): Promise<Result<string, string>>;
+interface ReadArgs extends BaseArgs {
+  id: string;
+}
+
+interface CreateArgs<T> extends BaseArgs {
+  resource: Omit<T, 'id'>;
+}
+
+export interface Service<T> {
+  read: (args: ReadArgs) => Promise<Result<T, string>>;
+  create: (args: CreateArgs<T>) => Promise<Result<string, string>>;
 }
