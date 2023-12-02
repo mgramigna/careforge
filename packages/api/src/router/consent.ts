@@ -38,29 +38,6 @@ export const createConsentRouter = ({ consentService }: { consentService: Consen
 
         return result.value;
       }),
-    update: authedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          resource: ConsentSchema.partial(),
-        }),
-      )
-      .mutation(async ({ ctx, input }) => {
-        const result = await consentService.update({
-          resource: {
-            ...input,
-            id: input.id,
-          },
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     search: authedProcedure.input(ConsentSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await consentService.search({
         args: input,
