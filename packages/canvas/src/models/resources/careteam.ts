@@ -23,3 +23,4 @@ export const CareTeamSearchArgsSchema = z.object({
 });
 
 export type CareTeam = z.infer<typeof CareTeamSchema>;
+export type CareTeamSearchArgs = z.infer<typeof CareTeamSearchArgsSchema>;

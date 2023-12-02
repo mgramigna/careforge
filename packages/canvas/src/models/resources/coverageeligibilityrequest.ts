@@ -24,4 +24,6 @@ export const CoverageEligibilityRequestSchema = createDomainResourceSchema(
 export const CoverageEligibilityRequestSearchArgsSchema = z.object({});
 
 export type CoverageEligibilityRequest = z.infer<typeof CoverageEligibilityRequestSchema>;
-export type CoverageEligibilityRequestSearchArgs = z.infer<typeof CoverageEligibilityRequestSchema>;
+export type CoverageEligibilityRequestSearchArgs = z.infer<
+  typeof CoverageEligibilityRequestSearchArgsSchema
+>;

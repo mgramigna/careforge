@@ -13,7 +13,10 @@ export const SlotSchema = createDomainResourceSchema('Slot').extend({
 });
 
 export const SlotSearchArgsSchema = z.object({
-  duration: z.number().optional(),
+  duration: z
+    .number()
+    .transform((n) => n.toString())
+    .optional(),
   end: DateSchema.optional(),
   schedule: z.string(),
   start: DateSchema.optional(),
