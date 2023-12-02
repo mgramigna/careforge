@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   CarePlanBundleSchema,
   CarePlanSchema,
@@ -7,14 +9,14 @@ import {
   type CarePlanSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type CarePlanServiceType = Service<
   CarePlan,
   CarePlanSearchArgs,
   CarePlanBundle,
-  CarePlan,
-  CarePlan
+  never,
+  never
 >;
 
 export const CarePlanService = ({ baseUrl }: { baseUrl: string }): CarePlanServiceType => {
@@ -27,24 +29,12 @@ export const CarePlanService = ({ baseUrl }: { baseUrl: string }): CarePlanServi
     return response;
   };
 
-  const create: CarePlanServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/CarePlan`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: CarePlanServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: CarePlanServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/CarePlan/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: CarePlanServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: CarePlanServiceType['search'] = async ({ accessToken, args }) => {

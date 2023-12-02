@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   CareTeamBundleSchema,
   CareTeamSchema,
@@ -7,13 +9,13 @@ import {
   type CareTeamSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
 export type CareTeamServiceType = Service<
   CareTeam,
   CareTeamSearchArgs,
   CareTeamBundle,
-  CareTeam,
+  never,
   CareTeam
 >;
 
@@ -27,14 +29,8 @@ export const CareTeamService = ({ baseUrl }: { baseUrl: string }): CareTeamServi
     return response;
   };
 
-  const create: CareTeamServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/CareTeam`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: CareTeamServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const update: CareTeamServiceType['update'] = async ({ resource, accessToken }) => {

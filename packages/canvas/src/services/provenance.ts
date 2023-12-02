@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   ProvenanceBundleSchema,
   ProvenanceSchema,
@@ -7,14 +9,14 @@ import {
   type ProvenanceSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type ProvenanceServiceType = Service<
   Provenance,
   ProvenanceSearchArgs,
   ProvenanceBundle,
-  Provenance,
-  Provenance
+  never,
+  never
 >;
 
 export const ProvenanceService = ({ baseUrl }: { baseUrl: string }): ProvenanceServiceType => {
@@ -27,24 +29,12 @@ export const ProvenanceService = ({ baseUrl }: { baseUrl: string }): ProvenanceS
     return response;
   };
 
-  const create: ProvenanceServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Provenance`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: ProvenanceServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: ProvenanceServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Provenance/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: ProvenanceServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: ProvenanceServiceType['search'] = async ({ accessToken, args }) => {

@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   GoalBundleSchema,
   GoalSchema,
@@ -7,9 +9,9 @@ import {
   type GoalSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
-export type GoalServiceType = Service<Goal, GoalSearchArgs, GoalBundle, Goal, Goal>;
+export type GoalServiceType = Service<Goal, GoalSearchArgs, GoalBundle, never, never>;
 
 export const GoalService = ({ baseUrl }: { baseUrl: string }): GoalServiceType => {
   const read: GoalServiceType['read'] = async ({ id, accessToken }) => {
@@ -21,24 +23,12 @@ export const GoalService = ({ baseUrl }: { baseUrl: string }): GoalServiceType =
     return response;
   };
 
-  const create: GoalServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Goal`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: GoalServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: GoalServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Goal/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: GoalServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: GoalServiceType['search'] = async ({ accessToken, args }) => {

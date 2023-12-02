@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   DeviceBundleSchema,
   DeviceSchema,
@@ -7,9 +9,9 @@ import {
   type DeviceSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
-export type DeviceServiceType = Service<Device, DeviceSearchArgs, DeviceBundle, Device, Device>;
+export type DeviceServiceType = Service<Device, DeviceSearchArgs, DeviceBundle, never, never>;
 
 export const DeviceService = ({ baseUrl }: { baseUrl: string }): DeviceServiceType => {
   const read: DeviceServiceType['read'] = async ({ id, accessToken }) => {
@@ -21,24 +23,12 @@ export const DeviceService = ({ baseUrl }: { baseUrl: string }): DeviceServiceTy
     return response;
   };
 
-  const create: DeviceServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Device`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: DeviceServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: DeviceServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Device/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: DeviceServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: DeviceServiceType['search'] = async ({ accessToken, args }) => {

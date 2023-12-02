@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   PaymentNoticeBundleSchema,
   PaymentNoticeSchema,
@@ -7,14 +9,14 @@ import {
   type PaymentNoticeSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
 
 export type PaymentNoticeServiceType = Service<
   PaymentNotice,
   PaymentNoticeSearchArgs,
   PaymentNoticeBundle,
   PaymentNotice,
-  PaymentNotice
+  never
 >;
 
 export const PaymentNoticeService = ({
@@ -41,14 +43,8 @@ export const PaymentNoticeService = ({
     return response;
   };
 
-  const update: PaymentNoticeServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/PaymentNotice/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: PaymentNoticeServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: PaymentNoticeServiceType['search'] = async ({ accessToken, args }) => {

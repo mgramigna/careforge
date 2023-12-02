@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   CommunicationBundleSchema,
   CommunicationSchema,
@@ -7,14 +9,14 @@ import {
   type CommunicationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
 
 export type CommunicationServiceType = Service<
   Communication,
   CommunicationSearchArgs,
   CommunicationBundle,
   Communication,
-  Communication
+  never
 >;
 
 export const CommunicationService = ({
@@ -41,14 +43,8 @@ export const CommunicationService = ({
     return response;
   };
 
-  const update: CommunicationServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Communication/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: CommunicationServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: CommunicationServiceType['search'] = async ({ accessToken, args }) => {

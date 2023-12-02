@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   EncounterBundleSchema,
   EncounterSchema,
@@ -7,14 +9,14 @@ import {
   type EncounterSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type EncounterServiceType = Service<
   Encounter,
   EncounterSearchArgs,
   EncounterBundle,
-  Encounter,
-  Encounter
+  never,
+  never
 >;
 
 export const EncounterService = ({ baseUrl }: { baseUrl: string }): EncounterServiceType => {
@@ -27,24 +29,12 @@ export const EncounterService = ({ baseUrl }: { baseUrl: string }): EncounterSer
     return response;
   };
 
-  const create: EncounterServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Encounter`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: EncounterServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: EncounterServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Encounter/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: EncounterServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: EncounterServiceType['search'] = async ({ accessToken, args }) => {

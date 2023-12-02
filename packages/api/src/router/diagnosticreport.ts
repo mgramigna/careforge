@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import {
-  DiagnosticReportSchema,
   DiagnosticReportSearchArgsSchema,
   type DiagnosticReportServiceType,
 } from '@canvas-challenge/canvas';
@@ -27,44 +26,6 @@ export const createDiagnosticReportRouter = ({
 
       return result.value;
     }),
-    create: authedProcedure
-      .input(DiagnosticReportSchema.omit({ id: true }))
-      .mutation(async ({ ctx, input }) => {
-        const result = await diagnosticReportService.create({
-          resource: input,
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
-    update: authedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          resource: DiagnosticReportSchema.partial(),
-        }),
-      )
-      .mutation(async ({ ctx, input }) => {
-        const result = await diagnosticReportService.update({
-          resource: {
-            ...input,
-            id: input.id,
-          },
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     search: authedProcedure
       .input(DiagnosticReportSearchArgsSchema)
       .query(async ({ ctx, input }) => {

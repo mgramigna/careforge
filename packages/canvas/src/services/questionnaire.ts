@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   QuestionnaireBundleSchema,
   QuestionnaireSchema,
@@ -7,14 +9,14 @@ import {
   type QuestionnaireSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type QuestionnaireServiceType = Service<
   Questionnaire,
   QuestionnaireSearchArgs,
   QuestionnaireBundle,
-  Questionnaire,
-  Questionnaire
+  never,
+  never
 >;
 
 export const QuestionnaireService = ({
@@ -31,24 +33,12 @@ export const QuestionnaireService = ({
     return response;
   };
 
-  const create: QuestionnaireServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Questionnaire`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: QuestionnaireServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: QuestionnaireServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Questionnaire/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: QuestionnaireServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: QuestionnaireServiceType['search'] = async ({ accessToken, args }) => {

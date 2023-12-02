@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   LocationBundleSchema,
   LocationSchema,
@@ -7,14 +9,14 @@ import {
   type LocationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type LocationServiceType = Service<
   Location,
   LocationSearchArgs,
   LocationBundle,
-  Location,
-  Location
+  never,
+  never
 >;
 
 export const LocationService = ({ baseUrl }: { baseUrl: string }): LocationServiceType => {
@@ -27,24 +29,12 @@ export const LocationService = ({ baseUrl }: { baseUrl: string }): LocationServi
     return response;
   };
 
-  const create: LocationServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Location`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: LocationServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: LocationServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Location/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: LocationServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: LocationServiceType['search'] = async ({ accessToken, args }) => {

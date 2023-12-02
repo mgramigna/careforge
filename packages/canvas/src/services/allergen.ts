@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   AllergenBundleSchema,
   AllergenSchema,
@@ -7,14 +9,14 @@ import {
   type AllergenSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type AllergenServiceType = Service<
   Allergen,
   AllergenSearchArgs,
   AllergenBundle,
-  Allergen,
-  Allergen
+  never,
+  never
 >;
 
 export const AllergenService = ({ baseUrl }: { baseUrl: string }): AllergenServiceType => {
@@ -27,24 +29,12 @@ export const AllergenService = ({ baseUrl }: { baseUrl: string }): AllergenServi
     return response;
   };
 
-  const create: AllergenServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Allergen`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: AllergenServiceType['create'] = async () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: AllergenServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Allergen/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: AllergenServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: AllergenServiceType['search'] = async ({ accessToken, args }) => {

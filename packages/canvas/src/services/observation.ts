@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   ObservationBundleSchema,
   ObservationSchema,
@@ -7,14 +9,14 @@ import {
   type ObservationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
 
 export type ObservationServiceType = Service<
   Observation,
   ObservationSearchArgs,
   ObservationBundle,
   Observation,
-  Observation
+  never
 >;
 
 export const ObservationService = ({ baseUrl }: { baseUrl: string }): ObservationServiceType => {
@@ -37,14 +39,8 @@ export const ObservationService = ({ baseUrl }: { baseUrl: string }): Observatio
     return response;
   };
 
-  const update: ObservationServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Observation/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: ObservationServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: ObservationServiceType['search'] = async ({ accessToken, args }) => {

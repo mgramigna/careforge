@@ -1,6 +1,7 @@
+import { err } from 'neverthrow';
+
 import {
   TaskBundleSchema,
-  TaskSchema,
   TaskSearchArgsSchema,
   type Task,
   type TaskBundle,
@@ -12,13 +13,8 @@ import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from
 export type TaskServiceType = Service<Task, TaskSearchArgs, TaskBundle, Task, Task>;
 
 export const TaskService = ({ baseUrl }: { baseUrl: string }): TaskServiceType => {
-  const read: TaskServiceType['read'] = async ({ id, accessToken }) => {
-    const response = await makeFhirGetRequest(TaskSchema, {
-      path: `${baseUrl}/Task/${id}`,
-      token: accessToken,
-    });
-
-    return response;
+  const read: TaskServiceType['read'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const create: TaskServiceType['create'] = async ({ resource, accessToken }) => {

@@ -42,29 +42,6 @@ export const createCommunicationRouter = ({
 
         return result.value;
       }),
-    update: authedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          resource: CommunicationSchema.partial(),
-        }),
-      )
-      .mutation(async ({ ctx, input }) => {
-        const result = await communicationService.update({
-          resource: {
-            ...input,
-            id: input.id,
-          },
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     search: authedProcedure.input(CommunicationSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await communicationService.search({
         args: input,

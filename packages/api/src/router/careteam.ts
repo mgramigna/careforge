@@ -27,21 +27,6 @@ export const createCareTeamRouter = ({
 
       return result.value;
     }),
-    create: authedProcedure
-      .input(CareTeamSchema.omit({ id: true }))
-      .mutation(async ({ ctx, input }) => {
-        const result = await careTeamService.create({
-          resource: input,
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     update: authedProcedure
       .input(
         z.object({

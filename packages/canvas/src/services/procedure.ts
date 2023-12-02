@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   ProcedureBundleSchema,
   ProcedureSchema,
@@ -7,14 +9,14 @@ import {
   type ProcedureSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type ProcedureServiceType = Service<
   Procedure,
   ProcedureSearchArgs,
   ProcedureBundle,
-  Procedure,
-  Procedure
+  never,
+  never
 >;
 
 export const ProcedureService = ({ baseUrl }: { baseUrl: string }): ProcedureServiceType => {
@@ -27,24 +29,12 @@ export const ProcedureService = ({ baseUrl }: { baseUrl: string }): ProcedureSer
     return response;
   };
 
-  const create: ProcedureServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Procedure`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: ProcedureServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: ProcedureServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Procedure/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: ProcedureServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: ProcedureServiceType['search'] = async ({ accessToken, args }) => {

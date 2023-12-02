@@ -1,20 +1,15 @@
-import {
-  CoverageEligibilityRequestBundleSchema,
-  CoverageEligibilityRequestSchema,
-  CoverageEligibilityRequestSearchArgsSchema,
-  type CoverageEligibilityRequest,
-  type CoverageEligibilityRequestBundle,
-  type CoverageEligibilityRequestSearchArgs,
-} from '../models';
+import { err } from 'neverthrow';
+
+import { type CoverageEligibilityRequest } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirCreateRequest } from '../utils/fetch';
 
 export type CoverageEligibilityRequestServiceType = Service<
   CoverageEligibilityRequest,
-  CoverageEligibilityRequestSearchArgs,
-  CoverageEligibilityRequestBundle,
+  never,
+  never,
   CoverageEligibilityRequest,
-  CoverageEligibilityRequest
+  never
 >;
 
 export const CoverageEligibilityRequestService = ({
@@ -22,13 +17,8 @@ export const CoverageEligibilityRequestService = ({
 }: {
   baseUrl: string;
 }): CoverageEligibilityRequestServiceType => {
-  const read: CoverageEligibilityRequestServiceType['read'] = async ({ id, accessToken }) => {
-    const response = await makeFhirGetRequest(CoverageEligibilityRequestSchema, {
-      path: `${baseUrl}/CoverageEligibilityRequest/${id}`,
-      token: accessToken,
-    });
-
-    return response;
+  const read: CoverageEligibilityRequestServiceType['read'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const create: CoverageEligibilityRequestServiceType['create'] = async ({
@@ -44,28 +34,12 @@ export const CoverageEligibilityRequestService = ({
     return response;
   };
 
-  const update: CoverageEligibilityRequestServiceType['update'] = async ({
-    resource,
-    accessToken,
-  }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/CoverageEligibilityRequest/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: CoverageEligibilityRequestServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const search: CoverageEligibilityRequestServiceType['search'] = async ({ accessToken, args }) => {
-    const parsedArgs = CoverageEligibilityRequestSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(CoverageEligibilityRequestBundleSchema, {
-      path: `${baseUrl}/CoverageEligibilityRequest`,
-      token: accessToken,
-      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
-    });
-
-    return response;
+  const search: CoverageEligibilityRequestServiceType['search'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   return {

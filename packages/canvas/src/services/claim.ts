@@ -1,24 +1,14 @@
-import {
-  ClaimBundleSchema,
-  ClaimSchema,
-  ClaimSearchArgsSchema,
-  type Claim,
-  type ClaimBundle,
-  type ClaimSearchArgs,
-} from '../models';
-import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { err } from 'neverthrow';
 
-export type ClaimServiceType = Service<Claim, ClaimSearchArgs, ClaimBundle, Claim, Claim>;
+import { type Claim } from '../models';
+import { type Service } from '../types/service';
+import { makeFhirCreateRequest } from '../utils/fetch';
+
+export type ClaimServiceType = Service<Claim, never, never, Claim, never>;
 
 export const ClaimService = ({ baseUrl }: { baseUrl: string }): ClaimServiceType => {
-  const read: ClaimServiceType['read'] = async ({ id, accessToken }) => {
-    const response = await makeFhirGetRequest(ClaimSchema, {
-      path: `${baseUrl}/Claim/${id}`,
-      token: accessToken,
-    });
-
-    return response;
+  const read: ClaimServiceType['read'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const create: ClaimServiceType['create'] = async ({ resource, accessToken }) => {
@@ -31,25 +21,12 @@ export const ClaimService = ({ baseUrl }: { baseUrl: string }): ClaimServiceType
     return response;
   };
 
-  const update: ClaimServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Claim/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: ClaimServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const search: ClaimServiceType['search'] = async ({ accessToken, args }) => {
-    const parsedArgs = ClaimSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(ClaimBundleSchema, {
-      path: `${baseUrl}/Claim`,
-      token: accessToken,
-      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
-    });
-
-    return response;
+  const search: ClaimServiceType['search'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   return {

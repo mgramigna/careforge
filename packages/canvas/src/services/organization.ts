@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   OrganizationBundleSchema,
   OrganizationSchema,
@@ -7,14 +9,14 @@ import {
   type OrganizationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type OrganizationServiceType = Service<
   Organization,
   OrganizationSearchArgs,
   OrganizationBundle,
-  Organization,
-  Organization
+  never,
+  never
 >;
 
 export const OrganizationService = ({ baseUrl }: { baseUrl: string }): OrganizationServiceType => {
@@ -27,24 +29,12 @@ export const OrganizationService = ({ baseUrl }: { baseUrl: string }): Organizat
     return response;
   };
 
-  const create: OrganizationServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Organization`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: OrganizationServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: OrganizationServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Organization/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: OrganizationServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: OrganizationServiceType['search'] = async ({ accessToken, args }) => {

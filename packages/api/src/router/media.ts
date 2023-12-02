@@ -38,29 +38,6 @@ export const createMediaRouter = ({ mediaService }: { mediaService: MediaService
 
         return result.value;
       }),
-    update: authedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          resource: MediaSchema.partial(),
-        }),
-      )
-      .mutation(async ({ ctx, input }) => {
-        const result = await mediaService.update({
-          resource: {
-            ...input,
-            id: input.id,
-          },
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     search: authedProcedure.input(MediaSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await mediaService.search({
         args: input,

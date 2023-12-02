@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import {
-  MedicationRequestSchema,
   MedicationRequestSearchArgsSchema,
   type MedicationRequestServiceType,
 } from '@canvas-challenge/canvas';
@@ -27,44 +26,6 @@ export const createMedicationRequestRouter = ({
 
       return result.value;
     }),
-    create: authedProcedure
-      .input(MedicationRequestSchema.omit({ id: true }))
-      .mutation(async ({ ctx, input }) => {
-        const result = await medicationRequestService.create({
-          resource: input,
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
-    update: authedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          resource: MedicationRequestSchema.partial(),
-        }),
-      )
-      .mutation(async ({ ctx, input }) => {
-        const result = await medicationRequestService.update({
-          resource: {
-            ...input,
-            id: input.id,
-          },
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     search: authedProcedure
       .input(MedicationRequestSearchArgsSchema)
       .query(async ({ ctx, input }) => {

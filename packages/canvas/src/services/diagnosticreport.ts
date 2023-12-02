@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   DiagnosticReportBundleSchema,
   DiagnosticReportSchema,
@@ -7,14 +9,14 @@ import {
   type DiagnosticReportSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type DiagnosticReportServiceType = Service<
   DiagnosticReport,
   DiagnosticReportSearchArgs,
   DiagnosticReportBundle,
-  DiagnosticReport,
-  DiagnosticReport
+  never,
+  never
 >;
 
 export const DiagnosticReportService = ({
@@ -31,24 +33,12 @@ export const DiagnosticReportService = ({
     return response;
   };
 
-  const create: DiagnosticReportServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/DiagnosticReport`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: DiagnosticReportServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: DiagnosticReportServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/DiagnosticReport/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: DiagnosticReportServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: DiagnosticReportServiceType['search'] = async ({ accessToken, args }) => {

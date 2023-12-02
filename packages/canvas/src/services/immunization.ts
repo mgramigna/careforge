@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   ImmunizationBundleSchema,
   ImmunizationSchema,
@@ -7,14 +9,14 @@ import {
   type ImmunizationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type ImmunizationServiceType = Service<
   Immunization,
   ImmunizationSearchArgs,
   ImmunizationBundle,
-  Immunization,
-  Immunization
+  never,
+  never
 >;
 
 export const ImmunizationService = ({ baseUrl }: { baseUrl: string }): ImmunizationServiceType => {
@@ -27,24 +29,12 @@ export const ImmunizationService = ({ baseUrl }: { baseUrl: string }): Immunizat
     return response;
   };
 
-  const create: ImmunizationServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Immunization`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: ImmunizationServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: ImmunizationServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Immunization/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: ImmunizationServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: ImmunizationServiceType['search'] = async ({ accessToken, args }) => {

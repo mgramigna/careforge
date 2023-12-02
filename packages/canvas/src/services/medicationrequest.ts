@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   MedicationRequestBundleSchema,
   MedicationRequestSchema,
@@ -7,14 +9,14 @@ import {
   type MedicationRequestSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type MedicationRequestServiceType = Service<
   MedicationRequest,
   MedicationRequestSearchArgs,
   MedicationRequestBundle,
-  MedicationRequest,
-  MedicationRequest
+  never,
+  never
 >;
 
 export const MedicationRequestService = ({
@@ -31,24 +33,12 @@ export const MedicationRequestService = ({
     return response;
   };
 
-  const create: MedicationRequestServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/MedicationRequest`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: MedicationRequestServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: MedicationRequestServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/MedicationRequest/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: MedicationRequestServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: MedicationRequestServiceType['search'] = async ({ accessToken, args }) => {

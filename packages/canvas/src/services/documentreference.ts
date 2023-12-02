@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   DocumentReferenceBundleSchema,
   DocumentReferenceSchema,
@@ -7,14 +9,14 @@ import {
   type DocumentReferenceSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type DocumentReferenceServiceType = Service<
   DocumentReference,
   DocumentReferenceSearchArgs,
   DocumentReferenceBundle,
-  DocumentReference,
-  DocumentReference
+  never,
+  never
 >;
 
 export const DocumentReferenceService = ({
@@ -31,24 +33,12 @@ export const DocumentReferenceService = ({
     return response;
   };
 
-  const create: DocumentReferenceServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/DocumentReference`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: DocumentReferenceServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: DocumentReferenceServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/DocumentReference/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: DocumentReferenceServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: DocumentReferenceServiceType['search'] = async ({ accessToken, args }) => {

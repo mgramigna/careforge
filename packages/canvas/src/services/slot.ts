@@ -1,44 +1,28 @@
+import { err } from 'neverthrow';
+
 import {
   SlotBundleSchema,
-  SlotSchema,
   SlotSearchArgsSchema,
   type Slot,
   type SlotBundle,
   type SlotSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
-export type SlotServiceType = Service<Slot, SlotSearchArgs, SlotBundle, Slot, Slot>;
+export type SlotServiceType = Service<Slot, SlotSearchArgs, SlotBundle, never, never>;
 
 export const SlotService = ({ baseUrl }: { baseUrl: string }): SlotServiceType => {
-  const read: SlotServiceType['read'] = async ({ id, accessToken }) => {
-    const response = await makeFhirGetRequest(SlotSchema, {
-      path: `${baseUrl}/Slot/${id}`,
-      token: accessToken,
-    });
-
-    return response;
+  const read: SlotServiceType['read'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const create: SlotServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Slot`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: SlotServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: SlotServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Slot/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: SlotServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: SlotServiceType['search'] = async ({ accessToken, args }) => {

@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import {
-  DocumentReferenceSchema,
   DocumentReferenceSearchArgsSchema,
   type DocumentReferenceServiceType,
 } from '@canvas-challenge/canvas';
@@ -27,44 +26,6 @@ export const createDocumentReferenceRouter = ({
 
       return result.value;
     }),
-    create: authedProcedure
-      .input(DocumentReferenceSchema.omit({ id: true }))
-      .mutation(async ({ ctx, input }) => {
-        const result = await documentReferenceService.create({
-          resource: input,
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
-    update: authedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          resource: DocumentReferenceSchema.partial(),
-        }),
-      )
-      .mutation(async ({ ctx, input }) => {
-        const result = await documentReferenceService.update({
-          resource: {
-            ...input,
-            id: input.id,
-          },
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     search: authedProcedure
       .input(DocumentReferenceSearchArgsSchema)
       .query(async ({ ctx, input }) => {

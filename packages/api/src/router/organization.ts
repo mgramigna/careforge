@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import {
-  OrganizationSchema,
   OrganizationSearchArgsSchema,
   type OrganizationServiceType,
 } from '@canvas-challenge/canvas';
@@ -27,44 +26,6 @@ export const createOrganizationRouter = ({
 
       return result.value;
     }),
-    create: authedProcedure
-      .input(OrganizationSchema.omit({ id: true }))
-      .mutation(async ({ ctx, input }) => {
-        const result = await organizationService.create({
-          resource: input,
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
-    update: authedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          resource: OrganizationSchema.partial(),
-        }),
-      )
-      .mutation(async ({ ctx, input }) => {
-        const result = await organizationService.update({
-          resource: {
-            ...input,
-            id: input.id,
-          },
-          accessToken: ctx.accessToken,
-        });
-
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
-
-        return result.value;
-      }),
     search: authedProcedure.input(OrganizationSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await organizationService.search({
         args: input,

@@ -1,50 +1,34 @@
+import { err } from 'neverthrow';
+
 import {
   ScheduleBundleSchema,
-  ScheduleSchema,
   ScheduleSearchArgsSchema,
   type Schedule,
   type ScheduleBundle,
   type ScheduleSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type ScheduleServiceType = Service<
   Schedule,
   ScheduleSearchArgs,
   ScheduleBundle,
-  Schedule,
-  Schedule
+  never,
+  never
 >;
 
 export const ScheduleService = ({ baseUrl }: { baseUrl: string }): ScheduleServiceType => {
-  const read: ScheduleServiceType['read'] = async ({ id, accessToken }) => {
-    const response = await makeFhirGetRequest(ScheduleSchema, {
-      path: `${baseUrl}/Schedule/${id}`,
-      token: accessToken,
-    });
-
-    return response;
+  const read: ScheduleServiceType['read'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const create: ScheduleServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Schedule`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: ScheduleServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: ScheduleServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Schedule/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: ScheduleServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: ScheduleServiceType['search'] = async ({ accessToken, args }) => {

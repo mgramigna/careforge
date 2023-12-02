@@ -1,3 +1,5 @@
+import { err } from 'neverthrow';
+
 import {
   PractitionerBundleSchema,
   PractitionerSchema,
@@ -7,14 +9,14 @@ import {
   type PractitionerSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
+import { makeFhirGetRequest } from '../utils/fetch';
 
 export type PractitionerServiceType = Service<
   Practitioner,
   PractitionerSearchArgs,
   PractitionerBundle,
-  Practitioner,
-  Practitioner
+  never,
+  never
 >;
 
 export const PractitionerService = ({ baseUrl }: { baseUrl: string }): PractitionerServiceType => {
@@ -27,24 +29,12 @@ export const PractitionerService = ({ baseUrl }: { baseUrl: string }): Practitio
     return response;
   };
 
-  const create: PractitionerServiceType['create'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirCreateRequest({
-      path: `${baseUrl}/Practitioner`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const create: PractitionerServiceType['create'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
-  const update: PractitionerServiceType['update'] = async ({ resource, accessToken }) => {
-    const response = await makeFhirUpdateRequest({
-      path: `${baseUrl}/Practitioner/${resource.id}`,
-      token: accessToken,
-      body: resource,
-    });
-
-    return response;
+  const update: PractitionerServiceType['update'] = () => {
+    return Promise.resolve(err('NOT_SUPPORTED'));
   };
 
   const search: PractitionerServiceType['search'] = async ({ accessToken, args }) => {
