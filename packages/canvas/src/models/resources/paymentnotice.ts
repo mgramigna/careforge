@@ -16,4 +16,10 @@ export const PaymentNoticeSchema = createDomainResourceSchema('PaymentNotice').e
   paymentStatus: CodeableConceptSchema.optional(),
 });
 
+export const PaymentNoticeSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  request: z.string().optional(),
+});
+
 export type PaymentNotice = z.infer<typeof PaymentNoticeSchema>;
+export type PaymentNoticeSearchArgs = z.infer<typeof PaymentNoticeSearchArgsSchema>;

@@ -9,4 +9,10 @@ export const AllergenSchema = createDomainResourceSchema('Allergen').extend({
   code: CodeableConceptSchema.optional(),
 });
 
+export const AllergenSearchArgsSchema = z.object({
+  _text: z.string().optional(),
+  code: z.string().optional(),
+});
+
 export type Allergen = z.infer<typeof AllergenSchema>;
+export type AllergenSearchArgs = z.infer<typeof AllergenSearchArgsSchema>;

@@ -78,4 +78,12 @@ export const MedicationRequestSchema = createDomainResourceSchema('MedicationReq
   ]),
 });
 
+export const MedicationRequestSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  intent: z.string().optional(),
+  patient: z.string().optional(),
+  status: z.enum(['active', 'cancelled', 'entered-in-error', 'stopped']).optional(),
+});
+
 export type MedicationRequest = z.infer<typeof MedicationRequestSchema>;
+export type MedicationRequestSearchArgs = z.infer<typeof MedicationRequestSearchArgsSchema>;

@@ -27,4 +27,11 @@ export const CoverageSchema = createDomainResourceSchema('Coverage').extend({
   order: z.number(),
 });
 
+export const CoverageSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  patient: z.string().optional(),
+  subscriberid: z.string().optional(),
+});
+
 export type Coverage = z.infer<typeof CoverageSchema>;
+export type CoverageSearchArgs = z.infer<typeof CoverageSearchArgsSchema>;

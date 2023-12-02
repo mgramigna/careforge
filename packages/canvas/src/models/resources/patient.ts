@@ -53,4 +53,20 @@ export const PatientSchema = createDomainResourceSchema('Patient').extend({
     .optional(),
 });
 
+export const PatientSearchArgsSchema = z.object({
+  '_has:CareTeam:participant:member': z.boolean().optional(),
+  _id: z.string().optional(),
+  _sort: z
+    .enum(['_id', 'birthdate', 'family', 'given', '-_id', '-birthdate', '-family', '-given'])
+    .optional(),
+  active: z.boolean().optional(),
+  birthdate: DateSchema.optional(),
+  email: z.string().email().optional(),
+  family: z.string().optional(),
+  gender: z.enum(['male', 'female', 'other', 'unknown']).optional(),
+  given: z.string().optional(),
+  identifier: z.string().optional(),
+});
+
 export type Patient = z.infer<typeof PatientSchema>;
+export type PatientSearchArgs = z.infer<typeof PatientSearchArgsSchema>;

@@ -59,4 +59,13 @@ export const EncounterSchema = createDomainResourceSchema('Encounter').extend({
     .optional(),
 });
 
+export const EncounterSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  appointment: z.string().optional(),
+  date: z.string().optional(),
+  patient: z.string().optional(),
+  subject: z.string().optional(),
+});
+
 export type Encounter = z.infer<typeof EncounterSchema>;
+export type EncounterSearchArgs = z.infer<typeof EncounterSearchArgsSchema>;

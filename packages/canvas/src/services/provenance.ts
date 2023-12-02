@@ -1,8 +1,14 @@
-import { ProvenanceSchema, type Provenance } from '../models';
+import {
+  BundleSchema,
+  ProvenanceSchema,
+  ProvenanceSearchArgs,
+  ProvenanceSearchArgsSchema,
+  type Provenance,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ProvenanceServiceType = Service<Provenance>;
+export type ProvenanceServiceType = Service<Provenance, ProvenanceSearchArgs>;
 
 export const ProvenanceService = ({ baseUrl }: { baseUrl: string }): ProvenanceServiceType => {
   const read: ProvenanceServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const ProvenanceService = ({ baseUrl }: { baseUrl: string }): ProvenanceS
     return response;
   };
 
+  const update: ProvenanceServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Provenance/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: ProvenanceServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = ProvenanceSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(ProvenanceSchema), {
+      path: `${baseUrl}/Provenance`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

@@ -31,4 +31,10 @@ export const GroupSchema = createDomainResourceSchema('Group').extend({
     .optional(),
 });
 
+export const GroupSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  type: z.string().optional(),
+});
+
 export type Group = z.infer<typeof GroupSchema>;
+export type GroupSearchArgs = z.infer<typeof GroupSearchArgsSchema>;

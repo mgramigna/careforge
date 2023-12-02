@@ -45,4 +45,16 @@ export const TaskSchema = createDomainResourceSchema('Task').extend({
     .optional(),
 });
 
+export const TaskSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  sort: z.enum(['_id', 'due-date', '-_id', '-due-date']),
+  description: z.string().optional(),
+  label: z.string().optional(),
+  owner: z.string().optional(),
+  patient: z.string().optional(),
+  requester: z.string().optional(),
+  status: z.string().optional(),
+});
+
 export type Task = z.infer<typeof TaskSchema>;
+export type TaskSearchArgs = z.infer<typeof TaskSearchArgsSchema>;

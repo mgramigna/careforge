@@ -5,11 +5,17 @@ const resourceTypeRegex = /export type (\w+) = /gm;
 
 const genServiceCode = (resourceType: string) => {
   return `
-import { ${resourceType}Schema, type ${resourceType} } from '../models';
+import {
+  BundleSchema,
+  ${resourceType}Schema,
+  ${resourceType}SearchArgs,
+  ${resourceType}SearchArgsSchema,
+  type ${resourceType},
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ${resourceType}ServiceType = Service<${resourceType}>;
+export type ${resourceType}ServiceType = Service<${resourceType}, ${resourceType}SearchArgs>;
 
 export const ${resourceType}Service = ({ baseUrl }: { baseUrl: string }): ${resourceType}ServiceType => {
   const read: ${resourceType}ServiceType['read'] = async ({ id, accessToken }) => {
@@ -31,9 +37,32 @@ export const ${resourceType}Service = ({ baseUrl }: { baseUrl: string }): ${reso
     return response;
   };
 
+  const update: ${resourceType}ServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: \`\${baseUrl}/${resourceType}/\${resource.id}\`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: ${resourceType}ServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = ${resourceType}SearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(${resourceType}Schema), {
+      path: \`\${baseUrl}/${resourceType}\`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };
   `;

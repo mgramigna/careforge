@@ -1,8 +1,14 @@
-import { OrganizationSchema, type Organization } from '../models';
+import {
+  BundleSchema,
+  OrganizationSchema,
+  OrganizationSearchArgs,
+  OrganizationSearchArgsSchema,
+  type Organization,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type OrganizationServiceType = Service<Organization>;
+export type OrganizationServiceType = Service<Organization, OrganizationSearchArgs>;
 
 export const OrganizationService = ({ baseUrl }: { baseUrl: string }): OrganizationServiceType => {
   const read: OrganizationServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const OrganizationService = ({ baseUrl }: { baseUrl: string }): Organizat
     return response;
   };
 
+  const update: OrganizationServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Organization/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: OrganizationServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = OrganizationSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(OrganizationSchema), {
+      path: `${baseUrl}/Organization`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

@@ -57,4 +57,11 @@ export const CoverageEligibilityResponseSchema = createDomainResourceSchema(
     .optional(),
 });
 
+export const CoverageEligibilityResponseSearchArgsSchema = z.object({
+  request: z.string(),
+});
+
 export type CoverageEligibilityResponse = z.infer<typeof CoverageEligibilityResponseSchema>;
+export type CoverageEligibilityResponseSearchArgs = z.infer<
+  typeof CoverageEligibilityResponseSearchArgsSchema
+>;

@@ -1,8 +1,14 @@
-import { TaskSchema, type Task } from '../models';
+import {
+  BundleSchema,
+  TaskSchema,
+  TaskSearchArgs,
+  TaskSearchArgsSchema,
+  type Task,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type TaskServiceType = Service<Task>;
+export type TaskServiceType = Service<Task, TaskSearchArgs>;
 
 export const TaskService = ({ baseUrl }: { baseUrl: string }): TaskServiceType => {
   const read: TaskServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const TaskService = ({ baseUrl }: { baseUrl: string }): TaskServiceType =
     return response;
   };
 
+  const update: TaskServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Task/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: TaskServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = TaskSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(TaskSchema), {
+      path: `${baseUrl}/Task`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

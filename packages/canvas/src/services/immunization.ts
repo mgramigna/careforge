@@ -1,8 +1,14 @@
-import { ImmunizationSchema, type Immunization } from '../models';
+import {
+  BundleSchema,
+  ImmunizationSchema,
+  ImmunizationSearchArgs,
+  ImmunizationSearchArgsSchema,
+  type Immunization,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ImmunizationServiceType = Service<Immunization>;
+export type ImmunizationServiceType = Service<Immunization, ImmunizationSearchArgs>;
 
 export const ImmunizationService = ({ baseUrl }: { baseUrl: string }): ImmunizationServiceType => {
   const read: ImmunizationServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const ImmunizationService = ({ baseUrl }: { baseUrl: string }): Immunizat
     return response;
   };
 
+  const update: ImmunizationServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Immunization/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: ImmunizationServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = ImmunizationSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(ImmunizationSchema), {
+      path: `${baseUrl}/Immunization`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

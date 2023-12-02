@@ -1,8 +1,14 @@
-import { QuestionnaireSchema, type Questionnaire } from '../models';
+import {
+  BundleSchema,
+  QuestionnaireSchema,
+  QuestionnaireSearchArgs,
+  QuestionnaireSearchArgsSchema,
+  type Questionnaire,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type QuestionnaireServiceType = Service<Questionnaire>;
+export type QuestionnaireServiceType = Service<Questionnaire, QuestionnaireSearchArgs>;
 
 export const QuestionnaireService = ({
   baseUrl,
@@ -28,8 +34,31 @@ export const QuestionnaireService = ({
     return response;
   };
 
+  const update: QuestionnaireServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Questionnaire/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: QuestionnaireServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = QuestionnaireSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(QuestionnaireSchema), {
+      path: `${baseUrl}/Questionnaire`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

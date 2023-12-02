@@ -23,4 +23,7 @@ export const MediaSchema = createDomainResourceSchema('Media').extend({
   note: AnnotationSchema.array().optional(),
 });
 
+export const MediaSearchArgsSchema = z.object({});
+
 export type Media = z.infer<typeof MediaSchema>;
+export type MediaSearchArgs = z.infer<typeof MediaSearchArgsSchema>;

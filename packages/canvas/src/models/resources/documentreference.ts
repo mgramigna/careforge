@@ -4,6 +4,7 @@ import { IdentifierSchema } from '..';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { CodingSchema } from '../core/coding';
+import { DateSchema } from '../core/date';
 import { InstantSchema } from '../core/instant';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
@@ -32,4 +33,15 @@ export const DocumentReferenceSchema = createDomainResourceSchema('DocumentRefer
     .optional(),
 });
 
+export const DocumentReferenceSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  category: z.string().optional(),
+  date: DateSchema.optional(),
+  patient: z.string().optional(),
+  status: z.string().optional(),
+  subject: z.string().optional(),
+  type: z.string().optional(),
+});
+
 export type DocumentReference = z.infer<typeof DocumentReferenceSchema>;
+export type DocumentReferenceSearchArgs = z.infer<typeof DocumentReferenceSearchArgsSchema>;

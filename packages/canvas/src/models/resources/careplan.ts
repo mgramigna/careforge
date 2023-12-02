@@ -21,4 +21,11 @@ export const CarePlanSchema = createDomainResourceSchema('CarePlan').extend({
   subject: ReferenceSchema,
 });
 
+export const CarePlanSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  category: z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type CarePlan = z.infer<typeof CarePlanSchema>;
+export type CarePlanSearchArgs = z.infer<typeof CarePlanSearchArgsSchema>;

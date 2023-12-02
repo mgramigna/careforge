@@ -50,4 +50,14 @@ export const ObservationSchema = createDomainResourceSchema('Observation')
   })
   .merge(ValueXSchema);
 
+export const ObservationSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  category: z.string().optional(),
+  code: z.string().optional(),
+  date: z.string().optional(),
+  'derived-from': z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type Observation = z.infer<typeof ObservationSchema>;
+export type ObservationSearchArgs = z.infer<typeof ObservationSearchArgsSchema>;

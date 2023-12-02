@@ -1,8 +1,14 @@
-import { GoalSchema, type Goal } from '../models';
+import {
+  BundleSchema,
+  GoalSchema,
+  GoalSearchArgs,
+  GoalSearchArgsSchema,
+  type Goal,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type GoalServiceType = Service<Goal>;
+export type GoalServiceType = Service<Goal, GoalSearchArgs>;
 
 export const GoalService = ({ baseUrl }: { baseUrl: string }): GoalServiceType => {
   const read: GoalServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const GoalService = ({ baseUrl }: { baseUrl: string }): GoalServiceType =
     return response;
   };
 
+  const update: GoalServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Goal/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: GoalServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = GoalSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(GoalSchema), {
+      path: `${baseUrl}/Goal`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

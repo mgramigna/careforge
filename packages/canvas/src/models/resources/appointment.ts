@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { CodeableConceptSchema } from '../core/codeableconcept';
+import { DateSchema } from '../core/date';
 import { InstantSchema } from '../core/instant';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
@@ -47,4 +48,17 @@ export const AppointmentSchema = createDomainResourceSchema('Appointment').exten
   ),
 });
 
+export const AppointmentSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  'appointment-type': z.string().optional(),
+  location: z.string().optional(),
+  patient: z.string().optional(),
+  practitioner: z.string().optional(),
+  date: z.string().optional(),
+  _sort: z
+    .enum(['date', 'patient', 'practitioner', '-date', '-patient', '-practitioner'])
+    .optional(),
+});
+
 export type Appointment = z.infer<typeof AppointmentSchema>;
+export type AppointmentSearchArgs = z.infer<typeof AppointmentSearchArgsSchema>;

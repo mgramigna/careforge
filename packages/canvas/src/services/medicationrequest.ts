@@ -1,8 +1,14 @@
-import { MedicationRequestSchema, type MedicationRequest } from '../models';
+import {
+  BundleSchema,
+  MedicationRequestSchema,
+  MedicationRequestSearchArgs,
+  MedicationRequestSearchArgsSchema,
+  type MedicationRequest,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type MedicationRequestServiceType = Service<MedicationRequest>;
+export type MedicationRequestServiceType = Service<MedicationRequest, MedicationRequestSearchArgs>;
 
 export const MedicationRequestService = ({
   baseUrl,
@@ -28,8 +34,31 @@ export const MedicationRequestService = ({
     return response;
   };
 
+  const update: MedicationRequestServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/MedicationRequest/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: MedicationRequestServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = MedicationRequestSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(MedicationRequestSchema), {
+      path: `${baseUrl}/MedicationRequest`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

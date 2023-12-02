@@ -10,4 +10,7 @@ export const ScheduleSchema = createDomainResourceSchema('Schedule').extend({
   comment: z.string().optional(),
 });
 
+export const ScheduleSearchArgsSchema = z.object({});
+
 export type Schedule = z.infer<typeof ScheduleSchema>;
+export type ScheduleSearchArgs = z.infer<typeof ScheduleSearchArgsSchema>;

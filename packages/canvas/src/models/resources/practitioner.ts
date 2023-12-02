@@ -24,4 +24,11 @@ export const PractitionerSchema = createDomainResourceSchema('Practitioner').ext
     .optional(),
 });
 
+export const PractitionerSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  name: z.string().optional(),
+  'include-non-scheduleable-practitioners': z.boolean().optional(),
+});
+
 export type Practitioner = z.infer<typeof PractitionerSchema>;
+export type PractitionerSearchArgs = z.infer<typeof PractitionerSearchArgsSchema>;

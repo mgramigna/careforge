@@ -13,4 +13,9 @@ export const LocationSchema = createDomainResourceSchema('Location').extend({
   address: AddressSchema.optional(),
 });
 
+export const LocationSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+});
+
 export type Location = z.infer<typeof LocationSchema>;
+export type LocationSearchArgs = z.infer<typeof LocationSearchArgsSchema>;

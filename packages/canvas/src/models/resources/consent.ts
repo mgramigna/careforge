@@ -49,4 +49,11 @@ export const ConsentSchema = createDomainResourceSchema('Consent').extend({
   provision: ConsentProvisionSchema,
 });
 
+export const ConsentSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  patient: z.string().optional(),
+  period: z.string().optional(),
+});
+
 export type Consent = z.infer<typeof ConsentSchema>;
+export type ConsentSearchArgs = z.infer<typeof ConsentSearchArgsSchema>;

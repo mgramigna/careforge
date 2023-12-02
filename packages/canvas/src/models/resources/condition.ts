@@ -1,4 +1,4 @@
-import { type z } from 'zod';
+import { z } from 'zod';
 
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
@@ -22,4 +22,12 @@ export const ConditionSchema = createDomainResourceSchema('Condition').extend({
   note: AnnotationSchema.array().optional(),
 });
 
+export const ConditionSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  'clinical-status': z.string().optional(),
+  patient: z.string().optional(),
+  'verification-status': z.string().optional(),
+});
+
 export type Condition = z.infer<typeof ConditionSchema>;
+export type ConditionSearchArgs = z.infer<typeof ConditionSearchArgsSchema>;

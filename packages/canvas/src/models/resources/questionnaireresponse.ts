@@ -49,4 +49,15 @@ export const QuestionnaireResponseSchema = createDomainResourceSchema(
     .optional(),
 });
 
+export const QuestionnaireResponseSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  authored: z.string().optional(),
+  patient: z.string().optional(),
+  questionnaire: z.string().optional(),
+  'questionnaire.code': z.string().optional(),
+  'questionnaire.item.code': z.string().optional(),
+  _sort: z.enum(['_id', 'authored', '-_id', '-authored']),
+});
+
 export type QuestionnaireResponse = z.infer<typeof QuestionnaireResponseSchema>;
+export type QuestionnaireResponseSearchArgs = z.infer<typeof QuestionnaireResponseSearchArgsSchema>;

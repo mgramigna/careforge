@@ -1,8 +1,14 @@
-import { DiagnosticReportSchema, type DiagnosticReport } from '../models';
+import {
+  BundleSchema,
+  DiagnosticReportSchema,
+  DiagnosticReportSearchArgs,
+  DiagnosticReportSearchArgsSchema,
+  type DiagnosticReport,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type DiagnosticReportServiceType = Service<DiagnosticReport>;
+export type DiagnosticReportServiceType = Service<DiagnosticReport, DiagnosticReportSearchArgs>;
 
 export const DiagnosticReportService = ({
   baseUrl,
@@ -28,8 +34,31 @@ export const DiagnosticReportService = ({
     return response;
   };
 
+  const update: DiagnosticReportServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/DiagnosticReport/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: DiagnosticReportServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = DiagnosticReportSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(DiagnosticReportSchema), {
+      path: `${baseUrl}/DiagnosticReport`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

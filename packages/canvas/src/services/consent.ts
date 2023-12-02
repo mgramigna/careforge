@@ -1,8 +1,14 @@
-import { ConsentSchema, type Consent } from '../models';
+import {
+  BundleSchema,
+  ConsentSchema,
+  ConsentSearchArgs,
+  ConsentSearchArgsSchema,
+  type Consent,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ConsentServiceType = Service<Consent>;
+export type ConsentServiceType = Service<Consent, ConsentSearchArgs>;
 
 export const ConsentService = ({ baseUrl }: { baseUrl: string }): ConsentServiceType => {
   const read: ConsentServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const ConsentService = ({ baseUrl }: { baseUrl: string }): ConsentService
     return response;
   };
 
+  const update: ConsentServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Consent/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: ConsentServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = ConsentSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(ConsentSchema), {
+      path: `${baseUrl}/Consent`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

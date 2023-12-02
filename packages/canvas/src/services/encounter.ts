@@ -1,8 +1,14 @@
-import { EncounterSchema, type Encounter } from '../models';
+import {
+  BundleSchema,
+  EncounterSchema,
+  EncounterSearchArgs,
+  EncounterSearchArgsSchema,
+  type Encounter,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type EncounterServiceType = Service<Encounter>;
+export type EncounterServiceType = Service<Encounter, EncounterSearchArgs>;
 
 export const EncounterService = ({ baseUrl }: { baseUrl: string }): EncounterServiceType => {
   const read: EncounterServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const EncounterService = ({ baseUrl }: { baseUrl: string }): EncounterSer
     return response;
   };
 
+  const update: EncounterServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Encounter/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: EncounterServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = EncounterSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(EncounterSchema), {
+      path: `${baseUrl}/Encounter`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

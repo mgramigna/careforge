@@ -16,4 +16,10 @@ export const CareTeamSchema = createDomainResourceSchema('CareTeam').extend({
   ),
 });
 
+export const CareTeamSearchArgsSchema = z.object({
+  participant: z.string().optional(),
+  patient: z.string().optional(),
+  status: z.string().optional(),
+});
+
 export type CareTeam = z.infer<typeof CareTeamSchema>;

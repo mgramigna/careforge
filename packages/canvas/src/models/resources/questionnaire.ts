@@ -157,4 +157,13 @@ export const QuestionnaireSchema = createDomainResourceSchema('Questionnaire').e
   item: QuestionnaireItemSchema.array().optional(),
 });
 
+export const QuestionnaireSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  code: z.string().optional(),
+  name: z.string().optional(),
+  'questionnaire-code': z.string().optional(),
+  status: z.enum(['active', 'retired']),
+});
+
 export type Questionnaire = z.infer<typeof QuestionnaireSchema>;
+export type QuestionnaireSearchArgs = z.infer<typeof QuestionnaireSearchArgsSchema>;

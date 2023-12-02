@@ -39,4 +39,10 @@ export const GoalSchema = createDomainResourceSchema('Goal').extend({
   note: AnnotationSchema.array().optional(),
 });
 
+export const GoalSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type Goal = z.infer<typeof GoalSchema>;
+export type GoalSearchArgs = z.infer<typeof GoalSearchArgsSchema>;

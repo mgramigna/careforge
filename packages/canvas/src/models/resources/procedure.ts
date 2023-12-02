@@ -21,4 +21,10 @@ export const ProcedureSchema = createDomainResourceSchema('Procedure').extend({
   performedDateTime: DateTimeSchema,
 });
 
+export const ProcedureSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type Procedure = z.infer<typeof ProcedureSchema>;
+export type ProcedureSearchArgs = z.infer<typeof ProcedureSearchArgsSchema>;

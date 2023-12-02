@@ -20,4 +20,13 @@ export const DiagnosticReportSchema = createDomainResourceSchema('DiagnosticRepo
   presentedForm: AttachmentSchema.array().optional(),
 });
 
+export const DiagnosticReportSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  category: z.string().optional(),
+  code: z.string().optional(),
+  date: z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type DiagnosticReport = z.infer<typeof DiagnosticReportSchema>;
+export type DiagnosticReportSearchArgs = z.infer<typeof DiagnosticReportSearchArgsSchema>;

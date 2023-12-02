@@ -26,4 +26,11 @@ export const CommunicationSchema = createDomainResourceSchema('Communication').e
   ),
 });
 
+export const CommunicationSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  recipient: z.string().optional(),
+  sender: z.string().optional(),
+});
+
 export type Communication = z.infer<typeof CommunicationSchema>;
+export type CommunicationSearchArgs = z.infer<typeof CommunicationSearchArgsSchema>;

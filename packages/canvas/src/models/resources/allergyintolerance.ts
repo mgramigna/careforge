@@ -38,4 +38,10 @@ export const AllergyIntoleranceSchema = createDomainResourceSchema('AllergyIntol
     .optional(),
 });
 
+export const AllergyIntoleranceSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type AllergyIntolerance = z.infer<typeof AllergyIntoleranceSchema>;
+export type AllergyIntoleranceSearchArgs = z.infer<typeof AllergyIntoleranceSearchArgsSchema>;

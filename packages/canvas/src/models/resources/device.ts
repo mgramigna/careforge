@@ -30,4 +30,10 @@ export const DeviceSchema = createDomainResourceSchema('Device').extend({
   patient: ReferenceSchema.optional(),
 });
 
+export const DeviceSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  name: z.string().optional(),
+});
+
 export type Device = z.infer<typeof DeviceSchema>;
+export type DeviceSearchArgs = z.infer<typeof DeviceSearchArgsSchema>;

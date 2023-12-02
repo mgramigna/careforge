@@ -21,4 +21,12 @@ export const ProvenanceSchema = createDomainResourceSchema('Provenance').extend(
     .optional(),
 });
 
+export const ProvenanceSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  agent: z.string().optional(),
+  patient: z.string().optional(),
+  target: z.string().optional(),
+});
+
 export type Provenance = z.infer<typeof ProvenanceSchema>;
+export type ProvenanceSearchArgs = z.infer<typeof ProvenanceSearchArgsSchema>;

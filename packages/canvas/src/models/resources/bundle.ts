@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const BundleSchema = z.object({
+export const BaseBundleSchema = z.object({
   resourceType: z.literal('Bundle'),
   type: z.enum([
     'batch-response',
@@ -23,4 +23,9 @@ export const BundleSchema = z.object({
     .optional(),
 });
 
-export type Bundle = z.infer<typeof BundleSchema>;
+export const BundleSchema = <T extends z.ZodTypeAny>(resource: T) =>
+  BaseBundleSchema.extend({
+    entry: z.array(z.object({ resource })).default([]),
+  });
+
+export type Bundle = z.infer<typeof BaseBundleSchema>;

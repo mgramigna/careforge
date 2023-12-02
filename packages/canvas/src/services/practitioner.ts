@@ -1,8 +1,14 @@
-import { PractitionerSchema, type Practitioner } from '../models';
+import {
+  BundleSchema,
+  PractitionerSchema,
+  PractitionerSearchArgs,
+  PractitionerSearchArgsSchema,
+  type Practitioner,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type PractitionerServiceType = Service<Practitioner>;
+export type PractitionerServiceType = Service<Practitioner, PractitionerSearchArgs>;
 
 export const PractitionerService = ({ baseUrl }: { baseUrl: string }): PractitionerServiceType => {
   const read: PractitionerServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const PractitionerService = ({ baseUrl }: { baseUrl: string }): Practitio
     return response;
   };
 
+  const update: PractitionerServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Practitioner/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: PractitionerServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = PractitionerSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(PractitionerSchema), {
+      path: `${baseUrl}/Practitioner`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

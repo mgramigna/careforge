@@ -82,4 +82,7 @@ export const ClaimSchema = createDomainResourceSchema('Claim').extend({
   total: MoneySchema.optional(),
 });
 
+export const ClaimSearchArgsSchema = z.object({});
+
 export type Claim = z.infer<typeof ClaimSchema>;
+export type ClaimSearchArgs = z.infer<typeof ClaimSearchArgsSchema>;

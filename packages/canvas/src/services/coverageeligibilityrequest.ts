@@ -1,8 +1,17 @@
-import { CoverageEligibilityRequestSchema, type CoverageEligibilityRequest } from '../models';
+import {
+  BundleSchema,
+  CoverageEligibilityRequestSchema,
+  CoverageEligibilityRequestSearchArgs,
+  CoverageEligibilityRequestSearchArgsSchema,
+  type CoverageEligibilityRequest,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type CoverageEligibilityRequestServiceType = Service<CoverageEligibilityRequest>;
+export type CoverageEligibilityRequestServiceType = Service<
+  CoverageEligibilityRequest,
+  CoverageEligibilityRequestSearchArgs
+>;
 
 export const CoverageEligibilityRequestService = ({
   baseUrl,
@@ -31,8 +40,34 @@ export const CoverageEligibilityRequestService = ({
     return response;
   };
 
+  const update: CoverageEligibilityRequestServiceType['update'] = async ({
+    resource,
+    accessToken,
+  }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/CoverageEligibilityRequest/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: CoverageEligibilityRequestServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = CoverageEligibilityRequestSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(CoverageEligibilityRequestSchema), {
+      path: `${baseUrl}/CoverageEligibilityRequest`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

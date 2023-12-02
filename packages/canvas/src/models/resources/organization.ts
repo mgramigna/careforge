@@ -13,4 +13,11 @@ export const OrganizationSchema = createDomainResourceSchema('Organization').ext
   address: AddressSchema.array().optional(),
 });
 
+export const OrganizationSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  address: z.string().optional(),
+  name: z.string().optional(),
+});
+
 export type Organization = z.infer<typeof OrganizationSchema>;
+export type OrganizationSearchArgs = z.infer<typeof OrganizationSearchArgsSchema>;

@@ -19,4 +19,10 @@ export const MedicationStatementSchema = createDomainResourceSchema('MedicationS
   dosage: DosageSchema.array().optional(),
 });
 
+export const MedicationStatementSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type MedicationStatement = z.infer<typeof MedicationStatementSchema>;
+export type MedicationStatementSearchArgs = z.infer<typeof MedicationStatementSearchArgsSchema>;

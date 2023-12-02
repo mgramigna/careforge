@@ -14,4 +14,10 @@ export const ImmunizationSchema = createDomainResourceSchema('Immunization').ext
   primarySource: z.boolean(),
 });
 
+export const ImmunizationSearchArgsSchema = z.object({
+  _id: z.string().optional(),
+  patient: z.string().optional(),
+});
+
 export type Immunization = z.infer<typeof ImmunizationSchema>;
+export type ImmunizationSearchArgs = z.infer<typeof ImmunizationSearchArgsSchema>;

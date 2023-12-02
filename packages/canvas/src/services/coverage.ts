@@ -1,8 +1,14 @@
-import { CoverageSchema, type Coverage } from '../models';
+import {
+  BundleSchema,
+  CoverageSchema,
+  CoverageSearchArgs,
+  CoverageSearchArgsSchema,
+  type Coverage,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type CoverageServiceType = Service<Coverage>;
+export type CoverageServiceType = Service<Coverage, CoverageSearchArgs>;
 
 export const CoverageService = ({ baseUrl }: { baseUrl: string }): CoverageServiceType => {
   const read: CoverageServiceType['read'] = async ({ id, accessToken }) => {
@@ -24,8 +30,31 @@ export const CoverageService = ({ baseUrl }: { baseUrl: string }): CoverageServi
     return response;
   };
 
+  const update: CoverageServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/Coverage/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: CoverageServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = CoverageSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(CoverageSchema), {
+      path: `${baseUrl}/Coverage`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };

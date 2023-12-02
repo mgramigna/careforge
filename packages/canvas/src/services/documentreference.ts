@@ -1,8 +1,14 @@
-import { DocumentReferenceSchema, type DocumentReference } from '../models';
+import {
+  BundleSchema,
+  DocumentReferenceSchema,
+  DocumentReferenceSearchArgs,
+  DocumentReferenceSearchArgsSchema,
+  type DocumentReference,
+} from '../models';
 import { type Service } from '../types/service';
-import { makeFhirCreateRequest, makeFhirGetRequest } from '../utils/fetch';
+import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type DocumentReferenceServiceType = Service<DocumentReference>;
+export type DocumentReferenceServiceType = Service<DocumentReference, DocumentReferenceSearchArgs>;
 
 export const DocumentReferenceService = ({
   baseUrl,
@@ -28,8 +34,31 @@ export const DocumentReferenceService = ({
     return response;
   };
 
+  const update: DocumentReferenceServiceType['update'] = async ({ resource, accessToken }) => {
+    const response = await makeFhirUpdateRequest({
+      path: `${baseUrl}/DocumentReference/${resource.id}`,
+      token: accessToken,
+      body: resource,
+    });
+
+    return response;
+  };
+
+  const search: DocumentReferenceServiceType['search'] = async ({ accessToken, args }) => {
+    const parsedArgs = DocumentReferenceSearchArgsSchema.parse(args);
+    const response = await makeFhirGetRequest(BundleSchema(DocumentReferenceSchema), {
+      path: `${baseUrl}/DocumentReference`,
+      token: accessToken,
+      query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),
+    });
+
+    return response;
+  };
+
   return {
     read,
     create,
+    update,
+    search,
   };
 };
