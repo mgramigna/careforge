@@ -1,10 +1,11 @@
 import { z } from 'zod';
 
-import { BundleSchema, IdentifierSchema } from '..';
 import { CodeableConceptSchema } from '../core/codeableconcept';
+import { IdentifierSchema } from '../core/identifier';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const CoverageSchema = createDomainResourceSchema('Coverage').extend({
   status: z.enum(['active', 'cancelled']),

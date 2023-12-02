@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { DosageSchema } from '../core/dosage';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const MedicationStatementSchema = createDomainResourceSchema('MedicationStatement').extend({
   status: z.enum(['active', 'entered-in-error', 'stopped']),

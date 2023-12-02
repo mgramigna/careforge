@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AttachmentSchema } from '../core/attachment';
 import { CodingSchema } from '../core/coding';
 import { DateSchema } from '../core/date';
@@ -9,6 +8,7 @@ import { QuantitySchema } from '../core/quantity';
 import { ReferenceSchema } from '../core/reference';
 import { TimeSchema } from '../core/time';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 const BaseEnabledWhenSchema = z.object({
   question: z.string(),

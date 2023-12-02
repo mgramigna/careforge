@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
@@ -8,6 +7,7 @@ import { ExtensionSchema } from '../core/extension';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const TaskSchema = createDomainResourceSchema('Task').extend({
   extension: ExtensionSchema.array().optional(),

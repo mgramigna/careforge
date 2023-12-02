@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { DateSchema } from '../core/date';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const CoverageEligibilityRequestSchema = createDomainResourceSchema(
   'CoverageEligibilityRequest',

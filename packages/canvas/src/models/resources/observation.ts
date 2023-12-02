@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { InstantSchema } from '../core/instant';
@@ -12,6 +11,7 @@ import { ReferenceSchema } from '../core/reference';
 import { SampledDataSchema } from '../core/sampleddata';
 import { TimeSchema } from '../core/time';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 const ValueXSchema = z.object({
   valueQuantity: QuantitySchema.optional(),

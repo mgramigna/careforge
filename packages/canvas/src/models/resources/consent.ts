@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { CodingSchema } from '../core/coding';
@@ -8,6 +7,7 @@ import { DateTimeSchema } from '../core/datetime';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 const BaseConsentProvisionSchema = z.object({
   type: z.enum(['deny', 'permit']).optional(),

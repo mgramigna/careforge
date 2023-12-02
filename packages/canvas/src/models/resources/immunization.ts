@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateSchema } from '../core/date';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const ImmunizationSchema = createDomainResourceSchema('Immunization').extend({
   status: z.enum(['completed', 'not-done', 'entered-in-error']),

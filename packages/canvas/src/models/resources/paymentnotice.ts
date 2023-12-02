@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { MoneySchema } from '../core/money';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const PaymentNoticeSchema = createDomainResourceSchema('PaymentNotice').extend({
   status: z.literal('active'),

@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
@@ -10,6 +9,7 @@ import { PeriodSchema } from '../core/period';
 import { QuantitySchema } from '../core/quantity';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 const BaseSubstitutionSchema = z.object({
   id: z.string().optional(),

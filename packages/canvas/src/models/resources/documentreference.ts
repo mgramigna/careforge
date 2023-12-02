@@ -1,14 +1,15 @@
 import { z } from 'zod';
 
-import { BundleSchema, IdentifierSchema } from '..';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { CodingSchema } from '../core/coding';
 import { DateSchema } from '../core/date';
+import { IdentifierSchema } from '../core/identifier';
 import { InstantSchema } from '../core/instant';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const DocumentReferenceSchema = createDomainResourceSchema('DocumentReference').extend({
   identifier: IdentifierSchema.array().optional(),

@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { NarrativeSchema } from '../core/narrative';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const MedicationSchema = createDomainResourceSchema('Medication').extend({
   text: NarrativeSchema.optional(),

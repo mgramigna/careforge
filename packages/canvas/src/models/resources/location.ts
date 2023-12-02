@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
-import { BundleSchema, IdentifierSchema } from '..';
 import { AddressSchema } from '../core/address';
+import { IdentifierSchema } from '../core/identifier';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const LocationSchema = createDomainResourceSchema('Location').extend({
   identifier: IdentifierSchema.array().optional(),

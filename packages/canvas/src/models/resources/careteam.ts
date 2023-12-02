@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const CareTeamSchema = createDomainResourceSchema('CareTeam').extend({
   status: z.enum(['proposed', 'active', 'suspended', 'inactive']),

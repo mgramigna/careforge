@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { ExtensionSchema } from '../core/extension';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const AllergyIntoleranceSchema = createDomainResourceSchema('AllergyIntolerance').extend({
   id: z.string(),

@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
-import { BundleSchema, IdentifierSchema } from '..';
 import { AddressSchema } from '../core/address';
 import { ContactPointSchema } from '../core/contactpoint';
+import { IdentifierSchema } from '../core/identifier';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const OrganizationSchema = createDomainResourceSchema('Organization').extend({
   identifier: IdentifierSchema.array().optional(),

@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { InstantSchema } from '../core/instant';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const ProvenanceSchema = createDomainResourceSchema('Provenance').extend({
   target: ReferenceSchema.array(),

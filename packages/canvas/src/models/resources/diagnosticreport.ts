@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { InstantSchema } from '../core/instant';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const DiagnosticReportSchema = createDomainResourceSchema('DiagnosticReport').extend({
   status: z.enum(['registered', 'partial', 'preliminary', 'final']),

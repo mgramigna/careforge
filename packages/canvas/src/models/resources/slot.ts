@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { DateSchema } from '../core/date';
 import { InstantSchema } from '../core/instant';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const SlotSchema = createDomainResourceSchema('Slot').extend({
   schedule: ReferenceSchema,

@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { AttachmentSchema } from '../core/attachment';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const MediaSchema = createDomainResourceSchema('Media').extend({
   status: z.enum([

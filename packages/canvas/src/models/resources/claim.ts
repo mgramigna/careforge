@@ -1,10 +1,11 @@
 import { z } from 'zod';
 
-import { BundleSchema, IdentifierSchema } from '..';
+import { BundleSchema } from '.';
 import { AddressSchema } from '../core/address';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateSchema } from '../core/date';
 import { DateTimeSchema } from '../core/datetime';
+import { IdentifierSchema } from '../core/identifier';
 import { MoneySchema } from '../core/money';
 import { PeriodSchema } from '../core/period';
 import { QuantitySchema } from '../core/quantity';

@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { NarrativeSchema } from '../core/narrative';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const ConditionSchema = createDomainResourceSchema('Condition').extend({
   text: NarrativeSchema.optional(),

@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { createDomainResourceSchema } from '../util/domainresource';
+import { BundleSchema } from './bundle';
 
 export const AllergenSchema = createDomainResourceSchema('Allergen').extend({
   resourceType: z.literal('Allergen'),
