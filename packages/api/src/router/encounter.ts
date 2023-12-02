@@ -65,7 +65,7 @@ export const createEncounterRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(EncounterSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(EncounterSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await encounterService.search({
         args: input,
         accessToken: ctx.accessToken,

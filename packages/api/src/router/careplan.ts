@@ -65,7 +65,7 @@ export const createCarePlanRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(CarePlanSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(CarePlanSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await carePlanService.search({
         args: input,
         accessToken: ctx.accessToken,

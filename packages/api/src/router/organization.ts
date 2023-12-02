@@ -65,7 +65,7 @@ export const createOrganizationRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(OrganizationSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(OrganizationSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await organizationService.search({
         args: input,
         accessToken: ctx.accessToken,

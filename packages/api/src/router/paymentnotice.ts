@@ -65,20 +65,18 @@ export const createPaymentNoticeRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure
-      .input(PaymentNoticeSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
-        const result = await paymentNoticeService.search({
-          args: input,
-          accessToken: ctx.accessToken,
-        });
+    search: authedProcedure.input(PaymentNoticeSearchArgsSchema).query(async ({ ctx, input }) => {
+      const result = await paymentNoticeService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
 
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
 
-        return result.value;
-      }),
+      return result.value;
+    }),
   });
 };

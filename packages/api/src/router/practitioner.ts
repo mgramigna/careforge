@@ -65,7 +65,7 @@ export const createPractitionerRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(PractitionerSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(PractitionerSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await practitionerService.search({
         args: input,
         accessToken: ctx.accessToken,

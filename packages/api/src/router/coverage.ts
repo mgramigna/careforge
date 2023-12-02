@@ -65,7 +65,7 @@ export const createCoverageRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(CoverageSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(CoverageSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await coverageService.search({
         args: input,
         accessToken: ctx.accessToken,

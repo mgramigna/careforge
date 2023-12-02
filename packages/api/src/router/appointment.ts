@@ -65,7 +65,7 @@ export const createAppointmentRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(AppointmentSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(AppointmentSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await appointmentService.search({
         args: input,
         accessToken: ctx.accessToken,

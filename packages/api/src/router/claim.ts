@@ -61,7 +61,7 @@ export const createClaimRouter = ({ claimService }: { claimService: ClaimService
 
         return result.value;
       }),
-    search: authedProcedure.input(ClaimSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ClaimSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await claimService.search({
         args: input,
         accessToken: ctx.accessToken,

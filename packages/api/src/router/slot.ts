@@ -57,7 +57,7 @@ export const createSlotRouter = ({ slotService }: { slotService: SlotServiceType
 
         return result.value;
       }),
-    search: authedProcedure.input(SlotSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(SlotSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await slotService.search({
         args: input,
         accessToken: ctx.accessToken,

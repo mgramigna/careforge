@@ -61,7 +61,7 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
 
         return result.value;
       }),
-    search: authedProcedure.input(PatientSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(PatientSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await patientService.search({
         args: input,
         accessToken: ctx.accessToken,

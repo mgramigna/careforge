@@ -65,7 +65,7 @@ export const createConditionRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(ConditionSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ConditionSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await conditionService.search({
         args: input,
         accessToken: ctx.accessToken,

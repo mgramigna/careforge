@@ -65,20 +65,18 @@ export const createCommunicationRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure
-      .input(CommunicationSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
-        const result = await communicationService.search({
-          args: input,
-          accessToken: ctx.accessToken,
-        });
+    search: authedProcedure.input(CommunicationSearchArgsSchema).query(async ({ ctx, input }) => {
+      const result = await communicationService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
 
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
 
-        return result.value;
-      }),
+      return result.value;
+    }),
   });
 };

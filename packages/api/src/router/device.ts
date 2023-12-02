@@ -61,7 +61,7 @@ export const createDeviceRouter = ({ deviceService }: { deviceService: DeviceSer
 
         return result.value;
       }),
-    search: authedProcedure.input(DeviceSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(DeviceSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await deviceService.search({
         args: input,
         accessToken: ctx.accessToken,

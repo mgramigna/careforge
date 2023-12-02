@@ -61,7 +61,7 @@ export const createGroupRouter = ({ groupService }: { groupService: GroupService
 
         return result.value;
       }),
-    search: authedProcedure.input(GroupSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(GroupSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await groupService.search({
         args: input,
         accessToken: ctx.accessToken,

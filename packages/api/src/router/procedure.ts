@@ -65,7 +65,7 @@ export const createProcedureRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(ProcedureSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ProcedureSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await procedureService.search({
         args: input,
         accessToken: ctx.accessToken,

@@ -74,7 +74,7 @@ export const create${resourceType}Router = ({ ${
 
         return result.value;
       }),
-    search: authedProcedure.input(${resourceType}SearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(${resourceType}SearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await ${
         resourceType.charAt(0).toLowerCase() + resourceType.slice(1)
       }Service.search({

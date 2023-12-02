@@ -67,7 +67,7 @@ export const createDocumentReferenceRouter = ({
       }),
     search: authedProcedure
       .input(DocumentReferenceSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }) => {
         const result = await documentReferenceService.search({
           args: input,
           accessToken: ctx.accessToken,

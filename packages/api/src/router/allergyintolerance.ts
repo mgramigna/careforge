@@ -67,7 +67,7 @@ export const createAllergyIntoleranceRouter = ({
       }),
     search: authedProcedure
       .input(AllergyIntoleranceSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }) => {
         const result = await allergyIntoleranceService.search({
           args: input,
           accessToken: ctx.accessToken,

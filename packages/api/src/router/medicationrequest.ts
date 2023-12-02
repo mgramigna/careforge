@@ -67,7 +67,7 @@ export const createMedicationRequestRouter = ({
       }),
     search: authedProcedure
       .input(MedicationRequestSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }) => {
         const result = await medicationRequestService.search({
           args: input,
           accessToken: ctx.accessToken,

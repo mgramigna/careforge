@@ -65,7 +65,7 @@ export const createProvenanceRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(ProvenanceSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ProvenanceSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await provenanceService.search({
         args: input,
         accessToken: ctx.accessToken,

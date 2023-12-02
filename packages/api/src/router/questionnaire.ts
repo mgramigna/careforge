@@ -65,20 +65,18 @@ export const createQuestionnaireRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure
-      .input(QuestionnaireSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
-        const result = await questionnaireService.search({
-          args: input,
-          accessToken: ctx.accessToken,
-        });
+    search: authedProcedure.input(QuestionnaireSearchArgsSchema).query(async ({ ctx, input }) => {
+      const result = await questionnaireService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
 
-        if (result.isErr()) {
-          // TODO
-          return null;
-        }
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
 
-        return result.value;
-      }),
+      return result.value;
+    }),
   });
 };

@@ -67,7 +67,7 @@ export const createDiagnosticReportRouter = ({
       }),
     search: authedProcedure
       .input(DiagnosticReportSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }) => {
         const result = await diagnosticReportService.search({
           args: input,
           accessToken: ctx.accessToken,

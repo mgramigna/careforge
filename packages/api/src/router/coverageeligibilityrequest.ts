@@ -67,7 +67,7 @@ export const createCoverageEligibilityRequestRouter = ({
       }),
     search: authedProcedure
       .input(CoverageEligibilityRequestSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }) => {
         const result = await coverageEligibilityRequestService.search({
           args: input,
           accessToken: ctx.accessToken,

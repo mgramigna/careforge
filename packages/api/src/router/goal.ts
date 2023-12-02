@@ -57,7 +57,7 @@ export const createGoalRouter = ({ goalService }: { goalService: GoalServiceType
 
         return result.value;
       }),
-    search: authedProcedure.input(GoalSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(GoalSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await goalService.search({
         args: input,
         accessToken: ctx.accessToken,

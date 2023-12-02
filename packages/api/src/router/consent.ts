@@ -61,7 +61,7 @@ export const createConsentRouter = ({ consentService }: { consentService: Consen
 
         return result.value;
       }),
-    search: authedProcedure.input(ConsentSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ConsentSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await consentService.search({
         args: input,
         accessToken: ctx.accessToken,

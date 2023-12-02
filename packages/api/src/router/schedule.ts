@@ -65,7 +65,7 @@ export const createScheduleRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(ScheduleSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ScheduleSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await scheduleService.search({
         args: input,
         accessToken: ctx.accessToken,

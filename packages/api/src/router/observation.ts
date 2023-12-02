@@ -65,7 +65,7 @@ export const createObservationRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(ObservationSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ObservationSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await observationService.search({
         args: input,
         accessToken: ctx.accessToken,

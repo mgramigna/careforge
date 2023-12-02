@@ -57,7 +57,7 @@ export const createTaskRouter = ({ taskService }: { taskService: TaskServiceType
 
         return result.value;
       }),
-    search: authedProcedure.input(TaskSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(TaskSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await taskService.search({
         args: input,
         accessToken: ctx.accessToken,

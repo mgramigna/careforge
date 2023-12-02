@@ -61,7 +61,7 @@ export const createMediaRouter = ({ mediaService }: { mediaService: MediaService
 
         return result.value;
       }),
-    search: authedProcedure.input(MediaSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(MediaSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await mediaService.search({
         args: input,
         accessToken: ctx.accessToken,

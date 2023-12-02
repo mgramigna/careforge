@@ -65,7 +65,7 @@ export const createImmunizationRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(ImmunizationSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(ImmunizationSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await immunizationService.search({
         args: input,
         accessToken: ctx.accessToken,

@@ -67,7 +67,7 @@ export const createQuestionnaireResponseRouter = ({
       }),
     search: authedProcedure
       .input(QuestionnaireResponseSearchArgsSchema)
-      .mutation(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }) => {
         const result = await questionnaireResponseService.search({
           args: input,
           accessToken: ctx.accessToken,

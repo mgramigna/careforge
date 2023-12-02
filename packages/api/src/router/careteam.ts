@@ -65,7 +65,7 @@ export const createCareTeamRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(CareTeamSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(CareTeamSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await careTeamService.search({
         args: input,
         accessToken: ctx.accessToken,

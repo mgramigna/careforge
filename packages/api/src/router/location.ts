@@ -65,7 +65,7 @@ export const createLocationRouter = ({
 
         return result.value;
       }),
-    search: authedProcedure.input(LocationSearchArgsSchema).mutation(async ({ ctx, input }) => {
+    search: authedProcedure.input(LocationSearchArgsSchema).query(async ({ ctx, input }) => {
       const result = await locationService.search({
         args: input,
         accessToken: ctx.accessToken,
