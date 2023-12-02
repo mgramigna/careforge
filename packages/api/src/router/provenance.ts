@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { ProvenanceSchema, type ProvenanceServiceType } from '@canvas-challenge/canvas';
+import {
+  ProvenanceSchema,
+  ProvenanceSearchArgsSchema,
+  type ProvenanceServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -38,5 +42,41 @@ export const createProvenanceRouter = ({
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: ProvenanceSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await provenanceService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(ProvenanceSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await provenanceService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

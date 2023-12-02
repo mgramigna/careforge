@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { ConditionSchema, type ConditionServiceType } from '@canvas-challenge/canvas';
+import {
+  ConditionSchema,
+  ConditionSearchArgsSchema,
+  type ConditionServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -38,5 +42,41 @@ export const createConditionRouter = ({
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: ConditionSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await conditionService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(ConditionSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await conditionService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

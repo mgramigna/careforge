@@ -16,7 +16,7 @@ interface CreateArgs<T> extends BaseArgs {
 }
 
 interface UpdateArgs<T> extends BaseArgs {
-  resource: T;
+  resource: Partial<T>;
 }
 
 interface SearchArgs<T> extends BaseArgs {

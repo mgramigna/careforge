@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { SlotSchema, type SlotServiceType } from '@canvas-challenge/canvas';
+import { SlotSchema, SlotSearchArgsSchema, type SlotServiceType } from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -34,5 +34,41 @@ export const createSlotRouter = ({ slotService }: { slotService: SlotServiceType
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: SlotSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await slotService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(SlotSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await slotService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { PaymentNoticeSchema, type PaymentNoticeServiceType } from '@canvas-challenge/canvas';
+import {
+  PaymentNoticeSchema,
+  PaymentNoticeSearchArgsSchema,
+  type PaymentNoticeServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -28,6 +32,44 @@ export const createPaymentNoticeRouter = ({
       .mutation(async ({ ctx, input }) => {
         const result = await paymentNoticeService.create({
           resource: input,
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: PaymentNoticeSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await paymentNoticeService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure
+      .input(PaymentNoticeSearchArgsSchema)
+      .mutation(async ({ ctx, input }) => {
+        const result = await paymentNoticeService.search({
+          args: input,
           accessToken: ctx.accessToken,
         });
 

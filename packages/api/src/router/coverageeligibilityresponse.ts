@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import {
   CoverageEligibilityResponseSchema,
+  CoverageEligibilityResponseSearchArgsSchema,
   type CoverageEligibilityResponseServiceType,
 } from '@canvas-challenge/canvas';
 
@@ -31,6 +32,44 @@ export const createCoverageEligibilityResponseRouter = ({
       .mutation(async ({ ctx, input }) => {
         const result = await coverageEligibilityResponseService.create({
           resource: input,
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: CoverageEligibilityResponseSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await coverageEligibilityResponseService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure
+      .input(CoverageEligibilityResponseSearchArgsSchema)
+      .mutation(async ({ ctx, input }) => {
+        const result = await coverageEligibilityResponseService.search({
+          args: input,
           accessToken: ctx.accessToken,
         });
 

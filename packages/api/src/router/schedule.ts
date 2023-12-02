@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { ScheduleSchema, type ScheduleServiceType } from '@canvas-challenge/canvas';
+import {
+  ScheduleSchema,
+  ScheduleSearchArgsSchema,
+  type ScheduleServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -38,5 +42,41 @@ export const createScheduleRouter = ({
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: ScheduleSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await scheduleService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(ScheduleSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await scheduleService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

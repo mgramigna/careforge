@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { ImmunizationSchema, type ImmunizationServiceType } from '@canvas-challenge/canvas';
+import {
+  ImmunizationSchema,
+  ImmunizationSearchArgsSchema,
+  type ImmunizationServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -38,5 +42,41 @@ export const createImmunizationRouter = ({
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: ImmunizationSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await immunizationService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(ImmunizationSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await immunizationService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

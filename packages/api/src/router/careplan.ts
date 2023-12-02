@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { CarePlanSchema, type CarePlanServiceType } from '@canvas-challenge/canvas';
+import {
+  CarePlanSchema,
+  CarePlanSearchArgsSchema,
+  type CarePlanServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -38,5 +42,41 @@ export const createCarePlanRouter = ({
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: CarePlanSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await carePlanService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(CarePlanSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await carePlanService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

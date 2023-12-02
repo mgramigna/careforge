@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { GroupSchema, type GroupServiceType } from '@canvas-challenge/canvas';
+import {
+  GroupSchema,
+  GroupSearchArgsSchema,
+  type GroupServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -34,5 +38,41 @@ export const createGroupRouter = ({ groupService }: { groupService: GroupService
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: GroupSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await groupService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(GroupSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await groupService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

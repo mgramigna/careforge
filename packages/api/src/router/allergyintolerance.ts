@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import {
   AllergyIntoleranceSchema,
+  AllergyIntoleranceSearchArgsSchema,
   type AllergyIntoleranceServiceType,
 } from '@canvas-challenge/canvas';
 
@@ -31,6 +32,44 @@ export const createAllergyIntoleranceRouter = ({
       .mutation(async ({ ctx, input }) => {
         const result = await allergyIntoleranceService.create({
           resource: input,
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: AllergyIntoleranceSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await allergyIntoleranceService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure
+      .input(AllergyIntoleranceSearchArgsSchema)
+      .mutation(async ({ ctx, input }) => {
+        const result = await allergyIntoleranceService.search({
+          args: input,
           accessToken: ctx.accessToken,
         });
 

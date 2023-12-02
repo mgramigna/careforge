@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { ConsentSchema, type ConsentServiceType } from '@canvas-challenge/canvas';
+import {
+  ConsentSchema,
+  ConsentSearchArgsSchema,
+  type ConsentServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -34,5 +38,41 @@ export const createConsentRouter = ({ consentService }: { consentService: Consen
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: ConsentSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await consentService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(ConsentSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await consentService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

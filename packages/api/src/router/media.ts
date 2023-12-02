@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { MediaSchema, type MediaServiceType } from '@canvas-challenge/canvas';
+import {
+  MediaSchema,
+  MediaSearchArgsSchema,
+  type MediaServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -34,5 +38,41 @@ export const createMediaRouter = ({ mediaService }: { mediaService: MediaService
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: MediaSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await mediaService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(MediaSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await mediaService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

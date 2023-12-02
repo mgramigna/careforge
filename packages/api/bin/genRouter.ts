@@ -7,7 +7,7 @@ const genRouterCode = (resourceType: string) => {
   return `
 import { z } from 'zod';
 
-import { ${resourceType}Schema, type ${resourceType}ServiceType } from '@canvas-challenge/canvas';
+import { ${resourceType}Schema, ${resourceType}SearchArgsSchema, type ${resourceType}ServiceType } from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -49,6 +49,46 @@ export const create${resourceType}Router = ({ ${
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: ${resourceType}Schema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await ${
+          resourceType.charAt(0).toLowerCase() + resourceType.slice(1)
+        }Service.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(${resourceType}SearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await ${
+        resourceType.charAt(0).toLowerCase() + resourceType.slice(1)
+      }Service.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };
   `;
@@ -84,8 +124,8 @@ export const appRouter = createTRPCRouter({
 
   routerDef += '\n});\nexport type AppRouter = typeof appRouter;';
 
-  fs.appendFileSync(path.join(routerBase, '../root.ts'), serviceConstructs);
-  fs.appendFileSync(path.join(routerBase, '../root.ts'), routerDef);
+  // fs.appendFileSync(path.join(routerBase, '../root.ts'), serviceConstructs);
+  // fs.appendFileSync(path.join(routerBase, '../root.ts'), routerDef);
 }
 
 main();

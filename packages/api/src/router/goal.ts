@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { GoalSchema, type GoalServiceType } from '@canvas-challenge/canvas';
+import { GoalSchema, GoalSearchArgsSchema, type GoalServiceType } from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -34,5 +34,41 @@ export const createGoalRouter = ({ goalService }: { goalService: GoalServiceType
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: GoalSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await goalService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(GoalSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await goalService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };

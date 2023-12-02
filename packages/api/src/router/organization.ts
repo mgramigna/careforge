@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { OrganizationSchema, type OrganizationServiceType } from '@canvas-challenge/canvas';
+import {
+  OrganizationSchema,
+  OrganizationSearchArgsSchema,
+  type OrganizationServiceType,
+} from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -38,5 +42,41 @@ export const createOrganizationRouter = ({
 
         return result.value;
       }),
+    update: authedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          resource: OrganizationSchema.partial(),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const result = await organizationService.update({
+          resource: {
+            ...input,
+            id: input.id,
+          },
+          accessToken: ctx.accessToken,
+        });
+
+        if (result.isErr()) {
+          // TODO
+          return null;
+        }
+
+        return result.value;
+      }),
+    search: authedProcedure.input(OrganizationSearchArgsSchema).mutation(async ({ ctx, input }) => {
+      const result = await organizationService.search({
+        args: input,
+        accessToken: ctx.accessToken,
+      });
+
+      if (result.isErr()) {
+        // TODO
+        return null;
+      }
+
+      return result.value;
+    }),
   });
 };
