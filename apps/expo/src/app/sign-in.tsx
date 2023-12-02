@@ -1,10 +1,13 @@
 import React from 'react';
-import { ActivityIndicator, Alert, FlatList, Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
+import { useAuth } from '@/context/AuthContext';
 import { api } from '@/utils/api';
+import fhirpath from 'fhirpath';
 
-const Index = () => {
+const SignIn = () => {
+  const { signIn, patientId } = useAuth();
   const { data: bundle, isLoading } = api.patient.search.useQuery({
     active: true,
   });
@@ -17,6 +20,10 @@ const Index = () => {
     );
   }
 
+  if (patientId) {
+    return <Redirect href="/" />;
+  }
+
   return (
     <SafeAreaView className="">
       <Stack.Screen options={{ title: 'Home Page' }} />
@@ -27,12 +34,12 @@ const Index = () => {
           renderItem={({ item: patient }) => (
             <Pressable
               onPress={() => {
-                Alert.alert('hey');
+                signIn(patient.id);
               }}
             >
               <View className="w-full items-center border border-slate-200 p-8">
                 <Text>
-                  {patient.name.at(0)?.given?.join('-')} {patient.name.at(0)?.family}
+                  {fhirpath.evaluate(patient, 'name.given')} {patient.name.at(0)?.family}
                 </Text>
               </View>
             </Pressable>
@@ -43,4 +50,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default SignIn;

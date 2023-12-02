@@ -8,11 +8,6 @@ const defineConfig = (): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'light',
-  splash: {
-    image: './assets/icon.png',
-    resizeMode: 'contain',
-    backgroundColor: '#1F104A',
-  },
   updates: {
     fallbackToCacheTimeout: 0,
   },
@@ -24,8 +19,8 @@ const defineConfig = (): ExpoConfig => ({
   android: {
     package: 'your.bundle.identifier',
     adaptiveIcon: {
-      foregroundImage: './assets/icon.png',
-      backgroundColor: '#1F104A',
+      // foregroundImage: './assets/icon.png',
+      // backgroundColor: '#1F104A',
     },
   },
   // extra: {

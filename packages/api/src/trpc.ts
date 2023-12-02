@@ -9,19 +9,14 @@ const accessTokenCacheKey = 'FHIR_ACCESS_TOKEN';
 const cache = new Map<string, { token: string; expiresInSeconds: number; created: Date }>();
 
 interface CreateContextOptions {
-  patientId?: string;
   accessToken?: string;
 }
 
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
-    patientId: opts.patientId,
     accessToken: opts.accessToken,
   };
 };
-
-// TODO
-const TEST_PATIENT_ID = 'bf30c1ad56684713ac77cbfdb2764914';
 
 const getNewAccessToken = async (): Promise<string> => {
   console.log('sending auth token req');
@@ -58,8 +53,6 @@ export const createTRPCContext = async () => {
   }
 
   return createInnerTRPCContext({
-    // TODO
-    patientId: TEST_PATIENT_ID,
     accessToken: token,
   });
 };
@@ -78,17 +71,12 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 });
 
 const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
-  if (!ctx.patientId) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' });
-  }
-
   if (!ctx.accessToken) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
 
   return next({
     ctx: {
-      patientId: ctx.patientId,
       accessToken: ctx.accessToken,
     },
   });

@@ -1,16 +1,18 @@
 import React from 'react';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { Slot } from 'expo-router';
 import { TRPCProvider } from '@/utils/api';
 
 import '../styles.css';
 
+import { AuthProvider } from '@/context/AuthContext';
+
 const RootLayout = () => {
   return (
-    <TRPCProvider>
-      <Stack />
-      <StatusBar />
-    </TRPCProvider>
+    <AuthProvider>
+      <TRPCProvider>
+        <Slot />
+      </TRPCProvider>
+    </AuthProvider>
   );
 };
 
