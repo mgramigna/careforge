@@ -1,9 +1,9 @@
 import {
   AppointmentSchema,
-  AppointmentSearchArgs,
   AppointmentSearchArgsSchema,
   BundleSchema,
   type Appointment,
+  type AppointmentSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

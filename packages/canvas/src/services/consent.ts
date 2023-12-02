@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   ConsentSchema,
-  ConsentSearchArgs,
   ConsentSearchArgsSchema,
   type Consent,
+  type ConsentSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

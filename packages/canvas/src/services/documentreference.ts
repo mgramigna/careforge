@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   DocumentReferenceSchema,
-  DocumentReferenceSearchArgs,
   DocumentReferenceSearchArgsSchema,
   type DocumentReference,
+  type DocumentReferenceSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

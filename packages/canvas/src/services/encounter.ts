@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   EncounterSchema,
-  EncounterSearchArgs,
   EncounterSearchArgsSchema,
   type Encounter,
+  type EncounterSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

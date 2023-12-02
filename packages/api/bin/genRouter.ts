@@ -101,10 +101,6 @@ function main() {
     .readdirSync(path.join(modelBase))
     .filter((dir) => !dir.includes('bundle') && !dir.includes('index'));
 
-  let serviceConstructs = '';
-  let routerDef = `
-export const appRouter = createTRPCRouter({
-  `;
   resourceModelFiles.forEach((filePath) => {
     const fileContent = fs.readFileSync(path.join(modelBase, filePath), 'utf8');
 
@@ -113,19 +109,10 @@ export const appRouter = createTRPCRouter({
     if (!match ?? !match?.[1]) throw new Error(`Failed to extract resourceType from ${filePath}`);
 
     const resourceType = match[1];
-    const resourceTypeCamel = resourceType.charAt(0).toLowerCase() + resourceType.slice(1);
-    const resourceTypeLower = resourceType.toLowerCase();
 
     const code = genRouterCode(resourceType);
     fs.writeFileSync(path.join(routerBase, filePath), code, 'utf8');
-    serviceConstructs += `const ${resourceTypeCamel}Service = ${resourceType}Service({ baseUrl: process.env.CANVAS_FHIR_BASE_URL! });\n`;
-    routerDef += `${resourceTypeLower}: create${resourceType}Router({ ${resourceTypeCamel}Service }),\n`;
   });
-
-  routerDef += '\n});\nexport type AppRouter = typeof appRouter;';
-
-  // fs.appendFileSync(path.join(routerBase, '../root.ts'), serviceConstructs);
-  // fs.appendFileSync(path.join(routerBase, '../root.ts'), routerDef);
 }
 
 main();

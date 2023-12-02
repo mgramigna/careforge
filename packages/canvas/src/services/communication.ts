@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   CommunicationSchema,
-  CommunicationSearchArgs,
   CommunicationSearchArgsSchema,
   type Communication,
+  type CommunicationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

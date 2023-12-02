@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   CoverageEligibilityResponseSchema,
-  CoverageEligibilityResponseSearchArgs,
   CoverageEligibilityResponseSearchArgsSchema,
   type CoverageEligibilityResponse,
+  type CoverageEligibilityResponseSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

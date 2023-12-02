@@ -79,7 +79,7 @@ export async function makeFhirUpdateRequest<T>(args: {
   body?: T;
 }): Promise<Result<null, string>> {
   try {
-    const response = await fetch(args.path, {
+    await fetch(args.path, {
       headers: {
         Authorization: `Bearer ${args.token}`,
         'Content-Type': 'application/json',

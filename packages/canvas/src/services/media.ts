@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   MediaSchema,
-  MediaSearchArgs,
   MediaSearchArgsSchema,
   type Media,
+  type MediaSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

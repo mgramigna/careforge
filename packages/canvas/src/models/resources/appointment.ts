@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import { CodeableConceptSchema } from '../core/codeableconcept';
-import { DateSchema } from '../core/date';
 import { InstantSchema } from '../core/instant';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';

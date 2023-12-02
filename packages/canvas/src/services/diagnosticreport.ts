@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   DiagnosticReportSchema,
-  DiagnosticReportSearchArgs,
   DiagnosticReportSearchArgsSchema,
   type DiagnosticReport,
+  type DiagnosticReportSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

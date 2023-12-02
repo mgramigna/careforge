@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { OrganizationSchema } from '..';
 import { CodeableConceptSchema } from './codeableconcept';
 import { PeriodSchema } from './period';
 

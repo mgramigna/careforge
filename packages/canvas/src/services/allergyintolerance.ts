@@ -1,9 +1,9 @@
 import {
   AllergyIntoleranceSchema,
-  AllergyIntoleranceSearchArgs,
   AllergyIntoleranceSearchArgsSchema,
   BundleSchema,
   type AllergyIntolerance,
+  type AllergyIntoleranceSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   CareTeamSchema,
-  CareTeamSearchArgs,
   CareTeamSearchArgsSchema,
   type CareTeam,
+  type CareTeamSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

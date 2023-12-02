@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   MedicationSchema,
-  MedicationSearchArgs,
   MedicationSearchArgsSchema,
   type Medication,
+  type MedicationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

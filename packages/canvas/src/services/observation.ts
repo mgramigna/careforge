@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   ObservationSchema,
-  ObservationSearchArgs,
   ObservationSearchArgsSchema,
   type Observation,
+  type ObservationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

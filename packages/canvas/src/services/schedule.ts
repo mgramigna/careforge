@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   ScheduleSchema,
-  ScheduleSearchArgs,
   ScheduleSearchArgsSchema,
   type Schedule,
+  type ScheduleSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

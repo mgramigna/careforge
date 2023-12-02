@@ -1,7 +1,7 @@
 import { type Result } from 'neverthrow';
-import { z } from 'zod';
+import { type z } from 'zod';
 
-import { BaseBundleSchema, Bundle } from '../models';
+import { type BaseBundleSchema } from '../models';
 
 interface BaseArgs {
   accessToken: string;

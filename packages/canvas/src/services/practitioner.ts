@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   PractitionerSchema,
-  PractitionerSearchArgs,
   PractitionerSearchArgsSchema,
   type Practitioner,
+  type PractitionerSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';

@@ -1,9 +1,9 @@
 import {
   BundleSchema,
   GoalSchema,
-  GoalSearchArgs,
   GoalSearchArgsSchema,
   type Goal,
+  type GoalSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
