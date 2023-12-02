@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  PatientBundleSchema,
   PatientSchema,
   PatientSearchArgsSchema,
   type Patient,
+  type PatientBundle,
   type PatientSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type PatientServiceType = Service<Patient, PatientSearchArgs>;
+export type PatientServiceType = Service<
+  Patient,
+  PatientSearchArgs,
+  PatientBundle,
+  Patient,
+  Patient
+>;
 
 export const PatientService = ({ baseUrl }: { baseUrl: string }): PatientServiceType => {
   const read: PatientServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const PatientService = ({ baseUrl }: { baseUrl: string }): PatientService
 
   const search: PatientServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = PatientSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(PatientSchema), {
+    const response = await makeFhirGetRequest(PatientBundleSchema, {
       path: `${baseUrl}/Patient`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

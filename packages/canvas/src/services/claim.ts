@@ -1,14 +1,15 @@
 import {
-  BundleSchema,
+  ClaimBundleSchema,
   ClaimSchema,
   ClaimSearchArgsSchema,
   type Claim,
+  type ClaimBundle,
   type ClaimSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ClaimServiceType = Service<Claim, ClaimSearchArgs>;
+export type ClaimServiceType = Service<Claim, ClaimSearchArgs, ClaimBundle, Claim, Claim>;
 
 export const ClaimService = ({ baseUrl }: { baseUrl: string }): ClaimServiceType => {
   const read: ClaimServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +43,7 @@ export const ClaimService = ({ baseUrl }: { baseUrl: string }): ClaimServiceType
 
   const search: ClaimServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ClaimSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(ClaimSchema), {
+    const response = await makeFhirGetRequest(ClaimBundleSchema, {
       path: `${baseUrl}/Claim`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

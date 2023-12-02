@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  CarePlanBundleSchema,
   CarePlanSchema,
   CarePlanSearchArgsSchema,
   type CarePlan,
+  type CarePlanBundle,
   type CarePlanSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type CarePlanServiceType = Service<CarePlan, CarePlanSearchArgs>;
+export type CarePlanServiceType = Service<
+  CarePlan,
+  CarePlanSearchArgs,
+  CarePlanBundle,
+  CarePlan,
+  CarePlan
+>;
 
 export const CarePlanService = ({ baseUrl }: { baseUrl: string }): CarePlanServiceType => {
   const read: CarePlanServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const CarePlanService = ({ baseUrl }: { baseUrl: string }): CarePlanServi
 
   const search: CarePlanServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = CarePlanSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(CarePlanSchema), {
+    const response = await makeFhirGetRequest(CarePlanBundleSchema, {
       path: `${baseUrl}/CarePlan`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

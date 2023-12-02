@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { ReferenceSchema } from '../core/reference';
@@ -28,3 +29,6 @@ export const ProcedureSearchArgsSchema = z.object({
 
 export type Procedure = z.infer<typeof ProcedureSchema>;
 export type ProcedureSearchArgs = z.infer<typeof ProcedureSearchArgsSchema>;
+
+export const ProcedureBundleSchema = BundleSchema(ProcedureSchema);
+export type ProcedureBundle = z.infer<typeof ProcedureBundleSchema>;

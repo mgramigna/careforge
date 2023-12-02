@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { AddressSchema } from '../core/address';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
@@ -13,8 +13,6 @@ import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
 
 export const PatientSchema = createDomainResourceSchema('Patient').extend({
-  resourceType: z.literal('Patient'),
-  id: z.string(),
   identifier: z.array(IdentifierSchema),
   extension: z.array(ExtensionSchema).optional(),
   name: HumanNameSchema.array(),
@@ -70,3 +68,6 @@ export const PatientSearchArgsSchema = z.object({
 
 export type Patient = z.infer<typeof PatientSchema>;
 export type PatientSearchArgs = z.infer<typeof PatientSearchArgsSchema>;
+
+export const PatientBundleSchema = BundleSchema(PatientSchema);
+export type PatientBundle = z.infer<typeof PatientBundleSchema>;

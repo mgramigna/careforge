@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  CommunicationBundleSchema,
   CommunicationSchema,
   CommunicationSearchArgsSchema,
   type Communication,
+  type CommunicationBundle,
   type CommunicationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type CommunicationServiceType = Service<Communication, CommunicationSearchArgs>;
+export type CommunicationServiceType = Service<
+  Communication,
+  CommunicationSearchArgs,
+  CommunicationBundle,
+  Communication,
+  Communication
+>;
 
 export const CommunicationService = ({
   baseUrl,
@@ -46,7 +53,7 @@ export const CommunicationService = ({
 
   const search: CommunicationServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = CommunicationSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(CommunicationSchema), {
+    const response = await makeFhirGetRequest(CommunicationBundleSchema, {
       path: `${baseUrl}/Communication`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

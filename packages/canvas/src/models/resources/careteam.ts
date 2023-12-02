@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
@@ -24,3 +25,6 @@ export const CareTeamSearchArgsSchema = z.object({
 
 export type CareTeam = z.infer<typeof CareTeamSchema>;
 export type CareTeamSearchArgs = z.infer<typeof CareTeamSearchArgsSchema>;
+
+export const CareTeamBundleSchema = BundleSchema(CareTeamSchema);
+export type CareTeamBundle = z.infer<typeof CareTeamBundleSchema>;

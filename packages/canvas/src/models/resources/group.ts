@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
@@ -38,3 +39,6 @@ export const GroupSearchArgsSchema = z.object({
 
 export type Group = z.infer<typeof GroupSchema>;
 export type GroupSearchArgs = z.infer<typeof GroupSearchArgsSchema>;
+
+export const GroupBundleSchema = BundleSchema(GroupSchema);
+export type GroupBundle = z.infer<typeof GroupBundleSchema>;

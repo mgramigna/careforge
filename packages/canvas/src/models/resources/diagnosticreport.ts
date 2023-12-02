@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
@@ -30,3 +31,6 @@ export const DiagnosticReportSearchArgsSchema = z.object({
 
 export type DiagnosticReport = z.infer<typeof DiagnosticReportSchema>;
 export type DiagnosticReportSearchArgs = z.infer<typeof DiagnosticReportSearchArgsSchema>;
+
+export const DiagnosticReportBundleSchema = BundleSchema(DiagnosticReportSchema);
+export type DiagnosticReportBundle = z.infer<typeof DiagnosticReportBundleSchema>;

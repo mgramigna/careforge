@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { InstantSchema } from '../core/instant';
 import { PeriodSchema } from '../core/period';
@@ -61,3 +62,6 @@ export const AppointmentSearchArgsSchema = z.object({
 
 export type Appointment = z.infer<typeof AppointmentSchema>;
 export type AppointmentSearchArgs = z.infer<typeof AppointmentSearchArgsSchema>;
+
+export const AppointmentBundleSchema = BundleSchema(AppointmentSchema);
+export type AppointmentBundle = z.infer<typeof AppointmentBundleSchema>;

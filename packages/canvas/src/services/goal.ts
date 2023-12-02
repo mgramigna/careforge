@@ -1,14 +1,15 @@
 import {
-  BundleSchema,
+  GoalBundleSchema,
   GoalSchema,
   GoalSearchArgsSchema,
   type Goal,
+  type GoalBundle,
   type GoalSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type GoalServiceType = Service<Goal, GoalSearchArgs>;
+export type GoalServiceType = Service<Goal, GoalSearchArgs, GoalBundle, Goal, Goal>;
 
 export const GoalService = ({ baseUrl }: { baseUrl: string }): GoalServiceType => {
   const read: GoalServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +43,7 @@ export const GoalService = ({ baseUrl }: { baseUrl: string }): GoalServiceType =
 
   const search: GoalServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = GoalSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(GoalSchema), {
+    const response = await makeFhirGetRequest(GoalBundleSchema, {
       path: `${baseUrl}/Goal`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

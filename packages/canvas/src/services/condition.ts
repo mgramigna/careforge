@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  ConditionBundleSchema,
   ConditionSchema,
   ConditionSearchArgsSchema,
   type Condition,
+  type ConditionBundle,
   type ConditionSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ConditionServiceType = Service<Condition, ConditionSearchArgs>;
+export type ConditionServiceType = Service<
+  Condition,
+  ConditionSearchArgs,
+  ConditionBundle,
+  Condition,
+  Condition
+>;
 
 export const ConditionService = ({ baseUrl }: { baseUrl: string }): ConditionServiceType => {
   const read: ConditionServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const ConditionService = ({ baseUrl }: { baseUrl: string }): ConditionSer
 
   const search: ConditionServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ConditionSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(ConditionSchema), {
+    const response = await makeFhirGetRequest(ConditionBundleSchema, {
       path: `${baseUrl}/Condition`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

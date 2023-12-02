@@ -1,8 +1,9 @@
 import {
-  BundleSchema,
+  QuestionnaireResponseBundleSchema,
   QuestionnaireResponseSchema,
   QuestionnaireResponseSearchArgsSchema,
   type QuestionnaireResponse,
+  type QuestionnaireResponseBundle,
   type QuestionnaireResponseSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
@@ -10,7 +11,10 @@ import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from
 
 export type QuestionnaireResponseServiceType = Service<
   QuestionnaireResponse,
-  QuestionnaireResponseSearchArgs
+  QuestionnaireResponseSearchArgs,
+  QuestionnaireResponseBundle,
+  QuestionnaireResponse,
+  QuestionnaireResponse
 >;
 
 export const QuestionnaireResponseService = ({
@@ -49,7 +53,7 @@ export const QuestionnaireResponseService = ({
 
   const search: QuestionnaireResponseServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = QuestionnaireResponseSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(QuestionnaireResponseSchema), {
+    const response = await makeFhirGetRequest(QuestionnaireResponseBundleSchema, {
       path: `${baseUrl}/QuestionnaireResponse`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

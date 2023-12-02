@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { InstantSchema } from '../core/instant';
 import { ReferenceSchema } from '../core/reference';
@@ -30,3 +31,6 @@ export const ProvenanceSearchArgsSchema = z.object({
 
 export type Provenance = z.infer<typeof ProvenanceSchema>;
 export type ProvenanceSearchArgs = z.infer<typeof ProvenanceSearchArgsSchema>;
+
+export const ProvenanceBundleSchema = BundleSchema(ProvenanceSchema);
+export type ProvenanceBundle = z.infer<typeof ProvenanceBundleSchema>;

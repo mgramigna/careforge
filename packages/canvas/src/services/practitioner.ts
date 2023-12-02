@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  PractitionerBundleSchema,
   PractitionerSchema,
   PractitionerSearchArgsSchema,
   type Practitioner,
+  type PractitionerBundle,
   type PractitionerSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type PractitionerServiceType = Service<Practitioner, PractitionerSearchArgs>;
+export type PractitionerServiceType = Service<
+  Practitioner,
+  PractitionerSearchArgs,
+  PractitionerBundle,
+  Practitioner,
+  Practitioner
+>;
 
 export const PractitionerService = ({ baseUrl }: { baseUrl: string }): PractitionerServiceType => {
   const read: PractitionerServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const PractitionerService = ({ baseUrl }: { baseUrl: string }): Practitio
 
   const search: PractitionerServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = PractitionerSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(PractitionerSchema), {
+    const response = await makeFhirGetRequest(PractitionerBundleSchema, {
       path: `${baseUrl}/Practitioner`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

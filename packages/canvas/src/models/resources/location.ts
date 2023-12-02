@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { AddressSchema } from '../core/address';
 import { createDomainResourceSchema } from '../util/domainresource';
 
@@ -19,3 +19,6 @@ export const LocationSearchArgsSchema = z.object({
 
 export type Location = z.infer<typeof LocationSchema>;
 export type LocationSearchArgs = z.infer<typeof LocationSearchArgsSchema>;
+
+export const LocationBundleSchema = BundleSchema(LocationSchema);
+export type LocationBundle = z.infer<typeof LocationBundleSchema>;

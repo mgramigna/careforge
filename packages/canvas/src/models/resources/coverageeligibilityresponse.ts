@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { IdentifierSchema } from '../core/identifier';
@@ -64,4 +65,11 @@ export const CoverageEligibilityResponseSearchArgsSchema = z.object({
 export type CoverageEligibilityResponse = z.infer<typeof CoverageEligibilityResponseSchema>;
 export type CoverageEligibilityResponseSearchArgs = z.infer<
   typeof CoverageEligibilityResponseSearchArgsSchema
+>;
+
+export const CoverageEligibilityResponseBundleSchema = BundleSchema(
+  CoverageEligibilityResponseSchema,
+);
+export type CoverageEligibilityResponseBundle = z.infer<
+  typeof CoverageEligibilityResponseBundleSchema
 >;

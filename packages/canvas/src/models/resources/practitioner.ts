@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { AddressSchema } from '../core/address';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { HumanNameSchema } from '../core/humanname';
@@ -32,3 +32,6 @@ export const PractitionerSearchArgsSchema = z.object({
 
 export type Practitioner = z.infer<typeof PractitionerSchema>;
 export type PractitionerSearchArgs = z.infer<typeof PractitionerSearchArgsSchema>;
+
+export const PractitionerBundleSchema = BundleSchema(PractitionerSchema);
+export type PractitionerBundle = z.infer<typeof PractitionerBundleSchema>;

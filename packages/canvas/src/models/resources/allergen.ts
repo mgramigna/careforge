@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { createDomainResourceSchema } from '../util/domainresource';
 
@@ -16,3 +17,6 @@ export const AllergenSearchArgsSchema = z.object({
 
 export type Allergen = z.infer<typeof AllergenSchema>;
 export type AllergenSearchArgs = z.infer<typeof AllergenSearchArgsSchema>;
+
+export const AllergenBundleSchema = BundleSchema(AllergenSchema);
+export type AllergenBundle = z.infer<typeof AllergenBundleSchema>;

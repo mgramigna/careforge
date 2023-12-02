@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { InstantSchema } from '../core/instant';
@@ -61,3 +62,6 @@ export const ObservationSearchArgsSchema = z.object({
 
 export type Observation = z.infer<typeof ObservationSchema>;
 export type ObservationSearchArgs = z.infer<typeof ObservationSearchArgsSchema>;
+
+export const ObservationBundleSchema = BundleSchema(ObservationSchema);
+export type ObservationBundle = z.infer<typeof ObservationBundleSchema>;

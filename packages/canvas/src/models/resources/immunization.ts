@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateSchema } from '../core/date';
 import { ReferenceSchema } from '../core/reference';
@@ -21,3 +22,6 @@ export const ImmunizationSearchArgsSchema = z.object({
 
 export type Immunization = z.infer<typeof ImmunizationSchema>;
 export type ImmunizationSearchArgs = z.infer<typeof ImmunizationSearchArgsSchema>;
+
+export const ImmunizationBundleSchema = BundleSchema(ImmunizationSchema);
+export type ImmunizationBundle = z.infer<typeof ImmunizationBundleSchema>;

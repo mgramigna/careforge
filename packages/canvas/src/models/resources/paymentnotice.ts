@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { MoneySchema } from '../core/money';
@@ -23,3 +24,6 @@ export const PaymentNoticeSearchArgsSchema = z.object({
 
 export type PaymentNotice = z.infer<typeof PaymentNoticeSchema>;
 export type PaymentNoticeSearchArgs = z.infer<typeof PaymentNoticeSearchArgsSchema>;
+
+export const PaymentNoticeBundleSchema = BundleSchema(PaymentNoticeSchema);
+export type PaymentNoticeBundle = z.infer<typeof PaymentNoticeBundleSchema>;

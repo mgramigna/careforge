@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  ProvenanceBundleSchema,
   ProvenanceSchema,
   ProvenanceSearchArgsSchema,
   type Provenance,
+  type ProvenanceBundle,
   type ProvenanceSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ProvenanceServiceType = Service<Provenance, ProvenanceSearchArgs>;
+export type ProvenanceServiceType = Service<
+  Provenance,
+  ProvenanceSearchArgs,
+  ProvenanceBundle,
+  Provenance,
+  Provenance
+>;
 
 export const ProvenanceService = ({ baseUrl }: { baseUrl: string }): ProvenanceServiceType => {
   const read: ProvenanceServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const ProvenanceService = ({ baseUrl }: { baseUrl: string }): ProvenanceS
 
   const search: ProvenanceServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ProvenanceSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(ProvenanceSchema), {
+    const response = await makeFhirGetRequest(ProvenanceBundleSchema, {
       path: `${baseUrl}/Provenance`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

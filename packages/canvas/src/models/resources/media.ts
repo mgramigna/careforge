@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { AttachmentSchema } from '../core/attachment';
 import { ReferenceSchema } from '../core/reference';
@@ -27,3 +28,6 @@ export const MediaSearchArgsSchema = z.object({});
 
 export type Media = z.infer<typeof MediaSchema>;
 export type MediaSearchArgs = z.infer<typeof MediaSearchArgsSchema>;
+
+export const MediaBundleSchema = BundleSchema(MediaSchema);
+export type MediaBundle = z.infer<typeof MediaBundleSchema>;

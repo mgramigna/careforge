@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
@@ -45,3 +46,6 @@ export const AllergyIntoleranceSearchArgsSchema = z.object({
 
 export type AllergyIntolerance = z.infer<typeof AllergyIntoleranceSchema>;
 export type AllergyIntoleranceSearchArgs = z.infer<typeof AllergyIntoleranceSearchArgsSchema>;
+
+export const AllergyIntoleranceBundleSchema = BundleSchema(AllergyIntoleranceSchema);
+export type AllergyIntoleranceBundle = z.infer<typeof AllergyIntoleranceBundleSchema>;

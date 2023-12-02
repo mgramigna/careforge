@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  ObservationBundleSchema,
   ObservationSchema,
   ObservationSearchArgsSchema,
   type Observation,
+  type ObservationBundle,
   type ObservationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ObservationServiceType = Service<Observation, ObservationSearchArgs>;
+export type ObservationServiceType = Service<
+  Observation,
+  ObservationSearchArgs,
+  ObservationBundle,
+  Observation,
+  Observation
+>;
 
 export const ObservationService = ({ baseUrl }: { baseUrl: string }): ObservationServiceType => {
   const read: ObservationServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const ObservationService = ({ baseUrl }: { baseUrl: string }): Observatio
 
   const search: ObservationServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ObservationSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(ObservationSchema), {
+    const response = await makeFhirGetRequest(ObservationBundleSchema, {
       path: `${baseUrl}/Observation`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

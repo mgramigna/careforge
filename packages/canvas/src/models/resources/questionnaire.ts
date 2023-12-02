@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AttachmentSchema } from '../core/attachment';
 import { CodingSchema } from '../core/coding';
 import { DateSchema } from '../core/date';
@@ -167,3 +168,6 @@ export const QuestionnaireSearchArgsSchema = z.object({
 
 export type Questionnaire = z.infer<typeof QuestionnaireSchema>;
 export type QuestionnaireSearchArgs = z.infer<typeof QuestionnaireSearchArgsSchema>;
+
+export const QuestionnaireBundleSchema = BundleSchema(QuestionnaireSchema);
+export type QuestionnaireBundle = z.infer<typeof QuestionnaireBundleSchema>;

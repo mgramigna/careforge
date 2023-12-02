@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  ImmunizationBundleSchema,
   ImmunizationSchema,
   ImmunizationSearchArgsSchema,
   type Immunization,
+  type ImmunizationBundle,
   type ImmunizationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ImmunizationServiceType = Service<Immunization, ImmunizationSearchArgs>;
+export type ImmunizationServiceType = Service<
+  Immunization,
+  ImmunizationSearchArgs,
+  ImmunizationBundle,
+  Immunization,
+  Immunization
+>;
 
 export const ImmunizationService = ({ baseUrl }: { baseUrl: string }): ImmunizationServiceType => {
   const read: ImmunizationServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const ImmunizationService = ({ baseUrl }: { baseUrl: string }): Immunizat
 
   const search: ImmunizationServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ImmunizationSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(ImmunizationSchema), {
+    const response = await makeFhirGetRequest(ImmunizationBundleSchema, {
       path: `${baseUrl}/Immunization`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

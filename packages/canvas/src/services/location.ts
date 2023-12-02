@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  LocationBundleSchema,
   LocationSchema,
   LocationSearchArgsSchema,
   type Location,
+  type LocationBundle,
   type LocationSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type LocationServiceType = Service<Location, LocationSearchArgs>;
+export type LocationServiceType = Service<
+  Location,
+  LocationSearchArgs,
+  LocationBundle,
+  Location,
+  Location
+>;
 
 export const LocationService = ({ baseUrl }: { baseUrl: string }): LocationServiceType => {
   const read: LocationServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const LocationService = ({ baseUrl }: { baseUrl: string }): LocationServi
 
   const search: LocationServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = LocationSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(LocationSchema), {
+    const response = await makeFhirGetRequest(LocationBundleSchema, {
       path: `${baseUrl}/Location`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

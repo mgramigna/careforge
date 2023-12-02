@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { DosageSchema } from '../core/dosage';
@@ -26,3 +27,6 @@ export const MedicationStatementSearchArgsSchema = z.object({
 
 export type MedicationStatement = z.infer<typeof MedicationStatementSchema>;
 export type MedicationStatementSearchArgs = z.infer<typeof MedicationStatementSearchArgsSchema>;
+
+export const MedicationStatementBundleSchema = BundleSchema(MedicationStatementSchema);
+export type MedicationStatementBundle = z.infer<typeof MedicationStatementBundleSchema>;

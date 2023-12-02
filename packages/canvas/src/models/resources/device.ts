@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
 import { ReferenceSchema } from '../core/reference';
@@ -37,3 +38,6 @@ export const DeviceSearchArgsSchema = z.object({
 
 export type Device = z.infer<typeof DeviceSchema>;
 export type DeviceSearchArgs = z.infer<typeof DeviceSearchArgsSchema>;
+
+export const DeviceBundleSchema = BundleSchema(DeviceSchema);
+export type DeviceBundle = z.infer<typeof DeviceBundleSchema>;

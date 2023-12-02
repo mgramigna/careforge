@@ -1,7 +1,4 @@
 import { type Result } from 'neverthrow';
-import { type z } from 'zod';
-
-import { type BaseBundleSchema } from '../models';
 
 interface BaseArgs {
   accessToken: string;
@@ -23,11 +20,9 @@ interface SearchArgs<T> extends BaseArgs {
   args: T;
 }
 
-export interface Service<TResource, TSearchArgs> {
+export interface Service<TResource, TSearchArgs, TSearchOutput, TCreateArgs, TUpdateArgs> {
   read: (args: ReadArgs) => Promise<Result<TResource, string>>;
-  create: (args: CreateArgs<TResource>) => Promise<Result<string, string>>;
-  update: (args: UpdateArgs<TResource>) => Promise<Result<null, string>>;
-  search: (
-    args: SearchArgs<TSearchArgs>,
-  ) => Promise<Result<z.infer<typeof BaseBundleSchema>, string>>;
+  create: (args: CreateArgs<TCreateArgs>) => Promise<Result<string, string>>;
+  update: (args: UpdateArgs<TUpdateArgs>) => Promise<Result<null, string>>;
+  search: (args: SearchArgs<TSearchArgs>) => Promise<Result<TSearchOutput, string>>;
 }

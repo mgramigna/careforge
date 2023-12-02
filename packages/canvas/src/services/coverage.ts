@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  CoverageBundleSchema,
   CoverageSchema,
   CoverageSearchArgsSchema,
   type Coverage,
+  type CoverageBundle,
   type CoverageSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type CoverageServiceType = Service<Coverage, CoverageSearchArgs>;
+export type CoverageServiceType = Service<
+  Coverage,
+  CoverageSearchArgs,
+  CoverageBundle,
+  Coverage,
+  Coverage
+>;
 
 export const CoverageService = ({ baseUrl }: { baseUrl: string }): CoverageServiceType => {
   const read: CoverageServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const CoverageService = ({ baseUrl }: { baseUrl: string }): CoverageServi
 
   const search: CoverageServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = CoverageSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(CoverageSchema), {
+    const response = await makeFhirGetRequest(CoverageBundleSchema, {
       path: `${baseUrl}/Coverage`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

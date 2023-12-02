@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { PeriodSchema } from '../core/period';
 import { ReferenceSchema } from '../core/reference';
@@ -35,3 +35,6 @@ export const CoverageSearchArgsSchema = z.object({
 
 export type Coverage = z.infer<typeof CoverageSchema>;
 export type CoverageSearchArgs = z.infer<typeof CoverageSearchArgsSchema>;
+
+export const CoverageBundleSchema = BundleSchema(CoverageSchema);
+export type CoverageBundle = z.infer<typeof CoverageBundleSchema>;

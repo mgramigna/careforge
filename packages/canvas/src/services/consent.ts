@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  ConsentBundleSchema,
   ConsentSchema,
   ConsentSearchArgsSchema,
   type Consent,
+  type ConsentBundle,
   type ConsentSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ConsentServiceType = Service<Consent, ConsentSearchArgs>;
+export type ConsentServiceType = Service<
+  Consent,
+  ConsentSearchArgs,
+  ConsentBundle,
+  Consent,
+  Consent
+>;
 
 export const ConsentService = ({ baseUrl }: { baseUrl: string }): ConsentServiceType => {
   const read: ConsentServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const ConsentService = ({ baseUrl }: { baseUrl: string }): ConsentService
 
   const search: ConsentServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ConsentSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(ConsentSchema), {
+    const response = await makeFhirGetRequest(ConsentBundleSchema, {
       path: `${baseUrl}/Consent`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

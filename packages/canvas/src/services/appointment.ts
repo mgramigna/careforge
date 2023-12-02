@@ -1,14 +1,21 @@
 import {
+  AppointmentBundleSchema,
   AppointmentSchema,
   AppointmentSearchArgsSchema,
-  BundleSchema,
   type Appointment,
+  type AppointmentBundle,
   type AppointmentSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type AppointmentServiceType = Service<Appointment, AppointmentSearchArgs>;
+export type AppointmentServiceType = Service<
+  Appointment,
+  AppointmentSearchArgs,
+  AppointmentBundle,
+  Appointment,
+  Appointment
+>;
 
 export const AppointmentService = ({ baseUrl }: { baseUrl: string }): AppointmentServiceType => {
   const read: AppointmentServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const AppointmentService = ({ baseUrl }: { baseUrl: string }): Appointmen
 
   const search: AppointmentServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = AppointmentSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(AppointmentSchema), {
+    const response = await makeFhirGetRequest(AppointmentBundleSchema, {
       path: `${baseUrl}/Appointment`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

@@ -6,16 +6,23 @@ const resourceTypeRegex = /export type (\w+) = /gm;
 const genServiceCode = (resourceType: string) => {
   return `
 import {
-  BundleSchema,
+  ${resourceType}BundleSchema,
   ${resourceType}Schema,
   ${resourceType}SearchArgs,
   ${resourceType}SearchArgsSchema,
   type ${resourceType},
+  type ${resourceType}Bundle,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ${resourceType}ServiceType = Service<${resourceType}, ${resourceType}SearchArgs>;
+export type ${resourceType}ServiceType = Service<
+  ${resourceType},
+  ${resourceType}SearchArgs,
+  ${resourceType}Bundle,
+  ${resourceType},
+  ${resourceType}
+>;
 
 export const ${resourceType}Service = ({ baseUrl }: { baseUrl: string }): ${resourceType}ServiceType => {
   const read: ${resourceType}ServiceType['read'] = async ({ id, accessToken }) => {
@@ -49,7 +56,7 @@ export const ${resourceType}Service = ({ baseUrl }: { baseUrl: string }): ${reso
 
   const search: ${resourceType}ServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ${resourceType}SearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(${resourceType}Schema), {
+    const response = await makeFhirGetRequest(${resourceType}BundleSchema, {
       path: \`\${baseUrl}/${resourceType}\`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

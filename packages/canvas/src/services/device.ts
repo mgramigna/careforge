@@ -1,14 +1,15 @@
 import {
-  BundleSchema,
+  DeviceBundleSchema,
   DeviceSchema,
   DeviceSearchArgsSchema,
   type Device,
+  type DeviceBundle,
   type DeviceSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type DeviceServiceType = Service<Device, DeviceSearchArgs>;
+export type DeviceServiceType = Service<Device, DeviceSearchArgs, DeviceBundle, Device, Device>;
 
 export const DeviceService = ({ baseUrl }: { baseUrl: string }): DeviceServiceType => {
   const read: DeviceServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +43,7 @@ export const DeviceService = ({ baseUrl }: { baseUrl: string }): DeviceServiceTy
 
   const search: DeviceServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = DeviceSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(DeviceSchema), {
+    const response = await makeFhirGetRequest(DeviceBundleSchema, {
       path: `${baseUrl}/Device`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

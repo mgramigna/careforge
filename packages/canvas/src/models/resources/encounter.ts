@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { CodingSchema } from '../core/coding';
 import { PeriodSchema } from '../core/period';
@@ -69,3 +69,6 @@ export const EncounterSearchArgsSchema = z.object({
 
 export type Encounter = z.infer<typeof EncounterSchema>;
 export type EncounterSearchArgs = z.infer<typeof EncounterSearchArgsSchema>;
+
+export const EncounterBundleSchema = BundleSchema(EncounterSchema);
+export type EncounterBundle = z.infer<typeof EncounterBundleSchema>;

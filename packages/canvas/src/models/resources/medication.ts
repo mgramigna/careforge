@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { NarrativeSchema } from '../core/narrative';
 import { createDomainResourceSchema } from '../util/domainresource';
@@ -16,3 +17,6 @@ export const MedicationSearchArgsSchema = z.object({
 
 export type Medication = z.infer<typeof MedicationSchema>;
 export type MedicationSearchArgs = z.infer<typeof MedicationSearchArgsSchema>;
+
+export const MedicationBundleSchema = BundleSchema(MedicationSchema);
+export type MedicationBundle = z.infer<typeof MedicationBundleSchema>;

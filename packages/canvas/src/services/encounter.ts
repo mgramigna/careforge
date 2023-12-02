@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  EncounterBundleSchema,
   EncounterSchema,
   EncounterSearchArgsSchema,
   type Encounter,
+  type EncounterBundle,
   type EncounterSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type EncounterServiceType = Service<Encounter, EncounterSearchArgs>;
+export type EncounterServiceType = Service<
+  Encounter,
+  EncounterSearchArgs,
+  EncounterBundle,
+  Encounter,
+  Encounter
+>;
 
 export const EncounterService = ({ baseUrl }: { baseUrl: string }): EncounterServiceType => {
   const read: EncounterServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const EncounterService = ({ baseUrl }: { baseUrl: string }): EncounterSer
 
   const search: EncounterServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = EncounterSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(EncounterSchema), {
+    const response = await makeFhirGetRequest(EncounterBundleSchema, {
       path: `${baseUrl}/Encounter`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

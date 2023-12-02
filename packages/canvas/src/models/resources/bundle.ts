@@ -25,7 +25,7 @@ export const BaseBundleSchema = z.object({
 
 export const BundleSchema = <T extends z.ZodTypeAny>(resource: T) =>
   BaseBundleSchema.extend({
-    entry: z.array(z.object({ resource })).default([]),
+    entry: z.array(z.object({ resource })).optional(),
   });
 
 export type Bundle = z.infer<typeof BaseBundleSchema>;

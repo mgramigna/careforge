@@ -1,14 +1,15 @@
 import {
-  BundleSchema,
+  SlotBundleSchema,
   SlotSchema,
   SlotSearchArgsSchema,
   type Slot,
+  type SlotBundle,
   type SlotSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type SlotServiceType = Service<Slot, SlotSearchArgs>;
+export type SlotServiceType = Service<Slot, SlotSearchArgs, SlotBundle, Slot, Slot>;
 
 export const SlotService = ({ baseUrl }: { baseUrl: string }): SlotServiceType => {
   const read: SlotServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +43,7 @@ export const SlotService = ({ baseUrl }: { baseUrl: string }): SlotServiceType =
 
   const search: SlotServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = SlotSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(SlotSchema), {
+    const response = await makeFhirGetRequest(SlotBundleSchema, {
       path: `${baseUrl}/Slot`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

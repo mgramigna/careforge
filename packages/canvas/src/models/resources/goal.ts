@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateSchema } from '../core/date';
@@ -46,3 +47,6 @@ export const GoalSearchArgsSchema = z.object({
 
 export type Goal = z.infer<typeof GoalSchema>;
 export type GoalSearchArgs = z.infer<typeof GoalSearchArgsSchema>;
+
+export const GoalBundleSchema = BundleSchema(GoalSchema);
+export type GoalBundle = z.infer<typeof GoalBundleSchema>;

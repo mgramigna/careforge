@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { AddressSchema } from '../core/address';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateSchema } from '../core/date';
@@ -86,3 +86,6 @@ export const ClaimSearchArgsSchema = z.object({});
 
 export type Claim = z.infer<typeof ClaimSchema>;
 export type ClaimSearchArgs = z.infer<typeof ClaimSearchArgsSchema>;
+
+export const ClaimBundleSchema = BundleSchema(ClaimSchema);
+export type ClaimBundle = z.infer<typeof ClaimBundleSchema>;

@@ -1,14 +1,15 @@
 import {
-  BundleSchema,
+  MediaBundleSchema,
   MediaSchema,
   MediaSearchArgsSchema,
   type Media,
+  type MediaBundle,
   type MediaSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type MediaServiceType = Service<Media, MediaSearchArgs>;
+export type MediaServiceType = Service<Media, MediaSearchArgs, MediaBundle, Media, Media>;
 
 export const MediaService = ({ baseUrl }: { baseUrl: string }): MediaServiceType => {
   const read: MediaServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +43,7 @@ export const MediaService = ({ baseUrl }: { baseUrl: string }): MediaServiceType
 
   const search: MediaServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = MediaSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(MediaSchema), {
+    const response = await makeFhirGetRequest(MediaBundleSchema, {
       path: `${baseUrl}/Media`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

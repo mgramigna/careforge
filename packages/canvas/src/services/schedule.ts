@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  ScheduleBundleSchema,
   ScheduleSchema,
   ScheduleSearchArgsSchema,
   type Schedule,
+  type ScheduleBundle,
   type ScheduleSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type ScheduleServiceType = Service<Schedule, ScheduleSearchArgs>;
+export type ScheduleServiceType = Service<
+  Schedule,
+  ScheduleSearchArgs,
+  ScheduleBundle,
+  Schedule,
+  Schedule
+>;
 
 export const ScheduleService = ({ baseUrl }: { baseUrl: string }): ScheduleServiceType => {
   const read: ScheduleServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const ScheduleService = ({ baseUrl }: { baseUrl: string }): ScheduleServi
 
   const search: ScheduleServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = ScheduleSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(ScheduleSchema), {
+    const response = await makeFhirGetRequest(ScheduleBundleSchema, {
       path: `${baseUrl}/Schedule`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

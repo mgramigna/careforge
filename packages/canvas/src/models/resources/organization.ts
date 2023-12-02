@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { AddressSchema } from '../core/address';
 import { ContactPointSchema } from '../core/contactpoint';
 import { createDomainResourceSchema } from '../util/domainresource';
@@ -21,3 +21,6 @@ export const OrganizationSearchArgsSchema = z.object({
 
 export type Organization = z.infer<typeof OrganizationSchema>;
 export type OrganizationSearchArgs = z.infer<typeof OrganizationSearchArgsSchema>;
+
+export const OrganizationBundleSchema = BundleSchema(OrganizationSchema);
+export type OrganizationBundle = z.infer<typeof OrganizationBundleSchema>;

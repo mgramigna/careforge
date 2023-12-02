@@ -1,8 +1,9 @@
 import {
-  BundleSchema,
+  CoverageEligibilityResponseBundleSchema,
   CoverageEligibilityResponseSchema,
   CoverageEligibilityResponseSearchArgsSchema,
   type CoverageEligibilityResponse,
+  type CoverageEligibilityResponseBundle,
   type CoverageEligibilityResponseSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
@@ -10,7 +11,10 @@ import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from
 
 export type CoverageEligibilityResponseServiceType = Service<
   CoverageEligibilityResponse,
-  CoverageEligibilityResponseSearchArgs
+  CoverageEligibilityResponseSearchArgs,
+  CoverageEligibilityResponseBundle,
+  CoverageEligibilityResponse,
+  CoverageEligibilityResponse
 >;
 
 export const CoverageEligibilityResponseService = ({
@@ -58,7 +62,7 @@ export const CoverageEligibilityResponseService = ({
     args,
   }) => {
     const parsedArgs = CoverageEligibilityResponseSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(CoverageEligibilityResponseSchema), {
+    const response = await makeFhirGetRequest(CoverageEligibilityResponseBundleSchema, {
       path: `${baseUrl}/CoverageEligibilityResponse`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

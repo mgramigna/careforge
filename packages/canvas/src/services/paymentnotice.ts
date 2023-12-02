@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  PaymentNoticeBundleSchema,
   PaymentNoticeSchema,
   PaymentNoticeSearchArgsSchema,
   type PaymentNotice,
+  type PaymentNoticeBundle,
   type PaymentNoticeSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type PaymentNoticeServiceType = Service<PaymentNotice, PaymentNoticeSearchArgs>;
+export type PaymentNoticeServiceType = Service<
+  PaymentNotice,
+  PaymentNoticeSearchArgs,
+  PaymentNoticeBundle,
+  PaymentNotice,
+  PaymentNotice
+>;
 
 export const PaymentNoticeService = ({
   baseUrl,
@@ -46,7 +53,7 @@ export const PaymentNoticeService = ({
 
   const search: PaymentNoticeServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = PaymentNoticeSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(PaymentNoticeSchema), {
+    const response = await makeFhirGetRequest(PaymentNoticeBundleSchema, {
       path: `${baseUrl}/PaymentNotice`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

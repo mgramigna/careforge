@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
@@ -31,3 +32,6 @@ export const ConditionSearchArgsSchema = z.object({
 
 export type Condition = z.infer<typeof ConditionSchema>;
 export type ConditionSearchArgs = z.infer<typeof ConditionSearchArgsSchema>;
+
+export const ConditionBundleSchema = BundleSchema(ConditionSchema);
+export type ConditionBundle = z.infer<typeof ConditionBundleSchema>;

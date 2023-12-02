@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { CodingSchema } from '../core/coding';
@@ -57,3 +58,6 @@ export const ConsentSearchArgsSchema = z.object({
 
 export type Consent = z.infer<typeof ConsentSchema>;
 export type ConsentSearchArgs = z.infer<typeof ConsentSearchArgsSchema>;
+
+export const ConsentBundleSchema = BundleSchema(ConsentSchema);
+export type ConsentBundle = z.infer<typeof ConsentBundleSchema>;

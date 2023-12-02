@@ -1,14 +1,21 @@
 import {
-  BundleSchema,
+  DiagnosticReportBundleSchema,
   DiagnosticReportSchema,
   DiagnosticReportSearchArgsSchema,
   type DiagnosticReport,
+  type DiagnosticReportBundle,
   type DiagnosticReportSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type DiagnosticReportServiceType = Service<DiagnosticReport, DiagnosticReportSearchArgs>;
+export type DiagnosticReportServiceType = Service<
+  DiagnosticReport,
+  DiagnosticReportSearchArgs,
+  DiagnosticReportBundle,
+  DiagnosticReport,
+  DiagnosticReport
+>;
 
 export const DiagnosticReportService = ({
   baseUrl,
@@ -46,7 +53,7 @@ export const DiagnosticReportService = ({
 
   const search: DiagnosticReportServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = DiagnosticReportSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(DiagnosticReportSchema), {
+    const response = await makeFhirGetRequest(DiagnosticReportBundleSchema, {
       path: `${baseUrl}/DiagnosticReport`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

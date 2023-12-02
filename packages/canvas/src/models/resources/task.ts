@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { AnnotationSchema } from '../core/annotation';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { DateTimeSchema } from '../core/datetime';
@@ -58,3 +59,6 @@ export const TaskSearchArgsSchema = z.object({
 
 export type Task = z.infer<typeof TaskSchema>;
 export type TaskSearchArgs = z.infer<typeof TaskSearchArgsSchema>;
+
+export const TaskBundleSchema = BundleSchema(TaskSchema);
+export type TaskBundle = z.infer<typeof TaskBundleSchema>;

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BundleSchema } from '.';
 import { DateSchema } from '../core/date';
 import { InstantSchema } from '../core/instant';
 import { ReferenceSchema } from '../core/reference';
@@ -24,3 +25,6 @@ export const SlotSearchArgsSchema = z.object({
 
 export type Slot = z.infer<typeof SlotSchema>;
 export type SlotSearchArgs = z.infer<typeof SlotSearchArgsSchema>;
+
+export const SlotBundleSchema = BundleSchema(SlotSchema);
+export type SlotBundle = z.infer<typeof SlotBundleSchema>;

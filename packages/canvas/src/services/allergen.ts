@@ -1,14 +1,21 @@
 import {
+  AllergenBundleSchema,
   AllergenSchema,
   AllergenSearchArgsSchema,
-  BundleSchema,
   type Allergen,
+  type AllergenBundle,
   type AllergenSearchArgs,
 } from '../models';
 import { type Service } from '../types/service';
 import { makeFhirCreateRequest, makeFhirGetRequest, makeFhirUpdateRequest } from '../utils/fetch';
 
-export type AllergenServiceType = Service<Allergen, AllergenSearchArgs>;
+export type AllergenServiceType = Service<
+  Allergen,
+  AllergenSearchArgs,
+  AllergenBundle,
+  Allergen,
+  Allergen
+>;
 
 export const AllergenService = ({ baseUrl }: { baseUrl: string }): AllergenServiceType => {
   const read: AllergenServiceType['read'] = async ({ id, accessToken }) => {
@@ -42,7 +49,7 @@ export const AllergenService = ({ baseUrl }: { baseUrl: string }): AllergenServi
 
   const search: AllergenServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = AllergenSearchArgsSchema.parse(args);
-    const response = await makeFhirGetRequest(BundleSchema(AllergenSchema), {
+    const response = await makeFhirGetRequest(AllergenBundleSchema, {
       path: `${baseUrl}/Allergen`,
       token: accessToken,
       query: new URLSearchParams(parsedArgs as Record<string, string>).toString(),

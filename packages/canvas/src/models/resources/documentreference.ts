@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { IdentifierSchema } from '..';
+import { BundleSchema, IdentifierSchema } from '..';
 import { AttachmentSchema } from '../core/attachment';
 import { CodeableConceptSchema } from '../core/codeableconcept';
 import { CodingSchema } from '../core/coding';
@@ -45,3 +45,6 @@ export const DocumentReferenceSearchArgsSchema = z.object({
 
 export type DocumentReference = z.infer<typeof DocumentReferenceSchema>;
 export type DocumentReferenceSearchArgs = z.infer<typeof DocumentReferenceSearchArgsSchema>;
+
+export const DocumentReferenceBundleSchema = BundleSchema(DocumentReferenceSchema);
+export type DocumentReferenceBundle = z.infer<typeof DocumentReferenceBundleSchema>;
