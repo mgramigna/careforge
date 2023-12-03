@@ -23,7 +23,7 @@ export const Text = ({
     .otherwise(() => '');
 
   return (
-    <RNText {...props} className={clsx(fontStyle, className)}>
+    <RNText {...props} className={clsx('text-coolGray-800', fontStyle, className)}>
       {children}
     </RNText>
   );

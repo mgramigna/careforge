@@ -1,8 +1,10 @@
 import { ActivityIndicator, SafeAreaView } from 'react-native';
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useAuth } from '@/context/AuthContext';
 import { PatientProvider } from '@/context/PatientContext';
+import { palette } from '@/theme/colors';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AppLayout() {
   const { isLoading, patientId } = useAuth();
@@ -21,11 +23,56 @@ export default function AppLayout() {
 
   return (
     <PatientProvider patientId={patientId}>
-      <Stack
-        screenOptions={{
-          header: () => null,
-        }}
-      />
+      <Tabs screenOptions={{ header: () => null, tabBarLabel: () => null }}>
+        <Tabs.Screen
+          name="index"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="home"
+                size={24}
+                color={focused ? palette.pink[500] : palette.coolGray[300]}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="messages"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="chatbox-ellipses"
+                size={24}
+                color={focused ? palette.pink[500] : palette.coolGray[300]}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="appointments"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="calendar"
+                size={24}
+                color={focused ? palette.pink[500] : palette.coolGray[300]}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="person-circle"
+                size={24}
+                color={focused ? palette.pink[500] : palette.coolGray[300]}
+              />
+            ),
+          }}
+        />
+      </Tabs>
       <StatusBar />
     </PatientProvider>
   );
