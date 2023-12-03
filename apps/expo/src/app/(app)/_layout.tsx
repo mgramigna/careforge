@@ -23,7 +23,13 @@ export default function AppLayout() {
 
   return (
     <PatientProvider patientId={patientId}>
-      <Tabs screenOptions={{ header: () => null, tabBarLabel: () => null }}>
+      <Tabs
+        screenOptions={{
+          header: () => null,
+          tabBarLabel: () => null,
+          tabBarStyle: { backgroundColor: palette.coolGray[100] },
+        }}
+      >
         <Tabs.Screen
           name="index"
           options={{

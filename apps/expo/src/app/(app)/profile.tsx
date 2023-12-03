@@ -1,10 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityIndicator, Pressable } from 'react-native';
 import { Text } from '@/components/atoms/Text';
+import { ScreenView } from '@/components/molecules/ScreenView';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
-import { getFirstName } from '@/fhirpath/patient';
 
 const Profile = () => {
   const { signOut } = useAuth();
@@ -12,23 +11,18 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <SafeAreaView>
+      <ScreenView>
         <ActivityIndicator />
-      </SafeAreaView>
+      </ScreenView>
     );
   }
 
   return patient ? (
-    <SafeAreaView>
-      <View className="flex items-center">
-        <View className="p-4 pt-12">
-          <Text className="text-center text-5xl ">Welcome message, {getFirstName(patient)}</Text>
-        </View>
-        <Pressable onPress={signOut}>
-          <Text>Sign out</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+    <ScreenView>
+      <Pressable onPress={signOut}>
+        <Text>Sign out</Text>
+      </Pressable>
+    </ScreenView>
   ) : null;
 };
 

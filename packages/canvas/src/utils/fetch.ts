@@ -23,7 +23,7 @@ export async function makeFhirGetRequest<T>(
   } catch (e) {
     // TODO: fill these in
     if (e instanceof ZodError) {
-      return err('bad');
+      return err('parse');
     }
 
     if (e instanceof Error) {

@@ -49,6 +49,7 @@ export const AppointmentService = ({ baseUrl }: { baseUrl: string }): Appointmen
 
   const search: AppointmentServiceType['search'] = async ({ accessToken, args }) => {
     const parsedArgs = AppointmentSearchArgsSchema.parse(args);
+
     const response = await makeFhirGetRequest(AppointmentBundleSchema, {
       path: `${baseUrl}/Appointment`,
       token: accessToken,

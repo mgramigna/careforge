@@ -8,14 +8,16 @@ import { createDomainResourceSchema } from '../util/domainresource';
 import { BundleSchema } from './bundle';
 
 export const AppointmentSchema = createDomainResourceSchema('Appointment').extend({
-  contained: z.array(
-    createDomainResourceSchema('Endpoint').extend({
-      status: z.enum(['active', 'suspended', 'error', 'off', 'entered-in-error']),
-      connectionType: CodeableConceptSchema,
-      payloadType: z.array(CodeableConceptSchema).optional(),
-      address: z.string(),
-    }),
-  ),
+  contained: z
+    .array(
+      createDomainResourceSchema('Endpoint').extend({
+        status: z.enum(['active', 'suspended', 'error', 'off', 'entered-in-error']),
+        connectionType: CodeableConceptSchema,
+        payloadType: z.array(CodeableConceptSchema).optional(),
+        address: z.string(),
+      }),
+    )
+    .optional(),
   status: z.enum([
     'proposed',
     'pending',

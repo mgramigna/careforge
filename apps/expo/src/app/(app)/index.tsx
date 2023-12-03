@@ -1,36 +1,42 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack } from 'expo-router';
+import { ActivityIndicator } from 'react-native';
 import { Text } from '@/components/atoms/Text';
+import { ScreenView } from '@/components/molecules/ScreenView';
+import { HomeAppointmentList } from '@/components/organisms/HomeAppointmentList';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
 import { getFirstName } from '@/fhirpath/patient';
+import { api } from '@/utils/api';
 
 const Index = () => {
-  const { signOut } = useAuth();
+  const { patientId } = useAuth();
   const { patient, isLoading } = usePatient();
+
+  const { data: appointmentBundle } = api.appointment.search.useQuery(
+    {
+      patient: `Patient/${patientId!}`,
+      _sort: 'date',
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
 
   if (isLoading) {
     return (
-      <SafeAreaView>
+      <ScreenView>
         <ActivityIndicator />
-      </SafeAreaView>
+      </ScreenView>
     );
   }
 
   return patient ? (
-    <SafeAreaView>
-      <Stack.Screen options={{ title: 'Home' }} />
-      <View className="flex items-center">
-        <View className="p-4 pt-12">
-          <Text className="text-center text-5xl ">Welcome, {getFirstName(patient)}</Text>
-        </View>
-        <Pressable onPress={signOut}>
-          <Text>Sign out</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+    <ScreenView>
+      <Text className="text-center text-5xl">Welcome, {getFirstName(patient)}</Text>
+      <HomeAppointmentList
+        appointments={appointmentBundle?.entry?.map(({ resource }) => resource) ?? []}
+      />
+    </ScreenView>
   ) : null;
 };
 
