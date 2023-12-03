@@ -35,6 +35,9 @@ importers:
       '@canvas-challenge/canvas':
         specifier: workspace:*
         version: link:../../packages/canvas
+      '@expo-google-fonts/open-sans':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@expo/metro-config':
         specifier: ^0.10.7
         version: 0.10.7
@@ -50,12 +53,21 @@ importers:
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-10-26-15-15-56.93
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
       expo:
         specifier: ^49.0.21
         version: 49.0.21(@babel/core@7.23.2)
       expo-constants:
         specifier: ~14.4.2
         version: 14.4.2(expo@49.0.21)
+      expo-font:
+        specifier: ~11.4.0
+        version: 11.4.0(expo@49.0.21)
+      expo-image:
+        specifier: ~1.3.5
+        version: 1.3.5(expo@49.0.21)
       expo-linking:
         specifier: ~5.0.2
         version: 5.0.2(expo@49.0.21)
@@ -101,6 +113,9 @@ importers:
       superjson:
         specifier: 2.2.0
         version: 2.2.0
+      ts-pattern:
+        specifier: ^5.0.5
+        version: 5.0.5
     devDependencies:
       '@babel/core':
         specifier: ^7.23.2
@@ -1975,6 +1990,10 @@ packages:
   /@eslint/js@8.53.0:
     resolution: {integrity: sha512-Kn7K8dx/5U6+cT1yEhpX1w4PCSg0M+XyRILPgvwcEBjerFWCwQj5sbr3/VmxqV0JGHCBCzyd6LxypEuehypY1w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  /@expo-google-fonts/open-sans@0.2.3:
+    resolution: {integrity: sha512-HjEue5908n2yTtNSo47lAN3UFi2sAp00u6E3tx9nSEr0P2SDFDjYgsA89nPaAYOyxDN0EPGtNTa2K/VUe3jgmA==}
+    dev: false
 
   /@expo/bunyan@4.0.0:
     resolution: {integrity: sha512-Ydf4LidRB/EBI+YrB+cVLqIseiRfjUI/AeHBgjGMtq3GroraDu81OV7zqophRgupngoL3iS3JUMDMnxO7g39qA==}
@@ -4653,6 +4672,11 @@ packages:
     engines: {node: '>=0.8'}
     dev: false
 
+  /clsx@2.0.0:
+    resolution: {integrity: sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==}
+    engines: {node: '>=6'}
+    dev: false
+
   /co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
@@ -5841,6 +5865,14 @@ packages:
       react-native: 0.72.7(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
     transitivePeerDependencies:
       - react-dom
+    dev: false
+
+  /expo-image@1.3.5(expo@49.0.21):
+    resolution: {integrity: sha512-yrIR2mnfIKbKcguoqWK3U5m3zvLPnonvSCabB2ErVGhws8zQs7ILYf+7T08j8U6eFcohjw0CoAFJ6RWNsX2EhA==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.21(@babel/core@7.23.2)
     dev: false
 
   /expo-keep-awake@12.3.0(expo@49.0.21):
@@ -11123,6 +11155,10 @@ packages:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true
+
+  /ts-pattern@5.0.5:
+    resolution: {integrity: sha512-tL0w8U/pgaacOmkb9fRlYzWEUDCfVjjv9dD4wHTgZ61MjhuMt46VNWTG747NqW6vRzoWIKABVhFSOJ82FvXrfA==}
+    dev: false
 
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}

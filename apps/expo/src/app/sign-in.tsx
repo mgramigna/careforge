@@ -1,10 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, FlatList, Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Redirect, Stack } from 'expo-router';
+import { Text } from '@/components/atoms/Text';
 import { useAuth } from '@/context/AuthContext';
+import { getFullName } from '@/fhirpath/patient';
 import { api } from '@/utils/api';
-import fhirpath from 'fhirpath';
 
 const SignIn = () => {
   const { signIn, patientId } = useAuth();
@@ -37,10 +38,8 @@ const SignIn = () => {
                 signIn(patient.id);
               }}
             >
-              <View className="w-full items-center border border-slate-200 p-8">
-                <Text>
-                  {fhirpath.evaluate(patient, 'name.given')} {patient.name.at(0)?.family}
-                </Text>
+              <View className="border-coolGray-200 w-full items-center border p-8">
+                <Text>{getFullName(patient)}</Text>
               </View>
             </Pressable>
           )}

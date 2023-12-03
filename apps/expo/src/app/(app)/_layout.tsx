@@ -21,7 +21,11 @@ export default function AppLayout() {
 
   return (
     <PatientProvider patientId={patientId}>
-      <Stack />
+      <Stack
+        screenOptions={{
+          header: () => null,
+        }}
+      />
       <StatusBar />
     </PatientProvider>
   );
