@@ -35,6 +35,7 @@ export const MessageThread = ({
 
   return (
     <FlatList
+      inverted
       data={messages}
       keyExtractor={(communication) => communication.id}
       renderItem={({ item: communication }) => renderMessage(communication)}

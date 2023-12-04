@@ -1,14 +1,24 @@
-import React, { useCallback, useMemo } from 'react';
-import { ActivityIndicator } from 'react-native';
-import { Button } from '@/components/atoms/Button';
+import React, { useCallback, useMemo, useState } from 'react';
+import {
+  ActivityIndicator,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Constants from 'expo-constants';
+import { TextInput } from '@/components/atoms/TextInput';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { MessageThread } from '@/components/organisms/MessageThread';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
 import { getPractitionerFromCareTeam } from '@/fhirpath/careteam';
 import { getPractitionerName } from '@/fhirpath/practitioner';
+import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
 import { getCommunicationResource } from '@/utils/fhir';
+import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
 import { type Communication } from '@canvas-challenge/canvas';
@@ -26,8 +36,9 @@ function getCombinedMessagesSorted({
     const dateA = dayjs(a.sent);
     const dateB = dayjs(b.sent);
 
-    if (dateA.isBefore(dateB)) return -1;
-    if (dateB.isBefore(dateA)) return 1;
+    // List is inverted, so place the oldest messages first
+    if (dateA.isBefore(dateB)) return 1;
+    if (dateB.isBefore(dateA)) return -1;
     return 0;
   });
 }
@@ -81,9 +92,11 @@ const Messages = () => {
     },
   );
 
-  const sendMessage = api.communication.create.useMutation({
+  const sendMessageMutation = api.communication.create.useMutation({
     onSuccess: async () => {
       await utils.communication.search.invalidate();
+      setMessageText('');
+      Keyboard.dismiss();
     },
   });
 
@@ -92,28 +105,21 @@ const Messages = () => {
     received: receivedMessages?.entry?.map(({ resource }) => resource) ?? [],
   });
 
-  const sendExampleMessage = useCallback(() => {
+  const [messageText, setMessageText] = useState('');
+
+  const sendMessage = useCallback(() => {
     if (practitionerId && patientId) {
-      const sender = Math.random() < 0.5 ? 'Practitioner' : 'Patient';
-
-      const senderId = sender === 'Patient' ? patientId : practitionerId;
-      const recipientId = sender === 'Patient' ? practitionerId : patientId;
-      const senderType = sender;
-      const recipientType = sender === 'Practitioner' ? 'Patient' : 'Practitioner';
-
       const communication = getCommunicationResource({
-        senderId,
-        senderType,
-        recipientId,
-        recipientType,
-        message: 'Hello from an example message!',
+        senderId: patientId,
+        senderType: 'Patient',
+        recipientId: practitionerId,
+        recipientType: 'Practitioner',
+        message: messageText,
       });
 
-      sendMessage.mutate(communication);
+      sendMessageMutation.mutate(communication);
     }
-  }, [sendMessage, practitionerId, patientId]);
-
-  console.log({ fullThread });
+  }, [sendMessageMutation, practitionerId, patientId, messageText]);
 
   if (isLoading) {
     return (
@@ -125,13 +131,39 @@ const Messages = () => {
 
   return patient ? (
     <ScreenView noPadding>
-      <MessageThread
-        messages={fullThread}
-        practitionerSenderName={
-          practitioner ? getPractitionerName(practitioner) ?? 'Care Team' : 'Care Team'
-        }
-      />
-      <Button onPress={sendExampleMessage} text="Send example message" />
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Constants.statusBarHeight + 48}
+      >
+        <MessageThread
+          messages={fullThread}
+          practitionerSenderName={
+            practitioner ? getPractitionerName(practitioner) ?? 'Care Team' : 'Care Team'
+          }
+        />
+        <View className="flex flex-row items-center py-4 pl-2">
+          <TextInput
+            value={messageText}
+            onChangeText={setMessageText}
+            className="bg-coolGray-100 flex-1 rounded-full p-4"
+            placeholder="Message your care team..."
+            onSubmitEditing={() => {
+              if (messageText !== '') {
+                sendMessage();
+              }
+            }}
+          />
+          <TouchableOpacity disabled={messageText === ''} onPress={sendMessage}>
+            <Ionicons
+              name={messageText !== '' ? 'arrow-forward-circle' : 'arrow-forward-circle-outline'}
+              size={32}
+              className="px-6"
+              color={palette.cyan[600]}
+            />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </ScreenView>
   ) : null;
 };
