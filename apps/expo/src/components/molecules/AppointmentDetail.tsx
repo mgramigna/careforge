@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Alert, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { getLocation, getPractitionerId, getReason } from '@/fhirpath/appointment';
 import { getPractitionerName } from '@/fhirpath/practitioner';
 import { palette } from '@/theme/colors';
@@ -9,13 +9,16 @@ import dayjs from 'dayjs';
 
 import { type Appointment } from '@canvas-challenge/canvas';
 
-import { Button } from '../atoms/Button';
 import { Text } from '../atoms/Text';
 
 export const AppointmentDetail = ({ appointment }: { appointment: Appointment }) => {
   const [detailModalVisible, setDetailModalVisible] = useState(false);
 
-  const { locationId, practitionerId, reasonText } = useMemo(() => {
+  const {
+    locationId,
+    practitionerId,
+    reasonText: _reasonText,
+  } = useMemo(() => {
     const locationId = getLocation(appointment);
     const practitionerId = getPractitionerId(appointment);
     const reasonText = getReason(appointment);
@@ -23,7 +26,7 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
     return { locationId, practitionerId, reasonText };
   }, [appointment]);
 
-  const { data: location } = api.location.get.useQuery(
+  const { data: _location } = api.location.get.useQuery(
     {
       id: locationId!,
     },

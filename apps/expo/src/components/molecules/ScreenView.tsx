@@ -4,12 +4,19 @@ import { cn } from '@/utils/cn';
 
 export interface ScreenViewProps extends PropsWithChildren {
   centered?: boolean;
+  noPadding?: boolean;
 }
 
-export const ScreenView = ({ centered, children }: ScreenViewProps) => {
+export const ScreenView = ({ noPadding, centered, children }: ScreenViewProps) => {
   return (
     <SafeAreaView>
-      <View className={cn('bg-coolGray-50 flex h-screen px-4 pt-8', centered && 'items-center')}>
+      <View
+        className={cn(
+          'bg-coolGray-50 flex h-full px-4 pt-8',
+          centered && 'items-center',
+          noPadding && 'p-0',
+        )}
+      >
         {children}
       </View>
     </SafeAreaView>
