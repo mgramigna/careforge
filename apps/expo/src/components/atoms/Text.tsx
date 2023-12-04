@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
-import clsx from 'clsx';
+import { cn } from '@/utils/cn';
 import { match } from 'ts-pattern';
 
 export interface TextProps extends RNTextProps {
@@ -23,7 +23,7 @@ export const Text = ({
     .otherwise(() => '');
 
   return (
-    <RNText {...props} className={clsx('text-coolGray-800', fontStyle, className)}>
+    <RNText {...props} className={cn('text-coolGray-800', fontStyle, className)}>
       {children}
     </RNText>
   );

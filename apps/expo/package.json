@@ -23,6 +23,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
     "expo": "^49.0.21",
@@ -44,6 +45,7 @@
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.1",
     "superjson": "2.2.0",
+    "tailwind-merge": "^2.1.0",
     "ts-pattern": "^5.0.5"
   },
   "devDependencies": {

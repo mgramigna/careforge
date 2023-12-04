@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Alert, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { getLocation, getPractitionerId, getReason } from '@/fhirpath/appointment';
 import { getPractitionerName } from '@/fhirpath/practitioner';
 import { palette } from '@/theme/colors';
@@ -9,12 +9,19 @@ import dayjs from 'dayjs';
 
 import { type Appointment } from '@canvas-challenge/canvas';
 
+import { Button } from '../atoms/Button';
 import { Text } from '../atoms/Text';
 
 export const AppointmentDetail = ({ appointment }: { appointment: Appointment }) => {
-  const locationId = getLocation(appointment);
-  const practitionerId = getPractitionerId(appointment);
-  const reasonText = getReason(appointment);
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
+
+  const { locationId, practitionerId, reasonText } = useMemo(() => {
+    const locationId = getLocation(appointment);
+    const practitionerId = getPractitionerId(appointment);
+    const reasonText = getReason(appointment);
+
+    return { locationId, practitionerId, reasonText };
+  }, [appointment]);
 
   const { data: location } = api.location.get.useQuery(
     {
@@ -54,27 +61,43 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
   }, []);
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        Alert.alert('TODO: open appt modal?');
-      }}
-    >
-      <View className="bg-coolGray-200 rounded-md px-12 py-2">
-        <View className="absolute left-2 top-2 w-12">
-          <Ionicons name="calendar" size={36} color={palette.pink[400]} />
+    <>
+      <TouchableOpacity
+        onPress={() => {
+          setDetailModalVisible(true);
+        }}
+      >
+        <View className="bg-coolGray-100 border-coolGray-300 rounded-md border px-12 py-4">
+          <View className="absolute left-2 top-2 w-12">
+            <Ionicons name="calendar" size={36} color={palette.cyan[800]} />
+          </View>
+          <View className="ml-4">
+            {appointment.start &&
+              appointment.end &&
+              renderAppointmentDate({
+                start: appointment.start,
+                end: appointment.end,
+              })}
+            <Text className="text-lg">
+              with <Text>{practitioner ? getPractitionerName(practitioner) : ''}</Text>
+            </Text>
+          </View>
         </View>
-        <View className="ml-4">
-          {appointment.start &&
-            appointment.end &&
-            renderAppointmentDate({
-              start: appointment.start,
-              end: appointment.end,
-            })}
-          <Text className="text-lg">
-            With {practitioner ? getPractitionerName(practitioner) : ''}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        visible={detailModalVisible}
+        presentationStyle="pageSheet"
+        onRequestClose={() => {
+          setDetailModalVisible(false);
+        }}
+      >
+        <SafeAreaView>
+          <View className="bg-coolGray-50 h-screen">
+            <Text>TODO</Text>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    </>
   );
 };

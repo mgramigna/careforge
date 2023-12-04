@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, Pressable } from 'react-native';
-import { Text } from '@/components/atoms/Text';
+import { ActivityIndicator } from 'react-native';
+import { Button } from '@/components/atoms/Button';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
@@ -19,9 +19,7 @@ const Profile = () => {
 
   return patient ? (
     <ScreenView>
-      <Pressable onPress={signOut}>
-        <Text>Sign out</Text>
-      </Pressable>
+      <Button onPress={signOut} variant="secondary" text="Sign Out" className="" />
     </ScreenView>
   ) : null;
 };

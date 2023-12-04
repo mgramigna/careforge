@@ -25,7 +25,10 @@ export default function AppLayout() {
     <PatientProvider patientId={patientId}>
       <Tabs
         screenOptions={{
-          header: () => null,
+          headerStyle: {
+            backgroundColor: palette.coolGray[200],
+          },
+          headerTitle: () => null,
           tabBarLabel: () => null,
           tabBarStyle: { backgroundColor: palette.coolGray[100] },
         }}
@@ -36,19 +39,19 @@ export default function AppLayout() {
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="home"
-                size={24}
+                size={32}
                 color={focused ? palette.pink[500] : palette.coolGray[300]}
               />
             ),
           }}
         />
         <Tabs.Screen
-          name="messages"
+          name="messages/index"
           options={{
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="chatbox-ellipses"
-                size={24}
+                size={32}
                 color={focused ? palette.pink[500] : palette.coolGray[300]}
               />
             ),
@@ -60,7 +63,7 @@ export default function AppLayout() {
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="calendar"
-                size={24}
+                size={32}
                 color={focused ? palette.pink[500] : palette.coolGray[300]}
               />
             ),
@@ -72,7 +75,7 @@ export default function AppLayout() {
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="person-circle"
-                size={24}
+                size={32}
                 color={focused ? palette.pink[500] : palette.coolGray[300]}
               />
             ),
