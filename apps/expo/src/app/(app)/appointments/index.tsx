@@ -1,11 +1,30 @@
 import { useMemo } from 'react';
-import { Link } from 'expo-router';
-import { Button } from '@/components/atoms/Button';
+import { ActivityIndicator, FlatList, View } from 'react-native';
+import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
+import { SlotDetail } from '@/components/molecules/SlotDetail';
 import { useAuth } from '@/context/AuthContext';
 import { getPractitionerFromCareTeam } from '@/fhirpath/careteam';
 import { getPractitionerIdFromSchedule } from '@/fhirpath/schedule';
 import { api } from '@/utils/api';
+import dayjs from 'dayjs';
+
+import { type Slot } from '@canvas-challenge/canvas';
+
+function groupSlots(slots: Slot[]): Map<string, Slot[]> {
+  const res = new Map<string, Slot[]>();
+
+  slots.forEach((slot) => {
+    const dayOfStart = dayjs(slot.start).startOf('day').toISOString();
+    if (res.has(dayOfStart)) {
+      res.get(dayOfStart)!.push(slot);
+    } else {
+      res.set(dayOfStart, [slot]);
+    }
+  });
+
+  return res;
+}
 
 const Appointments = () => {
   const { patientId } = useAuth();
@@ -37,20 +56,41 @@ const Appointments = () => {
     return matchingSchedule?.id;
   }, [practitionerId, scheduleSearchResult]);
 
-  const { data: _slots } = api.slot.search.useQuery(
+  const { data: slots, isLoading: slotsLoading } = api.slot.search.useQuery(
     {
       schedule: scheduleId!,
+      end: dayjs().endOf('day').toISOString(),
     },
     {
       enabled: !!scheduleId,
     },
   );
 
+  const groupedSlots = useMemo(() => {
+    return groupSlots(slots?.entry?.map(({ resource }) => resource) ?? []);
+  }, [slots]);
+
   return patientId ? (
     <ScreenView>
-      <Link href="/appointments/sub" asChild>
-        <Button text="Schedule Appointment" className="mt-4" />
-      </Link>
+      {slotsLoading && <ActivityIndicator />}
+      <View className="flex-1">
+        {[...groupedSlots.entries()].map(([startDayISO, slots]) => (
+          <View key={startDayISO}>
+            <Text className="pb-8 text-center text-3xl" weight="bold">
+              {dayjs(startDayISO).format('dddd MM/DD/YYYY')}
+            </Text>
+            <FlatList
+              data={slots}
+              keyExtractor={(slot) => `${slot.start}-${slot.end}`}
+              renderItem={({ item: slot }) => (
+                <View className="my-4 pb-8">
+                  <SlotDetail slot={slot} />
+                </View>
+              )}
+            />
+          </View>
+        ))}
+      </View>
     </ScreenView>
   ) : null;
 };
