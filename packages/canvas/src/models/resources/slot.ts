@@ -6,12 +6,14 @@ import { ReferenceSchema } from '../core/reference';
 import { createDomainResourceSchema } from '../util/domainresource';
 import { BundleSchema } from './bundle';
 
-export const SlotSchema = createDomainResourceSchema('Slot').extend({
-  schedule: ReferenceSchema,
-  status: z.enum(['busy', 'free', 'busy-unavailable', 'busy-tentative', 'entered-in-error']),
-  start: InstantSchema,
-  end: InstantSchema,
-});
+export const SlotSchema = createDomainResourceSchema('Slot')
+  .extend({
+    schedule: ReferenceSchema,
+    status: z.enum(['busy', 'free', 'busy-unavailable', 'busy-tentative', 'entered-in-error']),
+    start: InstantSchema,
+    end: InstantSchema,
+  })
+  .omit({ id: true });
 
 export const SlotSearchArgsSchema = z.object({
   duration: z

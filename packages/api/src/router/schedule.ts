@@ -1,4 +1,4 @@
-import { ScheduleSearchArgsSchema, type ScheduleServiceType } from '@canvas-challenge/canvas';
+import { type ScheduleServiceType } from '@canvas-challenge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 
@@ -8,9 +8,9 @@ export const createScheduleRouter = ({
   scheduleService: ScheduleServiceType;
 }) => {
   return createTRPCRouter({
-    search: authedProcedure.input(ScheduleSearchArgsSchema).query(async ({ ctx, input }) => {
+    search: authedProcedure.query(async ({ ctx }) => {
       const result = await scheduleService.search({
-        args: input,
+        args: {},
         accessToken: ctx.accessToken,
       });
 

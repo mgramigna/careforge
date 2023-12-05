@@ -1,27 +1,53 @@
-import { ActivityIndicator, View } from 'react-native';
+import { useMemo } from 'react';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
-import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
-import { usePatient } from '@/context/PatientContext';
-import { getFirstName } from '@/fhirpath/patient';
+import { useAuth } from '@/context/AuthContext';
+import { getPractitionerFromCareTeam } from '@/fhirpath/careteam';
+import { getPractitionerIdFromSchedule } from '@/fhirpath/schedule';
+import { api } from '@/utils/api';
 
 const Appointments = () => {
-  const { patient, isLoading } = usePatient();
+  const { patientId } = useAuth();
 
-  if (isLoading) {
-    return (
-      <ScreenView>
-        <ActivityIndicator />
-      </ScreenView>
-    );
-  }
+  const { data: patientCareteam } = api.careteam.search.useQuery(
+    {
+      patient: patientId!,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
 
-  return patient ? (
+  const practitionerId = useMemo(() => {
+    if (patientCareteam?.entry?.at(0)?.resource) {
+      return getPractitionerFromCareTeam(patientCareteam.entry.at(0)!.resource);
+    }
+
+    return null;
+  }, [patientCareteam]);
+
+  const { data: scheduleSearchResult } = api.schedule.search.useQuery();
+
+  const scheduleId = useMemo(() => {
+    const matchingSchedule = scheduleSearchResult?.entry?.find(
+      ({ resource }) => getPractitionerIdFromSchedule(resource) === practitionerId,
+    )?.resource;
+
+    return matchingSchedule?.id;
+  }, [practitionerId, scheduleSearchResult]);
+
+  const { data: _slots } = api.slot.search.useQuery(
+    {
+      schedule: scheduleId!,
+    },
+    {
+      enabled: !!scheduleId,
+    },
+  );
+
+  return patientId ? (
     <ScreenView>
-      <View className="p-4 pt-12">
-        <Text className="text-center text-5xl ">Welcome appts, {getFirstName(patient)}</Text>
-      </View>
       <Link href="/appointments/sub" asChild>
         <Button text="Schedule Appointment" className="mt-4" />
       </Link>
