@@ -1,12 +1,12 @@
-import { ActivityIndicator, Pressable, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
+import { Link } from 'expo-router';
+import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
-import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
 import { getFirstName } from '@/fhirpath/patient';
 
 const Appointments = () => {
-  const { signOut } = useAuth();
   const { patient, isLoading } = usePatient();
 
   if (isLoading) {
@@ -22,9 +22,9 @@ const Appointments = () => {
       <View className="p-4 pt-12">
         <Text className="text-center text-5xl ">Welcome appts, {getFirstName(patient)}</Text>
       </View>
-      <Pressable onPress={signOut}>
-        <Text>Sign out</Text>
-      </Pressable>
+      <Link href="/appointments/sub" asChild>
+        <Button text="Schedule Appointment" className="mt-4" />
+      </Link>
     </ScreenView>
   ) : null;
 };

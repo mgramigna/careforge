@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
+import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { useAuth } from '@/context/AuthContext';
@@ -20,6 +21,9 @@ const Profile = () => {
   return patient ? (
     <ScreenView>
       <Button onPress={signOut} variant="secondary" text="Sign Out" className="" />
+      <Link asChild href="/profile/sub">
+        <Button text="Go To sub page" className="" />
+      </Link>
     </ScreenView>
   ) : null;
 };

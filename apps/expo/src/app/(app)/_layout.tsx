@@ -25,10 +25,7 @@ export default function AppLayout() {
     <PatientProvider patientId={patientId}>
       <Tabs
         screenOptions={{
-          headerStyle: {
-            backgroundColor: palette.coolGray[200],
-          },
-          headerTitle: () => null,
+          headerShown: false,
           tabBarLabel: () => null,
           tabBarStyle: { backgroundColor: palette.coolGray[100] },
         }}
@@ -46,7 +43,7 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="messages/index"
+          name="messages"
           options={{
             tabBarIcon: ({ focused }) => (
               <Ionicons

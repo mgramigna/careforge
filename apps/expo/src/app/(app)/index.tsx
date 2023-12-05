@@ -52,7 +52,7 @@ const Index = () => {
             <Text italic>No upcoming appointments</Text>
           </View>
         )}
-        <Link href="/appointments" asChild>
+        <Link href="/appointments/" asChild>
           <Button text="Schedule Appointment" className="mt-4" />
         </Link>
       </View>
