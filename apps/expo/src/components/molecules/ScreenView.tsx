@@ -9,13 +9,9 @@ export interface ScreenViewProps extends PropsWithChildren {
 
 export const ScreenView = ({ noPadding, centered, children }: ScreenViewProps) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1">
       <View
-        className={cn(
-          'bg-coolGray-50 flex h-full px-4 pt-8',
-          centered && 'items-center',
-          noPadding && 'p-0',
-        )}
+        className={cn('bg-coolGray-50 px-4 pt-8', centered && 'items-center', noPadding && 'p-0')}
       >
         {children}
       </View>

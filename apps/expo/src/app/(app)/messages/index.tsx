@@ -132,7 +132,7 @@ const Messages = () => {
   return patient ? (
     <ScreenView noPadding>
       <KeyboardAvoidingView
-        className="flex-1"
+        className="h-full"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Constants.statusBarHeight + 48}
       >
@@ -146,7 +146,7 @@ const Messages = () => {
           <TextInput
             value={messageText}
             onChangeText={setMessageText}
-            className="bg-coolGray-100 flex-1 rounded-full p-4"
+            className="flex-1 rounded-full p-4"
             placeholder="Message your care team..."
             onSubmitEditing={() => {
               if (messageText !== '') {

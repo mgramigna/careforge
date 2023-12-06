@@ -73,7 +73,7 @@ const Appointments = () => {
   return patientId ? (
     <ScreenView>
       {slotsLoading && <ActivityIndicator />}
-      <View className="flex-1">
+      <View className="h-full">
         {[...groupedSlots.entries()].map(([startDayISO, slots]) => (
           <View key={startDayISO}>
             <Text className="pb-8 text-center text-3xl" weight="bold">
