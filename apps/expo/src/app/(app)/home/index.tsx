@@ -11,7 +11,7 @@ import { getFirstName } from '@/fhirpath/patient';
 import { api } from '@/utils/api';
 import dayjs from 'dayjs';
 
-const Index = () => {
+const Home = () => {
   const { patientId } = useAuth();
   const { patient, isLoading } = usePatient();
 
@@ -60,4 +60,4 @@ const Index = () => {
   ) : null;
 };
 
-export default Index;
+export default Home;

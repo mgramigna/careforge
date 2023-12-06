@@ -12,6 +12,7 @@ export default function AuthLayout() {
           headerStyle: {
             backgroundColor: palette.coolGray[200],
           },
+          presentation: 'modal',
         }}
       />
       <StatusBar />

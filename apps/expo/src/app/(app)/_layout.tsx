@@ -31,7 +31,7 @@ export default function AppLayout() {
         }}
       >
         <Tabs.Screen
-          name="index"
+          name="home"
           options={{
             tabBarIcon: ({ focused }) => (
               <Ionicons
