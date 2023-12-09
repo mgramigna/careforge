@@ -1,21 +1,23 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { getLocation, getPractitionerId, getReason } from '@/fhirpath/appointment';
 import { getPractitionerName } from '@/fhirpath/practitioner';
 import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
+import { HARDCODED_OFFICE_LOCATION_ID } from '@/utils/constants';
 import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
 import { type Appointment } from '@canvas-challenge/canvas';
 
 import { Text } from '../atoms/Text';
+import { AppointmentDetailModal } from '../molecules/AppointmentDetailModal';
 
 export const AppointmentDetail = ({ appointment }: { appointment: Appointment }) => {
   const [detailModalVisible, setDetailModalVisible] = useState(false);
 
   const {
-    locationId,
+    locationId: _locationId,
     practitionerId,
     reasonText: _reasonText,
   } = useMemo(() => {
@@ -26,12 +28,13 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
     return { locationId, practitionerId, reasonText };
   }, [appointment]);
 
-  const { data: _location } = api.location.get.useQuery(
+  const { data: location } = api.location.get.useQuery(
     {
-      id: locationId!,
+      // TODO: remove this when Canvas fixes bug with location IDs
+      id: HARDCODED_OFFICE_LOCATION_ID,
     },
     {
-      enabled: !!locationId,
+      enabled: true,
     },
   );
 
@@ -87,20 +90,12 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
           </View>
         </View>
       </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        visible={detailModalVisible}
-        presentationStyle="pageSheet"
-        onRequestClose={() => {
-          setDetailModalVisible(false);
-        }}
-      >
-        <SafeAreaView>
-          <View className="bg-coolGray-50 h-screen">
-            <Text>TODO</Text>
-          </View>
-        </SafeAreaView>
-      </Modal>
+      <AppointmentDetailModal
+        isOpen={detailModalVisible}
+        onClose={() => setDetailModalVisible(false)}
+        appointment={appointment}
+        location={location}
+      />
     </>
   );
 };

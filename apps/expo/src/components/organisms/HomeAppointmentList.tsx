@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native';
 
 import { type Appointment } from '@canvas-challenge/canvas';
 
-import { AppointmentDetail } from '../molecules/AppointmentDetail';
+import { AppointmentDetail } from './AppointmentDetail';
 
 export const HomeAppointmentList = ({ appointments }: { appointments: Appointment[] }) => {
   return (

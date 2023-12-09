@@ -1,5 +1,7 @@
 import { type Appointment, type Communication } from '@canvas-challenge/canvas';
 
+import { HARDCODED_OFFICE_LOCATION_ID } from './constants';
+
 export function getIdPartFromReference(reference: string): string {
   const [_resourceType, idPart] = reference.split('/');
 
@@ -41,7 +43,6 @@ export function getCommunicationResource({
   };
 }
 
-const HARDCODED_OFFICE_LOCATION_ID = '1';
 const OFFICE_VISIT_CODE = '308335008';
 const TELEHEALTH_VISIT_CODE = '448337001';
 

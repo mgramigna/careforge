@@ -14,3 +14,5 @@ export const AddressSchema = z.object({
   country: z.string().optional(),
   period: PeriodSchema.optional(),
 });
+
+export type Address = z.infer<typeof AddressSchema>;
