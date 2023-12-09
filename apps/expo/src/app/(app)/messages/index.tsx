@@ -137,7 +137,9 @@ const Messages = () => {
         keyboardVerticalOffset={Constants.statusBarHeight + 48}
       >
         {sentLoading || receivedLoading ? (
-          <ActivityIndicator />
+          <View className="flex-1 pt-8">
+            <ActivityIndicator />
+          </View>
         ) : (
           <MessageThread
             messages={fullThread}
