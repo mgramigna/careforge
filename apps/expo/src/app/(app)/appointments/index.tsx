@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
-import { SlotDetail } from '@/components/molecules/SlotDetail';
+import { SlotDetail } from '@/components/organisms/SlotDetail';
 import { useAuth } from '@/context/AuthContext';
 import { getPractitionerFromCareTeam } from '@/fhirpath/careteam';
 import { getPractitionerIdFromSchedule } from '@/fhirpath/schedule';
@@ -28,6 +28,9 @@ function groupSlots(slots: Slot[]): Map<string, Slot[]> {
 
 const Appointments = () => {
   const { patientId } = useAuth();
+  const [appointmentSearchStart, _setAppointmentSearchStart] = useState(
+    dayjs('2023-12-11T00:00:00.0Z'),
+  );
 
   const { data: patientCareteam } = api.careteam.search.useQuery(
     {
@@ -59,7 +62,8 @@ const Appointments = () => {
   const { data: slots, isLoading: slotsLoading } = api.slot.search.useQuery(
     {
       schedule: scheduleId!,
-      end: dayjs().endOf('day').toISOString(),
+      start: appointmentSearchStart.startOf('day').toISOString(),
+      end: appointmentSearchStart.endOf('day').toISOString(),
     },
     {
       enabled: !!scheduleId,
@@ -70,7 +74,7 @@ const Appointments = () => {
     return groupSlots(slots?.entry?.map(({ resource }) => resource) ?? []);
   }, [slots]);
 
-  return patientId ? (
+  return patientId && practitionerId ? (
     <ScreenView>
       {slotsLoading && <ActivityIndicator />}
       <View className="h-full">
@@ -83,8 +87,8 @@ const Appointments = () => {
               data={slots}
               keyExtractor={(slot) => `${slot.start}-${slot.end}`}
               renderItem={({ item: slot }) => (
-                <View className="my-4 pb-8">
-                  <SlotDetail slot={slot} />
+                <View className="my-2">
+                  <SlotDetail slot={slot} patientId={patientId} practitionerId={practitionerId} />
                 </View>
               )}
             />

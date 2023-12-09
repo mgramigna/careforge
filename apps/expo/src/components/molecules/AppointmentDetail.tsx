@@ -51,7 +51,7 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
     return (
       <>
         <Text weight="bold" className="text-2xl">
-          {dayJsStart.format('dddd DD/MM/YYYY')}
+          {dayJsStart.format('dddd MM/DD/YYYY')}
         </Text>
         <Text className="text-lg">
           from{' '}

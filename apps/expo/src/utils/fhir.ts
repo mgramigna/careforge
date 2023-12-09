@@ -1,4 +1,4 @@
-import { type Communication } from '@canvas-challenge/canvas';
+import { type Appointment, type Communication } from '@canvas-challenge/canvas';
 
 export function getIdPartFromReference(reference: string): string {
   const [_resourceType, idPart] = reference.split('/');
@@ -36,6 +36,76 @@ export function getCommunicationResource({
     payload: [
       {
         contentString: message,
+      },
+    ],
+  };
+}
+
+const HARDCODED_OFFICE_LOCATION_ID = '1';
+const OFFICE_VISIT_CODE = '308335008';
+const TELEHEALTH_VISIT_CODE = '448337001';
+
+export function getAppointmentResource({
+  start,
+  end,
+  patientId,
+  practitionerId,
+  appointmentType,
+  reasonText,
+}: {
+  start: string;
+  end: string;
+  patientId: string;
+  practitionerId: string;
+  appointmentType: 'office' | 'telehealth';
+  reasonText?: string;
+}): Omit<Appointment, 'id'> {
+  return {
+    resourceType: 'Appointment' as const,
+    status: 'proposed',
+    start,
+    end,
+    appointmentType: {
+      coding: [
+        {
+          system: 'http://snomed.info/sct',
+          code: appointmentType === 'office' ? OFFICE_VISIT_CODE : TELEHEALTH_VISIT_CODE,
+          display:
+            appointmentType === 'office'
+              ? 'Office Visit'
+              : 'Telemedicine consultation with patient (procedure)',
+        },
+      ],
+    },
+    ...(appointmentType === 'office' && {
+      supportingInformation: [
+        {
+          reference: `Location/${HARDCODED_OFFICE_LOCATION_ID}`,
+          type: 'Location',
+        },
+      ],
+    }),
+    ...(reasonText && {
+      reasonCode: [
+        {
+          text: reasonText,
+        },
+      ],
+    }),
+    participant: [
+      {
+        status: 'accepted',
+        actor: {
+          reference: `Practitioner/${practitionerId}`,
+          type: 'Practitioner',
+        },
+      },
+      {
+        status: 'accepted',
+        actor: {
+          reference: `Patient/${patientId}`,
+          type: 'Patient',
+        },
       },
     ],
   };
