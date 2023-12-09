@@ -1,5 +1,14 @@
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, FlatList, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Modal,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import DateTimePicker from 'react-native-ui-datepicker';
+import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { SlotDetail } from '@/components/organisms/SlotDetail';
@@ -13,7 +22,8 @@ import dayjs from 'dayjs';
 
 const Appointments = () => {
   const { patientId } = useAuth();
-  const [appointmentSearchStart, setAppointmentSearchStart] = useState(dayjs());
+  const [appointmentSearchStart, setAppointmentSearchStart] = useState(dayjs().add(1, 'days'));
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const { data: patientCareteam } = api.careteam.search.useQuery(
     {
@@ -58,6 +68,31 @@ const Appointments = () => {
       <View className="h-full pb-24">
         <View>
           <View className="flex flex-row items-center justify-center pb-8">
+            <Modal
+              animationType="slide"
+              visible={showDatePicker}
+              presentationStyle="pageSheet"
+              onRequestClose={() => setShowDatePicker(false)}
+            >
+              <ScreenView>
+                <View className="h-full">
+                  <DateTimePicker
+                    value={appointmentSearchStart}
+                    onValueChange={(date) => {
+                      setAppointmentSearchStart(dayjs(date).startOf('day'));
+                      setShowDatePicker(false);
+                    }}
+                    mode="date"
+                    selectedItemColor={palette.pink[500]}
+                  />
+                  <Button
+                    text="Cancel"
+                    variant={'secondary'}
+                    onPress={() => setShowDatePicker(false)}
+                  />
+                </View>
+              </ScreenView>
+            </Modal>
             <TouchableOpacity
               onPress={() => {
                 setAppointmentSearchStart((curr) => curr.add(-1, 'days'));
@@ -65,9 +100,11 @@ const Appointments = () => {
             >
               <Ionicons name="chevron-back" size={32} color={palette.cyan[600]} />
             </TouchableOpacity>
-            <Text className=" px-4 text-3xl" weight="bold">
-              {appointmentSearchStart.format('dddd MM/DD/YYYY')}
-            </Text>
+            <Pressable onPress={() => setShowDatePicker(true)}>
+              <Text className=" px-4 text-3xl" weight="bold">
+                {appointmentSearchStart.format('dddd MM/DD/YYYY')}
+              </Text>
+            </Pressable>
             <TouchableOpacity
               onPress={() => {
                 setAppointmentSearchStart((curr) => curr.add(1, 'days'));
