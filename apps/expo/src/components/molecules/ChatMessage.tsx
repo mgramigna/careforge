@@ -19,7 +19,7 @@ export const ChatMessage = ({
     <View
       className={cn(
         'bg-coolGray-100 w-3/4 rounded-xl p-6',
-        isSentByPatient ? 'self-end bg-cyan-400' : 'self-start',
+        isSentByPatient ? 'self-end bg-cyan-300' : 'self-start',
       )}
     >
       <View className="flex flex-row justify-between">
