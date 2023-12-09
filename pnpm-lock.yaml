@@ -119,6 +119,9 @@ importers:
       react-native-screens:
         specifier: ~3.22.1
         version: 3.22.1(react-native@0.72.7)(react@18.2.0)
+      react-native-ui-datepicker:
+        specifier: ^1.0.10
+        version: 1.0.10(dayjs@1.11.10)(react-native@0.72.7)(react@18.2.0)
       superjson:
         specifier: 2.2.0
         version: 2.2.0
@@ -9934,6 +9937,20 @@ packages:
       warn-once: 0.1.1
     dev: false
 
+  /react-native-ui-datepicker@1.0.10(dayjs@1.11.10)(react-native@0.72.7)(react@18.2.0):
+    resolution: {integrity: sha512-a8ndk0PW5WN6HnuuLS7Pz/ekIzgYk7tF4Qmk73A6Fbt+NvBXq01IYQlYy/BCnU1HopFIOtkLh8XJ3YK4uQoxkw==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      dayjs: '*'
+      react: '*'
+      react-native: '*'
+    dependencies:
+      dayjs: 1.11.10
+      react: 18.2.0
+      react-native: 0.72.7(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
+      uninstall: 0.0.0
+    dev: false
+
   /react-native@0.72.7(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0):
     resolution: {integrity: sha512-dqVFojOO9rOvyFbbM3/v9/GJR355OSuBhEY4NQlMIRc2w0Xch5MT/2uPoq3+OvJ+5h7a8LFAco3fucSffG0FbA==}
     engines: {node: '>=16'}
@@ -11419,6 +11436,10 @@ packages:
   /unicode-property-aliases-ecmascript@2.1.0:
     resolution: {integrity: sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==}
     engines: {node: '>=4'}
+
+  /uninstall@0.0.0:
+    resolution: {integrity: sha512-pjP/0+A4gsbDVa8XH/S2GZdT9NPJW8NFMy3GI7HnsWG+NAmFSSj3QidNosXBI9cPtxxNExEDdhKFO6sli8K3mA==}
+    dev: false
 
   /unique-filename@1.1.1:
     resolution: {integrity: sha512-Vmp0jIp2ln35UTXuryvjzkjGdRyf9b2lTXuSYUiPmzRcl3FDtYqAwOnTJkAngD9SWhnoJzDbTKwaOrZ+STtxNQ==}

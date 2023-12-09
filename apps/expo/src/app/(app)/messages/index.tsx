@@ -48,7 +48,7 @@ const Messages = () => {
   const { patient, isLoading } = usePatient();
 
   const utils = api.useUtils();
-  const { data: sentMessages } = api.communication.search.useQuery(
+  const { data: sentMessages, isLoading: sentLoading } = api.communication.search.useQuery(
     {
       sender: `Patient/${patientId}`,
     },
@@ -57,7 +57,7 @@ const Messages = () => {
     },
   );
 
-  const { data: receivedMessages } = api.communication.search.useQuery(
+  const { data: receivedMessages, isLoading: receivedLoading } = api.communication.search.useQuery(
     {
       recipient: `Patient/${patientId}`,
     },
@@ -136,12 +136,16 @@ const Messages = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Constants.statusBarHeight + 48}
       >
-        <MessageThread
-          messages={fullThread}
-          practitionerSenderName={
-            practitioner ? getPractitionerName(practitioner) ?? 'Care Team' : 'Care Team'
-          }
-        />
+        {sentLoading || receivedLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <MessageThread
+            messages={fullThread}
+            practitionerSenderName={
+              practitioner ? getPractitionerName(practitioner) ?? 'Care Team' : 'Care Team'
+            }
+          />
+        )}
         <View className="flex flex-row items-center py-4 pl-2">
           <TextInput
             value={messageText}

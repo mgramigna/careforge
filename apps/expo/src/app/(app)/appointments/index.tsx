@@ -1,36 +1,19 @@
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, TouchableOpacity, View } from 'react-native';
 import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { SlotDetail } from '@/components/organisms/SlotDetail';
 import { useAuth } from '@/context/AuthContext';
 import { getPractitionerFromCareTeam } from '@/fhirpath/careteam';
 import { getPractitionerIdFromSchedule } from '@/fhirpath/schedule';
+import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
+import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
-
-import { type Slot } from '@canvas-challenge/canvas';
-
-function groupSlots(slots: Slot[]): Map<string, Slot[]> {
-  const res = new Map<string, Slot[]>();
-
-  slots.forEach((slot) => {
-    const dayOfStart = dayjs(slot.start).startOf('day').toISOString();
-    if (res.has(dayOfStart)) {
-      res.get(dayOfStart)!.push(slot);
-    } else {
-      res.set(dayOfStart, [slot]);
-    }
-  });
-
-  return res;
-}
 
 const Appointments = () => {
   const { patientId } = useAuth();
-  const [appointmentSearchStart, _setAppointmentSearchStart] = useState(
-    dayjs('2023-12-11T00:00:00.0Z'),
-  );
+  const [appointmentSearchStart, setAppointmentSearchStart] = useState(dayjs());
 
   const { data: patientCareteam } = api.careteam.search.useQuery(
     {
@@ -70,30 +53,41 @@ const Appointments = () => {
     },
   );
 
-  const groupedSlots = useMemo(() => {
-    return groupSlots(slots?.entry?.map(({ resource }) => resource) ?? []);
-  }, [slots]);
-
   return patientId && practitionerId ? (
     <ScreenView>
-      {slotsLoading && <ActivityIndicator />}
-      <View className="h-full">
-        {[...groupedSlots.entries()].map(([startDayISO, slots]) => (
-          <View key={startDayISO}>
-            <Text className="pb-8 text-center text-3xl" weight="bold">
-              {dayjs(startDayISO).format('dddd MM/DD/YYYY')}
+      <View className="h-full pb-24">
+        <View>
+          <View className="flex flex-row items-center justify-center pb-8">
+            <TouchableOpacity
+              onPress={() => {
+                setAppointmentSearchStart((curr) => curr.add(-1, 'days'));
+              }}
+            >
+              <Ionicons name="chevron-back" size={32} color={palette.cyan[600]} />
+            </TouchableOpacity>
+            <Text className=" px-4 text-3xl" weight="bold">
+              {appointmentSearchStart.format('dddd MM/DD/YYYY')}
             </Text>
-            <FlatList
-              data={slots}
-              keyExtractor={(slot) => `${slot.start}-${slot.end}`}
-              renderItem={({ item: slot }) => (
-                <View className="my-2">
-                  <SlotDetail slot={slot} patientId={patientId} practitionerId={practitionerId} />
-                </View>
-              )}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                setAppointmentSearchStart((curr) => curr.add(1, 'days'));
+              }}
+            >
+              <Ionicons name="chevron-forward" size={32} color={palette.cyan[600]} />
+            </TouchableOpacity>
           </View>
-        ))}
+          {slotsLoading && <ActivityIndicator />}
+          <FlatList
+            className="pb-20"
+            data={slots?.entry?.map(({ resource }) => resource) ?? []}
+            keyExtractor={(slot) => `${slot.start}-${slot.end}`}
+            renderItem={({ item: slot }) => (
+              <View className="my-2">
+                <SlotDetail slot={slot} patientId={patientId} practitionerId={practitionerId} />
+              </View>
+            )}
+          />
+        </View>
       </View>
     </ScreenView>
   ) : null;
