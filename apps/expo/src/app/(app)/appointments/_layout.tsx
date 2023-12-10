@@ -10,6 +10,7 @@ const TabLayout = () => {
         headerStyle: {
           backgroundColor: palette.coolGray[200],
         },
+        headerTintColor: palette.pink[500],
       }}
     />
   );

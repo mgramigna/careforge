@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
@@ -28,34 +28,44 @@ const Home = () => {
   if (isLoading) {
     return (
       <ScreenView>
-        <ActivityIndicator />
+        <View className="h-full">
+          <ActivityIndicator />
+        </View>
       </ScreenView>
     );
   }
 
   return patient ? (
     <ScreenView>
-      <View className="flex w-full flex-row items-center justify-between">
-        <Text className="text-4xl" weight="bold">
-          Hello, {getFirstName(patient)}
-        </Text>
-        <Text>{dayjs(new Date()).format('dddd MMM DD')}</Text>
-      </View>
-      <View className="mt-24">
-        <Text className="mb-4 text-3xl">Upcoming Appointments</Text>
-        {(appointmentBundle?.total ?? 0) > 0 ? (
-          <HomeAppointmentList
-            appointments={appointmentBundle?.entry?.map(({ resource }) => resource) ?? []}
-          />
-        ) : (
-          <View className="flex h-24 w-full items-center justify-center">
-            <Text italic>No upcoming appointments</Text>
-          </View>
-        )}
-        <Link href="/appointments/" asChild>
-          <Button text="Schedule Appointment" className="mt-4" />
-        </Link>
-      </View>
+      <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
+        <View className="flex w-full flex-row items-center justify-between">
+          <Text className="text-4xl" weight="bold">
+            Hello, {getFirstName(patient)}
+          </Text>
+          <Text>{dayjs(new Date()).format('dddd MMM DD')}</Text>
+        </View>
+        <View className="mt-24">
+          <Text className="mb-4 text-3xl">Upcoming Appointments</Text>
+          {(appointmentBundle?.total ?? 0) > 0 ? (
+            <HomeAppointmentList
+              appointments={appointmentBundle?.entry?.map(({ resource }) => resource) ?? []}
+            />
+          ) : (
+            <View className="flex h-24 w-full items-center justify-center">
+              <Text italic>No upcoming appointments</Text>
+            </View>
+          )}
+          <Link href="/appointments/" asChild>
+            <Button text="Schedule Appointment" className="mt-4" />
+          </Link>
+        </View>
+        <View className="mt-24">
+          <Text className="mb-4 text-3xl">My Allergies</Text>
+        </View>
+        <View className="mt-24">
+          <Text className="mb-4 text-3xl">My Medications</Text>
+        </View>
+      </ScrollView>
     </ScreenView>
   ) : null;
 };

@@ -65,8 +65,13 @@ const Appointments = () => {
 
   return patientId && practitionerId ? (
     <ScreenView>
-      <View className="h-full pb-24">
+      <View className="h-full pb-36">
         <View>
+          <Text className="text-3xl" weight="bold">
+            Schedule an Appointment
+          </Text>
+        </View>
+        <View className="mt-12">
           <View className="flex flex-row items-center justify-center pb-8">
             <Modal
               animationType="slide"
@@ -101,7 +106,7 @@ const Appointments = () => {
               <Ionicons name="chevron-back" size={32} color={palette.cyan[600]} />
             </TouchableOpacity>
             <Pressable onPress={() => setShowDatePicker(true)}>
-              <Text className=" px-4 text-3xl" weight="bold">
+              <Text className="px-4 text-2xl" weight="bold">
                 {appointmentSearchStart.format('dddd MM/DD/YYYY')}
               </Text>
             </Pressable>
@@ -115,6 +120,7 @@ const Appointments = () => {
           </View>
           {slotsLoading && <ActivityIndicator />}
           <FlatList
+            showsVerticalScrollIndicator={false}
             className="pb-20"
             data={slots?.entry?.map(({ resource }) => resource) ?? []}
             keyExtractor={(slot) => `${slot.start}-${slot.end}`}
