@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { PatientAvatar } from '@/components/atoms/PatientAvatar';
 import { Text } from '@/components/atoms/Text';
@@ -40,7 +40,7 @@ const Profile = () => {
         <Text className="mt-24 text-2xl" weight="bold">
           Settings
         </Text>
-        <View className="mt-4 flex">
+        <View className="mt-4">
           <TouchableOpacity
             onPress={() => {
               router.push('/profile/about');
@@ -63,6 +63,24 @@ const Profile = () => {
             <ProfileItem
               title="Billing"
               leftIcon={<Ionicons name="card-outline" size={36} color={palette.coolGray[400]} />}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text className="mt-12 text-2xl" weight="bold">
+          Legal
+        </Text>
+        <View className="mt-4">
+          <TouchableOpacity
+            onPress={() => {
+              router.push('/profile/documents');
+            }}
+            className="border-coolGray-200 border-y"
+          >
+            <ProfileItem
+              title="Documents"
+              leftIcon={
+                <Ionicons name="document-outline" size={36} color={palette.coolGray[400]} />
+              }
             />
           </TouchableOpacity>
         </View>

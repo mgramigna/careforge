@@ -46,7 +46,7 @@ export const ConsentSchema = createDomainResourceSchema('Consent').extend({
   category: CodeableConceptSchema.array(),
   patient: ReferenceSchema,
   dateTime: DateTimeSchema,
-  sourceAttachment: AttachmentSchema,
+  sourceAttachment: AttachmentSchema.optional(),
   provision: ConsentProvisionSchema,
 });
 

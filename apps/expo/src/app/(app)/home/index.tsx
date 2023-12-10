@@ -39,7 +39,7 @@ const Home = () => {
     <ScreenView>
       <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
         <View className="flex w-full flex-row items-center justify-between">
-          <Text className="text-4xl" weight="bold">
+          <Text className="text-3xl" weight="bold">
             Hello, {getFirstName(patient)}
           </Text>
           <Text>{dayjs(new Date()).format('dddd MMM DD')}</Text>
