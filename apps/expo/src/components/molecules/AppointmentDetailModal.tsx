@@ -1,4 +1,4 @@
-import { Linking, Modal, Pressable, View } from 'react-native';
+import { Linking, Modal, Platform, Pressable, View } from 'react-native';
 
 import { type Address, type Appointment, type Location } from '@canvas-challenge/canvas';
 
@@ -36,10 +36,14 @@ export const AppointmentDetailModal = ({
           {location?.address && (
             <Pressable
               onPress={() => {
-                // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                Linking.openURL(
-                  `https://maps.google.com?q=${getAddressUrlQuery(location.address!)}`,
-                );
+                const url = Platform.select({
+                  ios: `maps:0,0?q=${getAddressUrlQuery(location.address!)}`,
+                  android: `geo:0,0?q=${getAddressUrlQuery(location.address!)}`,
+                });
+                if (url) {
+                  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                  Linking.openURL(url);
+                }
               }}
             >
               <Text>{location?.name}</Text>
