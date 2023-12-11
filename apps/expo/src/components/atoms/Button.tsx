@@ -1,4 +1,5 @@
 import { ActivityIndicator, TouchableOpacity, type TouchableOpacityProps } from 'react-native';
+import { cn } from '@/utils/cn';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { Text } from './Text';
@@ -24,7 +25,7 @@ export const Button = ({ variant, text, isLoading, className, ...props }: Button
   return (
     <TouchableOpacity
       {...props}
-      className={buttonVariants({ variant, className })}
+      className={cn(buttonVariants({ variant, className }), props.disabled && 'bg-coolGray-400/50')}
       disabled={isLoading ?? props.disabled}
     >
       <Text className="text-coolGray-50 text-center" weight="bold">

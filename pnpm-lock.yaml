@@ -44,6 +44,12 @@ importers:
       '@expo/vector-icons':
         specifier: ^13.0.0
         version: 13.0.0
+      '@hookform/resolvers':
+        specifier: ^3.3.2
+        version: 3.3.2(react-hook-form@7.49.0)
+      '@react-native-community/datetimepicker':
+        specifier: 7.2.0
+        version: 7.2.0
       '@tanstack/react-query':
         specifier: ^5.8.7
         version: 5.8.7(react-dom@18.2.0)(react-native@0.72.7)(react@18.2.0)
@@ -104,12 +110,21 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-hook-form:
+        specifier: ^7.49.0
+        version: 7.49.0(react@18.2.0)
       react-native:
         specifier: 0.72.7
         version: 0.72.7(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
+      react-native-date-picker:
+        specifier: ^4.3.4
+        version: 4.3.4(react-native@0.72.7)(react@18.2.0)
       react-native-gesture-handler:
         specifier: ~2.12.0
         version: 2.12.1(react-native@0.72.7)(react@18.2.0)
+      react-native-modal-datetime-picker:
+        specifier: ^17.1.0
+        version: 17.1.0(@react-native-community/datetimepicker@7.2.0)(react-native@0.72.7)
       react-native-reanimated:
         specifier: ~3.3.0
         version: 3.3.0(@babel/core@7.23.2)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.22.5)(@babel/plugin-transform-shorthand-properties@7.22.5)(@babel/plugin-transform-template-literals@7.22.5)(react-native@0.72.7)(react@18.2.0)
@@ -131,6 +146,9 @@ importers:
       ts-pattern:
         specifier: ^5.0.5
         version: 5.0.5
+      zod:
+        specifier: ^3.22.2
+        version: 3.22.2
     devDependencies:
       '@babel/core':
         specifier: ^7.23.2
@@ -2473,6 +2491,14 @@ packages:
       '@hapi/hoek': 9.3.0
     dev: false
 
+  /@hookform/resolvers@3.3.2(react-hook-form@7.49.0):
+    resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.49.0(react@18.2.0)
+    dev: false
+
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -3100,6 +3126,12 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /@react-native-community/datetimepicker@7.2.0:
+    resolution: {integrity: sha512-dO1sQy83M/EvnHE2egto05iwXZX7EYn5f/VDMp6afZFRFXRiRo7CzB3VFg4B55gJRJMNBv06NYMLPM3SlpnEGQ==}
+    dependencies:
+      invariant: 2.2.4
     dev: false
 
   /@react-native/assets-registry@0.72.0:
@@ -8262,6 +8294,7 @@ packages:
 
   /loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
     dependencies:
       js-tokens: 4.0.0
     dev: false
@@ -9832,6 +9865,15 @@ packages:
       shallowequal: 1.1.0
     dev: false
 
+  /react-hook-form@7.49.0(react@18.2.0):
+    resolution: {integrity: sha512-gf4qyY4WiqK2hP/E45UUT6wt3Khl49pleEVcIzxhLBrD6m+GMWtLRk0vMrRv45D1ZH8PnpXFwRPv0Pewske2jw==}
+    engines: {node: '>=18', pnpm: '8'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -9874,6 +9916,16 @@ packages:
       - supports-color
     dev: false
 
+  /react-native-date-picker@4.3.4(react-native@0.72.7)(react@18.2.0):
+    resolution: {integrity: sha512-m02Q49mLn3p11CPvXkOBeUDTLrv1Khubd5Tyrs4pUXYr2dXcPDpGWVw5X0zNYrWWvpDuHKKv8cwBwYR3xNqi3Q==}
+    peerDependencies:
+      react: '>= 17.0.1'
+      react-native: '>= 0.64.3'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.72.7(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
+    dev: false
+
   /react-native-gesture-handler@2.12.1(react-native@0.72.7)(react@18.2.0):
     resolution: {integrity: sha512-deqh36bw82CFUV9EC4tTo2PP1i9HfCOORGS3Zmv71UYhEZEHkzZv18IZNPB+2Awzj45vLIidZxGYGFxHlDSQ5A==}
     peerDependencies:
@@ -9886,6 +9938,17 @@ packages:
       lodash: 4.17.21
       prop-types: 15.8.1
       react: 18.2.0
+      react-native: 0.72.7(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
+    dev: false
+
+  /react-native-modal-datetime-picker@17.1.0(@react-native-community/datetimepicker@7.2.0)(react-native@0.72.7):
+    resolution: {integrity: sha512-jfTwfaCLtBffYbQ+pOGFLM+J5HmUh3vb9rT0JrrQPjxzecdc8pNYreB1c96+mVuq8bDCvaCdIeuEsslTqLJL0Q==}
+    peerDependencies:
+      '@react-native-community/datetimepicker': '>=6.7.0'
+      react-native: '>=0.65.0'
+    dependencies:
+      '@react-native-community/datetimepicker': 7.2.0
+      prop-types: 15.8.1
       react-native: 0.72.7(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
     dev: false
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { Link, Redirect } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
@@ -7,12 +7,35 @@ import { TextInput } from '@/components/atoms/TextInput';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/utils/api';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { type PatientBundle } from '@canvas-challenge/canvas';
 
+const SignInFormSchema = z.object({
+  email: z.string().email().min(1),
+});
+
+type SignInFormType = z.infer<typeof SignInFormSchema>;
+
 const SignIn = () => {
   const { signIn, patientId } = useAuth();
-  const [email, setEmail] = useState('');
+
+  const {
+    control,
+    formState: { errors, isValid },
+    handleSubmit,
+    watch,
+  } = useForm<SignInFormType>({
+    defaultValues: {
+      email: '',
+    },
+    resolver: zodResolver(SignInFormSchema),
+    mode: 'onChange',
+  });
+
+  const email = watch('email');
 
   const { isLoading: patientSearchLoading, refetch } = api.patient.search.useQuery(
     {
@@ -54,18 +77,31 @@ const SignIn = () => {
               Log in to start owning your health data
             </Text>
             <View className="mt-28">
-              <TextInput
-                autoCapitalize="none"
-                textContentType="emailAddress"
-                keyboardType="email-address"
-                autoComplete="email"
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Enter your email..."
-                onSubmitEditing={searchForPatient}
+              <Text className="mb-2 pl-1 text-xl">Email</Text>
+              <Controller
+                control={control}
+                name="email"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    hasError={!!errors.email}
+                    autoCapitalize="none"
+                    textContentType="emailAddress"
+                    keyboardType="email-address"
+                    autoComplete="email"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    placeholder="Enter your email..."
+                  />
+                )}
               />
               <View className="mt-10">
-                <Button isLoading={patientSearchLoading} text="Login" onPress={searchForPatient} />
+                <Button
+                  disabled={!isValid}
+                  isLoading={patientSearchLoading}
+                  text="Login"
+                  onPress={handleSubmit(searchForPatient)}
+                />
               </View>
               <View className="mt-10">
                 <Text className="text-xl">
