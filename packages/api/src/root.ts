@@ -1,6 +1,3 @@
-import path from 'path';
-import dotenv from 'dotenv';
-
 import {
   AllergenService,
   AllergyIntoleranceService,
@@ -77,10 +74,6 @@ import { createScheduleRouter } from './router/schedule';
 import { createSlotRouter } from './router/slot';
 import { createTaskRouter } from './router/task';
 import { createTRPCRouter } from './trpc';
-
-dotenv.config({
-  path: path.join(__dirname, '../../../.env'),
-});
 
 const allergenService = AllergenService({ baseUrl: process.env.CANVAS_FHIR_BASE_URL! });
 const allergyIntoleranceService = AllergyIntoleranceService({
