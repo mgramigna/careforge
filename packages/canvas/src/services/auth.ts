@@ -8,15 +8,11 @@ const AuthTokenResponseBodySchema = z.object({
   smart_style_url: z.string(),
 });
 
-export async function getAuthToken({
-  clientId,
-  clientSecret,
-  baseUrl,
-}: {
-  clientId: string;
-  clientSecret: string;
-  baseUrl: string;
-}): Promise<{ token: string; expiresInSeconds: number }> {
+export async function getAuthToken(
+  { clientId, clientSecret, baseUrl }: { clientId: string; clientSecret: string; baseUrl: string },
+): Promise<{ token: string; expiresInSeconds: number }> {
+  console.log('clientId', clientId);
+  console.log('baseUrl', baseUrl);
   const response = await fetch(`${baseUrl}/auth/token/`, {
     method: 'POST',
     headers: {
@@ -28,6 +24,8 @@ export async function getAuthToken({
       client_secret: clientSecret,
     }),
   });
+
+  console.log(JSON.stringify(response, null, 2));
 
   const json = AuthTokenResponseBodySchema.parse(await response.json());
 
