@@ -69,6 +69,7 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
 
       if (result.isErr()) {
         // TODO
+        console.error(result.error);
         return null;
       }
 

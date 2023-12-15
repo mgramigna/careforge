@@ -9,7 +9,7 @@ import { createDomainResourceSchema } from '../util/domainresource';
 import { BundleSchema } from './bundle';
 
 export const MedicationStatementSchema = createDomainResourceSchema('MedicationStatement').extend({
-  status: z.enum(['active', 'entered-in-error', 'stopped']),
+  status: z.enum(['active', 'entered-in-error', 'stopped', 'intended']),
   medicationCodeableConcept: CodeableConceptSchema.optional(),
   medicationReference: ReferenceSchema.optional(),
   subject: ReferenceSchema,

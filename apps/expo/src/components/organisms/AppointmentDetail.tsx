@@ -2,10 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { getLocation, getPractitionerId, getReason } from '@/fhirpath/appointment';
 import { getPractitionerName } from '@/fhirpath/practitioner';
-import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
 import { HARDCODED_OFFICE_LOCATION_ID } from '@/utils/constants';
-import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
 import { type Appointment } from '@canvas-challenge/canvas';
@@ -73,11 +71,8 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
           setDetailModalVisible(true);
         }}
       >
-        <View className="bg-coolGray-100 border-coolGray-300 rounded-md border px-12 py-4">
-          <View className="absolute left-2 top-2 w-12">
-            <Ionicons name="calendar" size={36} color={palette.cyan[800]} />
-          </View>
-          <View className="ml-4">
+        <View className="bg-coolGray-100 border-coolGray-300 rounded-md border px-8 py-4">
+          <View className="">
             {appointment.start &&
               appointment.end &&
               renderAppointmentDate({

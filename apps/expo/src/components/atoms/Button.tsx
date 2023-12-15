@@ -8,7 +8,7 @@ const buttonVariants = cva('rounded-md p-6 inline-flex justify-center flex-row i
   variants: {
     variant: {
       default: 'bg-pink-500',
-      secondary: 'bg-coolGray-500',
+      secondary: 'bg-coolGray-700',
     },
   },
   defaultVariants: {

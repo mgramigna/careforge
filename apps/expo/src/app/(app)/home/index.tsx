@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
+import { AllergyDetail } from '@/components/molecules/AllergyDetail';
+import { MedicationDetail } from '@/components/molecules/MedicationDetail';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { HomeAppointmentList } from '@/components/organisms/HomeAppointmentList';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
 import { getFirstName } from '@/fhirpath/patient';
+import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
+import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
 const Home = () => {
@@ -24,6 +28,28 @@ const Home = () => {
       enabled: !!patientId,
     },
   );
+
+  const { data: allergyBundle } = api.allergyintolerance.search.useQuery(
+    {
+      patient: patientId!,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
+
+  const { data: medicationStatementBundle } = api.medicationstatement.search.useQuery(
+    {
+      patient: patientId!,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
+
+  console.log({
+    medicationStatementBundle,
+  });
 
   if (isLoading) {
     return (
@@ -45,7 +71,10 @@ const Home = () => {
           <Text>{dayjs(new Date()).format('dddd MMM DD')}</Text>
         </View>
         <View className="mt-24">
-          <Text className="mb-4 text-3xl">Upcoming Appointments</Text>
+          <View className="mb-4 flex flex-row items-center">
+            <Ionicons name="calendar" size={24} color={palette.purple[300]} />
+            <Text className="ml-2 text-3xl">Upcoming Appointments</Text>
+          </View>
           {(appointmentBundle?.total ?? 0) > 0 ? (
             <HomeAppointmentList
               appointments={appointmentBundle?.entry?.map(({ resource }) => resource) ?? []}
@@ -60,10 +89,32 @@ const Home = () => {
           </Link>
         </View>
         <View className="mt-24">
-          <Text className="mb-4 text-3xl">My Allergies</Text>
+          <View className="mb-4 flex flex-row items-center">
+            <Ionicons name="flower" size={24} color={palette.purple[300]} />
+            <Text className="ml-2 text-3xl">My Allergies</Text>
+          </View>
+          {allergyBundle?.entry?.map(({ resource }) => (
+            <Fragment key={resource.id}>
+              <AllergyDetail allergyIntolerance={resource} />
+            </Fragment>
+          ))}
+          <Link href="/home/allergy" asChild>
+            <Button text="Update Allergies" className="mt-4" />
+          </Link>
         </View>
         <View className="mt-24">
-          <Text className="mb-4 text-3xl">My Medications</Text>
+          <View className="mb-4 flex flex-row items-center">
+            <Ionicons name="medkit" size={24} color={palette.purple[300]} />
+            <Text className="ml-2 text-3xl">My Medications</Text>
+          </View>
+          {medicationStatementBundle?.entry?.map(({ resource }) => (
+            <Fragment key={resource.id}>
+              <MedicationDetail medicationStatement={resource} />
+            </Fragment>
+          ))}
+          <Link href="/home/medication" asChild>
+            <Button text="Update Medications" className="mt-4" />
+          </Link>
         </View>
       </ScrollView>
     </ScreenView>

@@ -27,7 +27,7 @@ export async function makeFhirGetRequest<T>(
     }
 
     if (e instanceof Error) {
-      return err('bad');
+      return err(e.message);
     }
 
     return err('bad');
@@ -66,7 +66,7 @@ export async function makeFhirCreateRequest<T>(args: {
     }
 
     if (e instanceof Error) {
-      return err('bad');
+      return err(e.message);
     }
 
     return err('bad');
@@ -96,7 +96,7 @@ export async function makeFhirUpdateRequest<T>(args: {
     }
 
     if (e instanceof Error) {
-      return err('bad');
+      return err(e.message);
     }
 
     return err('bad');

@@ -18,10 +18,6 @@ const Documents = () => {
     },
   );
 
-  console.log({
-    consentBundle,
-  });
-
   return patientId ? (
     <ScreenView>
       <View className="h-full">

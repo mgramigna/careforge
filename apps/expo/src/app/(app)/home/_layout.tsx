@@ -5,6 +5,7 @@ const TabLayout = () => {
   return (
     <Stack
       screenOptions={{
+        presentation: 'modal',
         headerBackTitle: 'Back',
         headerTitle: '',
         headerStyle: {
