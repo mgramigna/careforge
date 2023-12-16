@@ -3,8 +3,6 @@ import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
 import { appRouter, createTRPCContext } from '@canvas-challenge/api';
 
-export const runtime = 'edge';
-
 function setCorsHeaders(res: Response) {
   res.headers.set('Access-Control-Allow-Origin', '*');
   res.headers.set('Access-Control-Request-Method', '*');
