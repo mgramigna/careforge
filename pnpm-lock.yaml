@@ -225,9 +225,9 @@ importers:
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-24-13-58-38.113
-      date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
       next:
         specifier: ^14.0.3
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)

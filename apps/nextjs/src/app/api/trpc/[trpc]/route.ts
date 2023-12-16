@@ -1,6 +1,7 @@
 import { type NextRequest } from 'next/server';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { addSeconds } from 'date-fns';
+import dayjs from 'dayjs';
 
 import { appRouter, createTRPCContext } from '@canvas-challenge/api';
 import { getAuthToken } from '@canvas-challenge/canvas';
@@ -48,7 +49,7 @@ const handler = async (req: NextRequest) => {
 
     token = entry.token;
 
-    const isExpired = addSeconds(entry.created, entry.expiresInSeconds) < new Date();
+    const isExpired = dayjs(entry.created).add(entry.expiresInSeconds, 'seconds') < dayjs();
 
     if (isExpired) {
       token = await getNewAccessToken();
