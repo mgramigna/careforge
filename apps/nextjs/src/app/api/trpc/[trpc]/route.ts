@@ -26,7 +26,7 @@ const handler = async (req: NextRequest) => {
     // @ts-expect-error testing
     router: appRouter,
     req,
-    createContext: () => createTRPCContext(),
+    createContext: createTRPCContext,
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);
     },
