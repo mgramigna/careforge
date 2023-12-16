@@ -2,8 +2,7 @@ import { z } from 'zod';
 
 import { CodingSchema } from './coding';
 
-export const ExtensionSchema = z.object({
-  // TODO: sub extensions?
+const BaseExtensionSchema = z.object({
   url: z.string(),
   valueBoolean: z.boolean().optional(),
   valueCode: z.string().optional(),
@@ -20,5 +19,10 @@ export const ExtensionSchema = z.object({
     })
     .optional(),
   valueString: z.string().optional(),
+  valueCoding: CodingSchema.optional(),
   // TODO: other value[x]
+});
+
+export const ExtensionSchema = BaseExtensionSchema.extend({
+  extension: z.lazy(() => BaseExtensionSchema.array().optional()),
 });

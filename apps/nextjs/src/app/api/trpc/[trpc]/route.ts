@@ -1,6 +1,5 @@
 import { type NextRequest } from 'next/server';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { addSeconds } from 'date-fns';
 import dayjs from 'dayjs';
 
 import { appRouter, createTRPCContext } from '@canvas-challenge/api';

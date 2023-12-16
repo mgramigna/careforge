@@ -37,3 +37,24 @@ export function getPhoto(patient: Patient): string | undefined {
 
   return photoUrl;
 }
+
+const RACE_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race';
+const ETHNICITY_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity';
+
+export function getRaces(patient: Patient): string[] {
+  const races = fhirpath.evaluate(
+    patient,
+    `extension.where(url='${RACE_EXTENSION_URL}').extension.where(url='ombCategory').valueCoding.display`,
+  ) as string[];
+
+  return races;
+}
+
+export function getEthnicities(patient: Patient): string[] {
+  const races = fhirpath.evaluate(
+    patient,
+    `extension.where(url='${ETHNICITY_EXTENSION_URL}').extension.where(url='ombCategory').valueCoding.display`,
+  ) as string[];
+
+  return races;
+}

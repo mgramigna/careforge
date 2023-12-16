@@ -1,8 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { usePatient } from '@/context/PatientContext';
+import { getEthnicities, getRaces } from '@/fhirpath/patient';
 
 const About = () => {
   const { patient, isLoading } = usePatient();
@@ -19,11 +20,13 @@ const About = () => {
 
   return patient ? (
     <ScreenView>
-      <View className="h-full">
+      <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
         <Text className="text-2xl" weight="bold">
           About Me
         </Text>
-      </View>
+        <Text>{getRaces(patient)}</Text>
+        <Text>{getEthnicities(patient)}</Text>
+      </ScrollView>
     </ScreenView>
   ) : null;
 };
