@@ -1,7 +1,5 @@
 import { getAuthToken } from '@canvas-challenge/canvas';
 
-export const runtime = 'edge';
-
 function setCorsHeaders(res: Response) {
   res.headers.set('Access-Control-Allow-Origin', '*');
   res.headers.set('Access-Control-Request-Method', '*');
