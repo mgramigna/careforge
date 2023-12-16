@@ -29,6 +29,12 @@ export async function getAuthToken({
     }),
   });
 
+  if (!response.ok) {
+    return response.text().then((text) => {
+      throw new Error(text);
+    });
+  }
+
   const json = AuthTokenResponseBodySchema.parse(await response.json());
 
   return { token: json.access_token, expiresInSeconds: json.expires_in };

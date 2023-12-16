@@ -201,6 +201,9 @@ importers:
       '@canvas-challenge/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@canvas-challenge/canvas':
+        specifier: workspace:*
+        version: link:../../packages/canvas
       '@tanstack/react-query':
         specifier: ^5.8.7
         version: 5.8.7(react-dom@18.2.0)(react-native@0.72.7)(react@18.2.0)
