@@ -1,6 +1,6 @@
 import { type Appointment, type Communication } from '@canvas-challenge/canvas';
 
-import { HARDCODED_OFFICE_LOCATION_ID } from './constants';
+import { HARDCODED_OFFICE_LOCATION_ID_FOR_CREATE } from './constants';
 
 export function getIdPartFromReference(reference: string): string {
   const [_resourceType, idPart] = reference.split('/');
@@ -78,14 +78,12 @@ export function getAppointmentResource({
         },
       ],
     },
-    ...(appointmentType === 'office' && {
-      supportingInformation: [
-        {
-          reference: `Location/${HARDCODED_OFFICE_LOCATION_ID}`,
-          type: 'Location',
-        },
-      ],
-    }),
+    supportingInformation: [
+      {
+        reference: `Location/${HARDCODED_OFFICE_LOCATION_ID_FOR_CREATE}`,
+        type: 'Location',
+      },
+    ],
     ...(reasonText && {
       reasonCode: [
         {

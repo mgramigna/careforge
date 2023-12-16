@@ -47,10 +47,6 @@ const Home = () => {
     },
   );
 
-  console.log({
-    medicationStatementBundle,
-  });
-
   if (isLoading) {
     return (
       <ScreenView>

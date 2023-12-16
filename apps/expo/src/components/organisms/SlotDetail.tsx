@@ -29,18 +29,21 @@ export const SlotDetail = ({
     },
   });
 
-  const handleAppointmentConfirm = useCallback(() => {
-    const appointment = getAppointmentResource({
-      practitionerId,
-      patientId,
-      appointmentType: 'office', // TODO
-      reasonText: 'testing auto creation',
-      start: slot.start,
-      end: slot.end,
-    });
+  const handleAppointmentConfirm = useCallback(
+    (appointmentType: 'office' | 'telehealth', reasonText?: string) => {
+      const appointment = getAppointmentResource({
+        practitionerId,
+        patientId,
+        appointmentType,
+        reasonText,
+        start: slot.start,
+        end: slot.end,
+      });
 
-    createAppointment.mutate(appointment);
-  }, [slot, createAppointment, practitionerId, patientId]);
+      createAppointment.mutate(appointment);
+    },
+    [slot, createAppointment, practitionerId, patientId],
+  );
 
   return (
     <>
@@ -52,6 +55,8 @@ export const SlotDetail = ({
         />
       </View>
       <ScheduleAppointmentModal
+        practitionerId={practitionerId}
+        isConfirming={createAppointment.status === 'pending'}
         onConfirm={handleAppointmentConfirm}
         onClose={() => setScheduleModalOpen(false)}
         isOpen={scheduleModalOpen}
