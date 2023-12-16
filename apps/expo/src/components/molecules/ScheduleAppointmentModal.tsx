@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { ActivityIndicator, Modal, View } from 'react-native';
+import { ActivityIndicator, Modal, ScrollView, View } from 'react-native';
 import { getLocationAddress } from '@/fhirpath/location';
 import { getPractitionerName } from '@/fhirpath/practitioner';
 import { usePractitioner } from '@/hooks/usePractitioner';
@@ -75,7 +75,7 @@ export const ScheduleAppointmentModal = ({
       onRequestClose={onClose}
     >
       <ScreenView>
-        <View className="flex h-full">
+        <ScrollView className="flex h-full">
           {isLoading ? (
             <ActivityIndicator />
           ) : (
@@ -160,7 +160,7 @@ export const ScheduleAppointmentModal = ({
               </View>
             </>
           )}
-        </View>
+        </ScrollView>
       </ScreenView>
     </Modal>
   );
