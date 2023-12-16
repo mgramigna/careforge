@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native';
 import { getCommunicationStringPayload } from '@/fhirpath/communication';
 import dayjs from 'dayjs';
 
-import { type Communication } from '@canvas-challenge/canvas';
+import { type Communication } from '@careforge/canvas';
 
 import { ChatMessage } from '../molecules/ChatMessage';
 

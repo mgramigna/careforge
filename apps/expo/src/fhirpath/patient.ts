@@ -1,6 +1,6 @@
 import fhirpath from 'fhirpath';
 
-import { type Patient } from '@canvas-challenge/canvas';
+import { type Patient } from '@careforge/canvas';
 
 export function getFirstName(patient: Patient): string {
   const [usualFirstName] = fhirpath.evaluate(

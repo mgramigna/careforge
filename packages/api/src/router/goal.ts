@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { GoalSearchArgsSchema, type GoalServiceType } from '@canvas-challenge/canvas';
+import { GoalSearchArgsSchema, type GoalServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

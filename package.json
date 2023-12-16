@@ -1,5 +1,5 @@
 {
-  "name": "canvas-challenge",
+  "name": "careforge",
   "private": true,
   "engines": {
     "node": ">=18.18.2"
@@ -20,7 +20,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@canvas-challenge/prettier-config": "workspace:*",
+    "@careforge/prettier-config": "workspace:*",
     "@turbo/gen": "^1.10.16",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
@@ -28,7 +28,7 @@
     "turbo": "^1.10.16",
     "typescript": "^5.2.2"
   },
-  "prettier": "@canvas-challenge/prettier-config",
+  "prettier": "@careforge/prettier-config",
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "pnpm format:fix"

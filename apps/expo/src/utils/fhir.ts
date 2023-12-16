@@ -1,4 +1,4 @@
-import { type Appointment, type Communication } from '@canvas-challenge/canvas';
+import { type Appointment, type Communication } from '@careforge/canvas';
 
 import { HARDCODED_OFFICE_LOCATION_ID_FOR_CREATE } from './constants';
 

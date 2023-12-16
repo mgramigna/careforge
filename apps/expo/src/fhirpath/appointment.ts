@@ -1,7 +1,7 @@
 import { getIdPartFromReference } from '@/utils/fhir';
 import fhirpath from 'fhirpath';
 
-import { type Appointment } from '@canvas-challenge/canvas';
+import { type Appointment } from '@careforge/canvas';
 
 export function getLocation(appointment: Appointment): string | null {
   const [result] = fhirpath.evaluate(

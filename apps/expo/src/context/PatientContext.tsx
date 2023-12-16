@@ -1,7 +1,7 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
 import { api } from '@/utils/api';
 
-import { type Patient } from '@canvas-challenge/canvas';
+import { type Patient } from '@careforge/canvas';
 
 interface PatientContextType {
   patient?: Patient | null;

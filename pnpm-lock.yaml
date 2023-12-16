@@ -8,7 +8,7 @@ importers:
 
   .:
     devDependencies:
-      '@canvas-challenge/prettier-config':
+      '@careforge/prettier-config':
         specifier: workspace:*
         version: link:tooling/prettier
       '@turbo/gen':
@@ -32,7 +32,7 @@ importers:
 
   apps/expo:
     dependencies:
-      '@canvas-challenge/canvas':
+      '@careforge/canvas':
         specifier: workspace:*
         version: link:../../packages/canvas
       '@expo-google-fonts/open-sans':
@@ -159,19 +159,19 @@ importers:
       '@babel/runtime':
         specifier: ^7.23.2
         version: 7.23.2
-      '@canvas-challenge/api':
+      '@careforge/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@canvas-challenge/eslint-config':
+      '@careforge/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@canvas-challenge/prettier-config':
+      '@careforge/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@canvas-challenge/tailwind-config':
+      '@careforge/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
-      '@canvas-challenge/tsconfig':
+      '@careforge/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@expo/config-plugins':
@@ -198,10 +198,10 @@ importers:
 
   apps/nextjs:
     dependencies:
-      '@canvas-challenge/api':
+      '@careforge/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@canvas-challenge/canvas':
+      '@careforge/canvas':
         specifier: workspace:*
         version: link:../../packages/canvas
       '@tanstack/react-query':
@@ -244,16 +244,16 @@ importers:
         specifier: ^3.22.2
         version: 3.22.2
     devDependencies:
-      '@canvas-challenge/eslint-config':
+      '@careforge/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@canvas-challenge/prettier-config':
+      '@careforge/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@canvas-challenge/tailwind-config':
+      '@careforge/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
-      '@canvas-challenge/tsconfig':
+      '@careforge/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
@@ -283,7 +283,7 @@ importers:
 
   packages/api:
     dependencies:
-      '@canvas-challenge/canvas':
+      '@careforge/canvas':
         specifier: workspace:*
         version: link:../canvas
       '@trpc/client':
@@ -305,13 +305,13 @@ importers:
         specifier: ^3.22.2
         version: 3.22.2
     devDependencies:
-      '@canvas-challenge/eslint-config':
+      '@careforge/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@canvas-challenge/prettier-config':
+      '@careforge/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@canvas-challenge/tsconfig':
+      '@careforge/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       eslint:
@@ -339,13 +339,13 @@ importers:
         specifier: ^3.22.2
         version: 3.22.2
     devDependencies:
-      '@canvas-challenge/eslint-config':
+      '@careforge/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
-      '@canvas-challenge/prettier-config':
+      '@careforge/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@canvas-challenge/tsconfig':
+      '@careforge/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/jest':
@@ -397,10 +397,10 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0(eslint@8.53.0)
     devDependencies:
-      '@canvas-challenge/prettier-config':
+      '@careforge/prettier-config':
         specifier: workspace:*
         version: link:../prettier
-      '@canvas-challenge/tsconfig':
+      '@careforge/tsconfig':
         specifier: workspace:*
         version: link:../typescript
       '@types/eslint':
@@ -427,7 +427,7 @@ importers:
         specifier: ^0.5.7
         version: 0.5.7(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.1.0)
     devDependencies:
-      '@canvas-challenge/tsconfig':
+      '@careforge/tsconfig':
         specifier: workspace:*
         version: link:../typescript
       typescript:
@@ -443,13 +443,13 @@ importers:
         specifier: 3.3.5
         version: 3.3.5
     devDependencies:
-      '@canvas-challenge/eslint-config':
+      '@careforge/eslint-config':
         specifier: workspace:*
         version: link:../eslint
-      '@canvas-challenge/prettier-config':
+      '@careforge/prettier-config':
         specifier: workspace:*
         version: link:../prettier
-      '@canvas-challenge/tsconfig':
+      '@careforge/tsconfig':
         specifier: workspace:*
         version: link:../typescript
       eslint:

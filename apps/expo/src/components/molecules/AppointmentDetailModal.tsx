@@ -1,6 +1,6 @@
 import { Linking, Modal, Platform, Pressable, View } from 'react-native';
 
-import { type Address, type Appointment, type Location } from '@canvas-challenge/canvas';
+import { type Address, type Appointment, type Location } from '@careforge/canvas';
 
 import { Text } from '../atoms/Text';
 import { ScreenView } from './ScreenView';

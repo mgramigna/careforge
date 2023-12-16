@@ -1,10 +1,6 @@
 import { z } from 'zod';
 
-import {
-  ConsentSchema,
-  ConsentSearchArgsSchema,
-  type ConsentServiceType,
-} from '@canvas-challenge/canvas';
+import { ConsentSchema, ConsentSearchArgsSchema, type ConsentServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

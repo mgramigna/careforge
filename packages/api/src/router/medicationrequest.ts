@@ -3,7 +3,7 @@ import { z } from 'zod';
 import {
   MedicationRequestSearchArgsSchema,
   type MedicationRequestServiceType,
-} from '@canvas-challenge/canvas';
+} from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

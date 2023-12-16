@@ -1,10 +1,6 @@
 import { z } from 'zod';
 
-import {
-  PatientSchema,
-  PatientSearchArgsSchema,
-  type PatientServiceType,
-} from '@canvas-challenge/canvas';
+import { PatientSchema, PatientSearchArgsSchema, type PatientServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

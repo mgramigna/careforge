@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { MedicationSearchArgsSchema, type MedicationServiceType } from '@canvas-challenge/canvas';
+import { MedicationSearchArgsSchema, type MedicationServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

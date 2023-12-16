@@ -3,7 +3,7 @@ import nativewind from 'nativewind/preset';
 import { type Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
 
-import baseConfig from '@canvas-challenge/tailwind-config';
+import baseConfig from '@careforge/tailwind-config';
 
 import { palette } from './src/theme/colors';
 

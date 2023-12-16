@@ -4,7 +4,7 @@ import {
   ObservationSchema,
   ObservationSearchArgsSchema,
   type ObservationServiceType,
-} from '@canvas-challenge/canvas';
+} from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

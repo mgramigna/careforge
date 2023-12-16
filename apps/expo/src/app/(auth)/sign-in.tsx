@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { type PatientBundle } from '@canvas-challenge/canvas';
+import { type PatientBundle } from '@careforge/canvas';
 
 const SignInFormSchema = z.object({
   email: z.string().email().min(1),

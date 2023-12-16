@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { getAllergen, getSeverityText } from '@/fhirpath/allergyintolerance';
 
-import { type AllergyIntolerance } from '@canvas-challenge/canvas';
+import { type AllergyIntolerance } from '@careforge/canvas';
 
 import { Text } from '../atoms/Text';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@canvas-challenge/expo",
+  "name": "@careforge/expo",
   "version": "0.1.0",
   "private": true,
   "main": "expo-router/entry",
@@ -15,7 +15,7 @@
     "ios": "expo run:ios"
   },
   "dependencies": {
-    "@canvas-challenge/canvas": "workspace:*",
+    "@careforge/canvas": "workspace:*",
     "@expo-google-fonts/open-sans": "^0.2.3",
     "@expo/metro-config": "^0.10.7",
     "@expo/vector-icons": "^13.0.0",
@@ -59,11 +59,11 @@
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "@babel/runtime": "^7.23.2",
-    "@canvas-challenge/api": "workspace:*",
-    "@canvas-challenge/eslint-config": "workspace:*",
-    "@canvas-challenge/prettier-config": "workspace:*",
-    "@canvas-challenge/tailwind-config": "workspace:*",
-    "@canvas-challenge/tsconfig": "workspace:*",
+    "@careforge/api": "workspace:*",
+    "@careforge/eslint-config": "workspace:*",
+    "@careforge/prettier-config": "workspace:*",
+    "@careforge/tailwind-config": "workspace:*",
+    "@careforge/tsconfig": "workspace:*",
     "@expo/config-plugins": "^7.2.5",
     "@types/babel__core": "^7.20.4",
     "@types/react": "^18.2.37",
@@ -75,8 +75,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@canvas-challenge/eslint-config/base",
-      "@canvas-challenge/eslint-config/react"
+      "@careforge/eslint-config/base",
+      "@careforge/eslint-config/react"
     ],
     "ignorePatterns": [
       "expo-plugins/**"
@@ -88,11 +88,11 @@
         {
           "paths": [
             {
-              "name": "@canvas-challenge/api",
+              "name": "@careforge/api",
               "allowTypeImports": true
             },
             {
-              "name": "@canvas-challenge/canvas",
+              "name": "@careforge/canvas",
               "allowTypeImports": true
             },
             {
@@ -107,5 +107,5 @@
       ]
     }
   },
-  "prettier": "@canvas-challenge/prettier-config"
+  "prettier": "@careforge/prettier-config"
 }

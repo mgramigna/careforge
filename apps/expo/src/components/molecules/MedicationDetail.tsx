@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { getMedicationDisplay } from '@/fhirpath/medicationstatement';
 
-import { type MedicationStatement } from '@canvas-challenge/canvas';
+import { type MedicationStatement } from '@careforge/canvas';
 
 import { Text } from '../atoms/Text';
 

@@ -1,10 +1,6 @@
 import { z } from 'zod';
 
-import {
-  GroupSchema,
-  GroupSearchArgsSchema,
-  type GroupServiceType,
-} from '@canvas-challenge/canvas';
+import { GroupSchema, GroupSearchArgsSchema, type GroupServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

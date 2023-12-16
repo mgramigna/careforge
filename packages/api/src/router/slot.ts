@@ -1,4 +1,4 @@
-import { SlotSearchArgsSchema, type SlotServiceType } from '@canvas-challenge/canvas';
+import { SlotSearchArgsSchema, type SlotServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

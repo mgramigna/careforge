@@ -1,5 +1,5 @@
 {
-  "name": "@canvas-challenge/eslint-config",
+  "name": "@careforge/eslint-config",
   "version": "0.2.0",
   "private": true,
   "license": "MIT",
@@ -27,8 +27,8 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.44.7",
-    "@canvas-challenge/prettier-config": "workspace:*",
-    "@canvas-challenge/tsconfig": "workspace:*",
+    "@careforge/prettier-config": "workspace:*",
+    "@careforge/tsconfig": "workspace:*",
     "eslint": "^8.53.0",
     "typescript": "^5.2.2"
   },
@@ -38,5 +38,5 @@
       "./base.js"
     ]
   },
-  "prettier": "@canvas-challenge/prettier-config"
+  "prettier": "@careforge/prettier-config"
 }

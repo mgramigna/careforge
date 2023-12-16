@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { getVaccineName } from '@/fhirpath/immunization';
 
-import { type Immunization } from '@canvas-challenge/canvas';
+import { type Immunization } from '@careforge/canvas';
 
 import { Text } from '../atoms/Text';
 

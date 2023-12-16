@@ -17,7 +17,7 @@ const config = {
     '^(expo(.*)$)|^(expo$)',
     '<THIRD_PARTY_MODULES>',
     '',
-    '^@canvas-challenge/(.*)$',
+    '^@careforge/(.*)$',
     '',
     '^~/',
     '^[../]',

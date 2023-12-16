@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ProcedureSearchArgsSchema, type ProcedureServiceType } from '@canvas-challenge/canvas';
+import { ProcedureSearchArgsSchema, type ProcedureServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

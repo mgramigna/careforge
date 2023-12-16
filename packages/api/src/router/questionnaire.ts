@@ -1,9 +1,6 @@
 import { z } from 'zod';
 
-import {
-  QuestionnaireSearchArgsSchema,
-  type QuestionnaireServiceType,
-} from '@canvas-challenge/canvas';
+import { QuestionnaireSearchArgsSchema, type QuestionnaireServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

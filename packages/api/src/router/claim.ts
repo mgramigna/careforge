@@ -1,4 +1,4 @@
-import { ClaimSchema, type ClaimServiceType } from '@canvas-challenge/canvas';
+import { ClaimSchema, type ClaimServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

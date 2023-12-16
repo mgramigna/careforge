@@ -1,5 +1,5 @@
 {
-  "name": "@canvas-challenge/api",
+  "name": "@careforge/api",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@canvas-challenge/canvas": "workspace:*",
+    "@careforge/canvas": "workspace:*",
     "@trpc/client": "next",
     "@trpc/server": "next",
     "date-fns": "^2.30.0",
@@ -21,9 +21,9 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@canvas-challenge/eslint-config": "workspace:*",
-    "@canvas-challenge/prettier-config": "workspace:*",
-    "@canvas-challenge/tsconfig": "workspace:*",
+    "@careforge/eslint-config": "workspace:*",
+    "@careforge/prettier-config": "workspace:*",
+    "@careforge/tsconfig": "workspace:*",
     "eslint": "^8.53.0",
     "prettier": "^3.1.0",
     "tsx": "^4.6.0",
@@ -32,8 +32,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@canvas-challenge/eslint-config/base"
+      "@careforge/eslint-config/base"
     ]
   },
-  "prettier": "@canvas-challenge/prettier-config"
+  "prettier": "@careforge/prettier-config"
 }

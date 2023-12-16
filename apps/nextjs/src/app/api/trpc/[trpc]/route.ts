@@ -2,8 +2,8 @@ import { type NextRequest } from 'next/server';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import dayjs from 'dayjs';
 
-import { appRouter, createTRPCContext } from '@canvas-challenge/api';
-import { getAuthToken } from '@canvas-challenge/canvas';
+import { appRouter, createTRPCContext } from '@careforge/api';
+import { getAuthToken } from '@careforge/canvas';
 
 function setCorsHeaders(res: Response) {
   res.headers.set('Access-Control-Allow-Origin', '*');

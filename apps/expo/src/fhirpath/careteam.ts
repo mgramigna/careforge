@@ -1,7 +1,7 @@
 import { getIdPartFromReference } from '@/utils/fhir';
 import fhirpath from 'fhirpath';
 
-import { type CareTeam } from '@canvas-challenge/canvas';
+import { type CareTeam } from '@careforge/canvas';
 
 const PCP_SYSTEM = 'http://snomed.info/sct';
 const PCP_CODE = '446050000';

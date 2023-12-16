@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { type Slot } from '@canvas-challenge/canvas';
+import { type Slot } from '@careforge/canvas';
 
 import { Button } from '../atoms/Button';
 import { RadioButton } from '../atoms/RadioButton';

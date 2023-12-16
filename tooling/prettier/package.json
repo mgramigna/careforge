@@ -1,5 +1,5 @@
 {
-  "name": "@canvas-challenge/prettier-config",
+  "name": "@careforge/prettier-config",
   "private": true,
   "version": "0.1.0",
   "main": "index.mjs",
@@ -14,8 +14,8 @@
     "prettier-plugin-tailwindcss": "^0.5.7"
   },
   "devDependencies": {
-    "@canvas-challenge/tsconfig": "workspace:*",
+    "@careforge/tsconfig": "workspace:*",
     "typescript": "^5.2.2"
   },
-  "prettier": "@canvas-challenge/prettier-config"
+  "prettier": "@careforge/prettier-config"
 }

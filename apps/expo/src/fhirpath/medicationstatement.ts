@@ -1,6 +1,6 @@
 import fhirpath from 'fhirpath';
 
-import { type MedicationStatement } from '@canvas-challenge/canvas';
+import { type MedicationStatement } from '@careforge/canvas';
 
 export function getMedicationDisplay(medicationStatement: MedicationStatement): string | null {
   const [display] = fhirpath.evaluate(

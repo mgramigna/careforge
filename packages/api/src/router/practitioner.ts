@@ -1,9 +1,6 @@
 import { z } from 'zod';
 
-import {
-  PractitionerSearchArgsSchema,
-  type PractitionerServiceType,
-} from '@canvas-challenge/canvas';
+import { PractitionerSearchArgsSchema, type PractitionerServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

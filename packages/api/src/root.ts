@@ -35,7 +35,7 @@ import {
   ScheduleService,
   SlotService,
   TaskService,
-} from '@canvas-challenge/canvas';
+} from '@careforge/canvas';
 
 import { createAllergenRouter } from './router/allergen';
 import { createAllergyIntoleranceRouter } from './router/allergyintolerance';

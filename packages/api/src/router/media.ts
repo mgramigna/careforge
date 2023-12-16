@@ -1,10 +1,6 @@
 import { z } from 'zod';
 
-import {
-  MediaSchema,
-  MediaSearchArgsSchema,
-  type MediaServiceType,
-} from '@canvas-challenge/canvas';
+import { MediaSchema, MediaSearchArgsSchema, type MediaServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

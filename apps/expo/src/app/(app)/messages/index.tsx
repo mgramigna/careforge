@@ -21,7 +21,7 @@ import { getCommunicationResource } from '@/utils/fhir';
 import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
-import { type Communication } from '@canvas-challenge/canvas';
+import { type Communication } from '@careforge/canvas';
 
 function getCombinedMessagesSorted({
   sent,

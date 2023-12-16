@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ProvenanceSearchArgsSchema, type ProvenanceServiceType } from '@canvas-challenge/canvas';
+import { ProvenanceSearchArgsSchema, type ProvenanceServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

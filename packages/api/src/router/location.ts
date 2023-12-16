@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { LocationSearchArgsSchema, type LocationServiceType } from '@canvas-challenge/canvas';
+import { LocationSearchArgsSchema, type LocationServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

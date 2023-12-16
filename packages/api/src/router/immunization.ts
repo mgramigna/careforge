@@ -1,9 +1,6 @@
 import { z } from 'zod';
 
-import {
-  ImmunizationSearchArgsSchema,
-  type ImmunizationServiceType,
-} from '@canvas-challenge/canvas';
+import { ImmunizationSearchArgsSchema, type ImmunizationServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

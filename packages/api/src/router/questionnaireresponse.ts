@@ -4,7 +4,7 @@ import {
   QuestionnaireResponseSchema,
   QuestionnaireResponseSearchArgsSchema,
   type QuestionnaireResponseServiceType,
-} from '@canvas-challenge/canvas';
+} from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

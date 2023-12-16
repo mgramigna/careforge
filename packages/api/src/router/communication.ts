@@ -4,7 +4,7 @@ import {
   CommunicationSchema,
   CommunicationSearchArgsSchema,
   type CommunicationServiceType,
-} from '@canvas-challenge/canvas';
+} from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

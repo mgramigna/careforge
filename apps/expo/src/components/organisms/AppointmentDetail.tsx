@@ -6,7 +6,7 @@ import { api } from '@/utils/api';
 import { HARDCODED_OFFICE_LOCATION_ID } from '@/utils/constants';
 import dayjs from 'dayjs';
 
-import { type Appointment } from '@canvas-challenge/canvas';
+import { type Appointment } from '@careforge/canvas';
 
 import { Text } from '../atoms/Text';
 import { AppointmentDetailModal } from '../molecules/AppointmentDetailModal';

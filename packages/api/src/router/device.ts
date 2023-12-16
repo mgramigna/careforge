@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { DeviceSearchArgsSchema, type DeviceServiceType } from '@canvas-challenge/canvas';
+import { DeviceSearchArgsSchema, type DeviceServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

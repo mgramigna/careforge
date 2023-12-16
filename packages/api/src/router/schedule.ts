@@ -1,4 +1,4 @@
-import { type ScheduleServiceType } from '@canvas-challenge/canvas';
+import { type ScheduleServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

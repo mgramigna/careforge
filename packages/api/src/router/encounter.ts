@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EncounterSearchArgsSchema, type EncounterServiceType } from '@canvas-challenge/canvas';
+import { EncounterSearchArgsSchema, type EncounterServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

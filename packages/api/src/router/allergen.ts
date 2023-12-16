@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { AllergenSearchArgsSchema, type AllergenServiceType } from '@canvas-challenge/canvas';
+import { AllergenSearchArgsSchema, type AllergenServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

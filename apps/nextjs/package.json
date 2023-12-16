@@ -1,5 +1,5 @@
 {
-  "name": "@canvas-challenge/nextjs",
+  "name": "@careforge/nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,8 +13,8 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@canvas-challenge/api": "workspace:*",
-    "@canvas-challenge/canvas": "workspace:*",
+    "@careforge/api": "workspace:*",
+    "@careforge/canvas": "workspace:*",
     "@tanstack/react-query": "^5.8.7",
     "@tanstack/react-query-devtools": "^5.8.7",
     "@tanstack/react-query-next-experimental": "5.8.7",
@@ -30,10 +30,10 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@canvas-challenge/eslint-config": "workspace:*",
-    "@canvas-challenge/prettier-config": "workspace:*",
-    "@canvas-challenge/tailwind-config": "workspace:*",
-    "@canvas-challenge/tsconfig": "workspace:*",
+    "@careforge/eslint-config": "workspace:*",
+    "@careforge/prettier-config": "workspace:*",
+    "@careforge/tailwind-config": "workspace:*",
+    "@careforge/tsconfig": "workspace:*",
     "@types/node": "^18.18.13",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.17",
@@ -46,10 +46,10 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@canvas-challenge/eslint-config/base",
-      "@canvas-challenge/eslint-config/nextjs",
-      "@canvas-challenge/eslint-config/react"
+      "@careforge/eslint-config/base",
+      "@careforge/eslint-config/nextjs",
+      "@careforge/eslint-config/react"
     ]
   },
-  "prettier": "@canvas-challenge/prettier-config"
+  "prettier": "@careforge/prettier-config"
 }

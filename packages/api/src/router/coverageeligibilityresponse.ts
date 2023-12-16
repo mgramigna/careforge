@@ -1,7 +1,7 @@
 import {
   CoverageEligibilityResponseSearchArgsSchema,
   type CoverageEligibilityResponseServiceType,
-} from '@canvas-challenge/canvas';
+} from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

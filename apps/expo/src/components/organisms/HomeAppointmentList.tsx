@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 
-import { type Appointment } from '@canvas-challenge/canvas';
+import { type Appointment } from '@careforge/canvas';
 
 import { AppointmentDetail } from './AppointmentDetail';
 

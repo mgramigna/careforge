@@ -7,7 +7,7 @@ const genRouterCode = (resourceType: string) => {
   return `
 import { z } from 'zod';
 
-import { ${resourceType}Schema, ${resourceType}SearchArgsSchema, type ${resourceType}ServiceType } from '@canvas-challenge/canvas';
+import { ${resourceType}Schema, ${resourceType}SearchArgsSchema, type ${resourceType}ServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

@@ -1,6 +1,6 @@
 import fhirpath from 'fhirpath';
 
-import { type Immunization } from '@canvas-challenge/canvas';
+import { type Immunization } from '@careforge/canvas';
 
 export function getVaccineName(immunization: Immunization): string | null {
   const [display] = fhirpath.evaluate(

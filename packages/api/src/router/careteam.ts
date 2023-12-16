@@ -4,7 +4,7 @@ import {
   CareTeamSchema,
   CareTeamSearchArgsSchema,
   type CareTeamServiceType,
-} from '@canvas-challenge/canvas';
+} from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
 

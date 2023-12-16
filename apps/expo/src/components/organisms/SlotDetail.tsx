@@ -4,7 +4,7 @@ import { api } from '@/utils/api';
 import { getAppointmentResource } from '@/utils/fhir';
 import dayjs from 'dayjs';
 
-import { type Slot } from '@canvas-challenge/canvas';
+import { type Slot } from '@careforge/canvas';
 
 import { Button } from '../atoms/Button';
 import { ScheduleAppointmentModal } from '../molecules/ScheduleAppointmentModal';

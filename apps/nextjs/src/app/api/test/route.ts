@@ -1,4 +1,4 @@
-import { getAuthToken } from '@canvas-challenge/canvas';
+import { getAuthToken } from '@careforge/canvas';
 
 function setCorsHeaders(res: Response) {
   res.headers.set('Access-Control-Allow-Origin', '*');

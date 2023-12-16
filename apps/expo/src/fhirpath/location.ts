@@ -1,6 +1,6 @@
 import fhirpath from 'fhirpath';
 
-import { type Location } from '@canvas-challenge/canvas';
+import { type Location } from '@careforge/canvas';
 
 export function getLocationAddress(location: Location): string {
   const [street] = fhirpath.evaluate(location, 'address.line') as string[];

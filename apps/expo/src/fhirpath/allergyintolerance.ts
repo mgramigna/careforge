@@ -1,6 +1,6 @@
 import fhirpath from 'fhirpath';
 
-import { type AllergyIntolerance } from '@canvas-challenge/canvas';
+import { type AllergyIntolerance } from '@careforge/canvas';
 
 export function getSeverityText(allergyIntolerance: AllergyIntolerance): string | null {
   const [severity] = fhirpath.evaluate(allergyIntolerance, 'reaction.severity') as string[];
