@@ -30,8 +30,11 @@ const getBaseUrl = () => {
   const debuggerHost = Constants.expoConfig?.hostUri;
   const localhost = debuggerHost?.split(':')[0];
 
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}/api/trpc`;
+  }
+
   if (!localhost) {
-    // TODO: prod url
     throw new Error('Failed to get localhost. Please point to your production server.');
   }
 
