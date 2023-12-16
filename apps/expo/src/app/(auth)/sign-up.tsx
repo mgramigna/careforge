@@ -6,6 +6,7 @@ import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
 import { TextInput } from '@/components/atoms/TextInput';
 import { ScreenView } from '@/components/molecules/ScreenView';
+import { palette } from '@/theme/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
@@ -127,7 +128,10 @@ const SignUp = () => {
                 name="dateOfBirth"
                 render={({ field: { onChange, value } }) => (
                   <DateTimePickerModal
+                    textColor={palette.coolGray[900]}
+                    pickerContainerStyleIOS={{ backgroundColor: palette.coolGray[50] }}
                     isVisible={datePickerOpen}
+                    buttonTextColorIOS={palette.pink[500]}
                     date={value}
                     mode="date"
                     onConfirm={(date) => {
