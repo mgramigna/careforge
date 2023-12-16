@@ -25,6 +25,8 @@ export default {
         'open-sans-light': 'OpenSans_300Light',
         'open-sans-light-italic': 'OpenSans_300Light_Italic',
         'open-sans-bold-italic': 'OpenSans_700Bold_Italic',
+        roboto: 'Roboto_400Regular',
+        'roboto-bold': 'Roboto_700Bold',
       },
     },
   },

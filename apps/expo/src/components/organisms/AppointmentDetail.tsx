@@ -2,8 +2,10 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { getLocation, getPractitionerId, getReason } from '@/fhirpath/appointment';
 import { getPractitionerName } from '@/fhirpath/practitioner';
+import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
 import { HARDCODED_OFFICE_LOCATION_ID } from '@/utils/constants';
+import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
 import { type Appointment } from '@careforge/canvas';
@@ -71,7 +73,7 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
           setDetailModalVisible(true);
         }}
       >
-        <View className="bg-coolGray-100 border-coolGray-300 rounded-md border px-8 py-4">
+        <View className="bg-coolGray-100 border-coolGray-300 flex flex-row justify-between rounded-md border px-8 py-4">
           <View className="">
             {appointment.start &&
               appointment.end &&
@@ -83,6 +85,7 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
               with <Text>{practitioner ? getPractitionerName(practitioner) : ''}</Text>
             </Text>
           </View>
+          <Ionicons name="open-outline" size={24} color={palette.coolGray[600]} />
         </View>
       </TouchableOpacity>
       <AppointmentDetailModal
@@ -90,6 +93,9 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
         onClose={() => setDetailModalVisible(false)}
         appointment={appointment}
         location={location}
+        practitionerName={
+          practitioner ? getPractitionerName(practitioner) ?? 'Your Care Team' : 'Your Care Team'
+        }
       />
     </>
   );

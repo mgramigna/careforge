@@ -38,6 +38,15 @@ export function getPhoto(patient: Patient): string | undefined {
   return photoUrl;
 }
 
+export function getPhone(patient: Patient): string | undefined {
+  const [phone] = fhirpath.evaluate(
+    patient,
+    "telecom.where(system='phone').first().value",
+  ) as string[];
+
+  return phone;
+}
+
 const RACE_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race';
 const ETHNICITY_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity';
 

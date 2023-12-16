@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, Linking, ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
@@ -80,7 +80,7 @@ const Home = () => {
           <Text className="text-3xl" weight="bold">
             Hello, {getFirstName(patient)}
           </Text>
-          <Text>{dayjs(new Date()).format('dddd MMM DD')}</Text>
+          <Text>{dayjs(new Date()).format('dddd, MMM DD')}</Text>
         </View>
         <View className="mt-24">
           <View className="mb-4 flex flex-row items-center">
@@ -107,11 +107,17 @@ const Home = () => {
             <Text className="ml-2 text-3xl">My Allergies</Text>
           </View>
           {allergiesLoading && <Skeleton className="bg-coolGray-400 h-24" />}
-          {allergyBundle?.entry?.map(({ resource }) => (
-            <Fragment key={resource.id}>
-              <AllergyDetail allergyIntolerance={resource} />
-            </Fragment>
-          ))}
+          {!allergiesLoading && (allergyBundle?.total ?? 0) > 0 ? (
+            allergyBundle?.entry?.map(({ resource }) => (
+              <Fragment key={resource.id}>
+                <AllergyDetail allergyIntolerance={resource} />
+              </Fragment>
+            ))
+          ) : (
+            <View className="flex h-24 w-full items-center justify-center">
+              <Text italic>No known allergies</Text>
+            </View>
+          )}
           <Link href="/home/allergy" asChild>
             <Button text="Update Allergies" className="mt-4" />
           </Link>
@@ -122,11 +128,17 @@ const Home = () => {
             <Text className="ml-2 text-3xl">My Medications</Text>
           </View>
           {medicationsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
-          {medicationStatementBundle?.entry?.map(({ resource }) => (
-            <Fragment key={resource.id}>
-              <MedicationDetail medicationStatement={resource} />
-            </Fragment>
-          ))}
+          {!medicationsLoading && (medicationStatementBundle?.total ?? 0) > 0 ? (
+            medicationStatementBundle?.entry?.map(({ resource }) => (
+              <Fragment key={resource.id}>
+                <MedicationDetail medicationStatement={resource} />
+              </Fragment>
+            ))
+          ) : (
+            <View className="flex h-24 w-full items-center justify-center">
+              <Text italic>No current medications</Text>
+            </View>
+          )}
           <Link href="/home/medication" asChild>
             <Button text="Update Medications" className="mt-4" />
           </Link>
@@ -137,14 +149,22 @@ const Home = () => {
             <Text className="ml-2 text-3xl">My Vaccines</Text>
           </View>
           {vaccinesLoading && <Skeleton className="bg-coolGray-400 h-24" />}
-          {immunizationsBundle?.entry?.map(({ resource }) => (
-            <Fragment key={resource.id}>
-              <ImmunizationDetail immunization={resource} />
-            </Fragment>
-          ))}
-          <Link href="/home/medication" asChild>
-            <Button text="Update Medications" className="mt-4" />
-          </Link>
+          {!vaccinesLoading && (immunizationsBundle?.total ?? 0) > 0 ? (
+            immunizationsBundle?.entry?.map(({ resource }) => (
+              <Fragment key={resource.id}>
+                <ImmunizationDetail immunization={resource} />
+              </Fragment>
+            ))
+          ) : (
+            <View className="flex h-24 w-full items-center justify-center">
+              <Text italic>No vaccines on record</Text>
+            </View>
+          )}
+          <Button
+            text="Find Vaccines"
+            className="mt-4"
+            onPress={() => Linking.openURL('https://www.vaccines.gov')}
+          />
         </View>
       </ScrollView>
     </ScreenView>

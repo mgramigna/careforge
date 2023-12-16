@@ -15,10 +15,16 @@ export const RadioButton = ({ label, selected, onPress }: RadioButtonProps) => {
       <View className="flex flex-row items-center">
         <View
           className={cn(
-            'border-coolGray-200 h-8 w-8 rounded-full border bg-none',
-            selected && 'bg-cyan-300',
+            'flex h-8 w-8 items-center justify-center rounded-full border-2 border-cyan-500',
           )}
-        />
+        >
+          <View
+            className={cn(
+              'border-coolGray-200 m-auto h-5 w-5 rounded-full',
+              selected && 'bg-cyan-500',
+            )}
+          />
+        </View>
         <Text className="ml-2">{label}</Text>
       </View>
     </TouchableWithoutFeedback>

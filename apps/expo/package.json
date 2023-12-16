@@ -17,6 +17,7 @@
   "dependencies": {
     "@careforge/canvas": "workspace:*",
     "@expo-google-fonts/open-sans": "^0.2.3",
+    "@expo-google-fonts/roboto": "^0.2.3",
     "@expo/metro-config": "^0.10.7",
     "@expo/vector-icons": "^13.0.0",
     "@hookform/resolvers": "^3.3.2",

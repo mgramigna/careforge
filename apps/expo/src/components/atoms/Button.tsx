@@ -26,7 +26,7 @@ export const Button = ({ variant, text, isLoading, className, ...props }: Button
     <TouchableOpacity
       {...props}
       className={cn(buttonVariants({ variant, className }), props.disabled && 'bg-coolGray-400/50')}
-      disabled={isLoading ?? props.disabled}
+      disabled={isLoading || props.disabled}
     >
       <Text className="text-coolGray-50 text-center" weight="bold">
         {isLoading ? <ActivityIndicator className="text-coolGray-50" /> : text}

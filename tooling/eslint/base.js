@@ -28,6 +28,7 @@ const config = {
     ],
     '@typescript-eslint/no-misused-promises': [2, { checksVoidReturn: { attributes: false } }],
     'import/consistent-type-specifier-style': ['error', 'prefer-inline'],
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
   },
   ignorePatterns: [
     '**/.eslintrc.cjs',

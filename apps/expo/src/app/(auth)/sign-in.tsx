@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import { Link, Redirect } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
@@ -70,9 +70,11 @@ const SignIn = () => {
   return (
     <ScreenView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View className="h-full">
+        <ScrollView showsVerticalScrollIndicator={false} className="h-full">
           <>
-            <Text className="mt-12 text-center text-5xl">App Name TBD</Text>
+            <Text className="mt-12 text-center text-6xl" heading>
+              Careforge
+            </Text>
             <Text className="text-coolGray-400 mt-4 text-center text-lg">
               Log in to start owning your health data
             </Text>
@@ -113,7 +115,7 @@ const SignIn = () => {
               </View>
             </View>
           </>
-        </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
     </ScreenView>
   );

@@ -1,6 +1,10 @@
 import { type Appointment, type Communication } from '@careforge/canvas';
 
-import { HARDCODED_OFFICE_LOCATION_ID_FOR_CREATE } from './constants';
+import {
+  HARDCODED_OFFICE_LOCATION_ID_FOR_CREATE,
+  OFFICE_VISIT_CODE,
+  TELEHEALTH_VISIT_CODE,
+} from './constants';
 
 export function getIdPartFromReference(reference: string): string {
   const [_resourceType, idPart] = reference.split('/');
@@ -42,9 +46,6 @@ export function getCommunicationResource({
     ],
   };
 }
-
-const OFFICE_VISIT_CODE = '308335008';
-const TELEHEALTH_VISIT_CODE = '448337001';
 
 export function getAppointmentResource({
   start,

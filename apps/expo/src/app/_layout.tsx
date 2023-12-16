@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import { TRPCProvider } from '@/utils/api';
 import {
@@ -8,8 +9,8 @@ import {
   OpenSans_400Regular_Italic,
   OpenSans_700Bold,
   OpenSans_700Bold_Italic,
-  useFonts,
 } from '@expo-google-fonts/open-sans';
+import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 
 import '../styles.css';
 
@@ -23,6 +24,8 @@ const RootLayout = () => {
     OpenSans_700Bold,
     OpenSans_300Light_Italic,
     OpenSans_700Bold_Italic,
+    Roboto_400Regular,
+    Roboto_700Bold,
   });
 
   if (!fontsLoaded && !fontError) {
