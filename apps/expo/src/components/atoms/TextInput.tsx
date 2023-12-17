@@ -10,7 +10,7 @@ export const TextInput = ({ className, hasError, ...props }: TextInputProps) => 
   return (
     <RNTextInput
       className={cn(
-        'text-coolGray-800 bg-coolGray-100 placeholder-coolGray-300 rounded-md p-6',
+        'text-coolGray-800 bg-coolGray-100 placeholder-coolGray-300 border-coolGray-300 rounded-md border p-6',
         className,
         hasError && 'border border-red-500',
       )}

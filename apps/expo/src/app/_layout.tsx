@@ -1,4 +1,5 @@
 import React from 'react';
+import { RootSiblingParent } from 'react-native-root-siblings';
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import { TRPCProvider } from '@/utils/api';
@@ -35,7 +36,9 @@ const RootLayout = () => {
   return (
     <AuthProvider>
       <TRPCProvider>
-        <Slot />
+        <RootSiblingParent>
+          <Slot />
+        </RootSiblingParent>
       </TRPCProvider>
     </AuthProvider>
   );
