@@ -7,7 +7,7 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".expo/**", ".output/**", ".vercel/output/**"]
+      "outputs": [".expo/**", ".output/**", ".vercel/output/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {
       "persistent": true,
