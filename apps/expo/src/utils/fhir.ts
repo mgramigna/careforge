@@ -6,6 +6,7 @@ import {
   type Appointment,
   type CareTeam,
   type Communication,
+  type Consent,
   type Patient,
 } from '@careforge/canvas';
 
@@ -193,5 +194,34 @@ export function getCareTeamResource({ patientId }: { patientId: string }): CareT
         },
       },
     ],
+  };
+}
+
+export function getConsentToDisclose({ patientId }: { patientId: string }): Omit<Consent, 'id'> {
+  return {
+    resourceType: 'Consent' as const,
+    status: 'active',
+    scope: {},
+    category: [
+      {
+        coding: [
+          {
+            system: 'http://loinc.org',
+            code: '64292-6',
+            display: 'Release of information consent Document',
+          },
+        ],
+      },
+    ],
+    patient: {
+      reference: `Patient/${patientId}`,
+      type: 'Patient',
+    },
+    dateTime: dayjs().toISOString(),
+    provision: {
+      period: {
+        start: dayjs().format('YYYY-MM-DD'),
+      },
+    },
   };
 }

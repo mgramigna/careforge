@@ -1,23 +1,36 @@
 import React, { useCallback, useState } from 'react';
 import { Alert } from 'react-native';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { BasicInfo } from '@/components/templates/SignUp/BasicInfo';
-import { Complete } from '@/components/templates/SignUp/Complete';
 import { Consents } from '@/components/templates/SignUp/Consents';
 import { type BasicInfoFormType } from '@/components/templates/SignUp/types';
+import { useAuth } from '@/context/AuthContext';
 import { api } from '@/utils/api';
-import { getCareTeamResource, getPatientResource } from '@/utils/fhir';
+import { getCareTeamResource, getConsentToDisclose, getPatientResource } from '@/utils/fhir';
 import { match } from 'ts-pattern';
 
-type SignUpState = 'basic-info' | 'consents' | 'done';
+type SignUpState = 'basic-info' | 'consents';
 
 const SignUp = () => {
   const [signUpState, setSignUpState] = useState<SignUpState>('basic-info');
   const [createdPatientId, setCreatedPatientId] = useState<string>();
 
+  const { signIn } = useAuth();
+
   const createCareteamMutation = api.careteam.update.useMutation({
     onSuccess: () => {
       setSignUpState('consents');
+    },
+    onError: (e) => {
+      Alert.alert('Something went wrong');
+      Alert.alert(e.message);
+    },
+  });
+
+  const createConsentMutation = api.consent.create.useMutation({
+    onSuccess: () => {
+      signIn(createdPatientId!);
+      router.replace('/home/');
     },
     onError: (e) => {
       Alert.alert('Something went wrong');
@@ -61,9 +74,17 @@ const SignUp = () => {
     [createPatientMutation],
   );
 
+  const handleConsentsContinue = useCallback(() => {
+    if (createdPatientId) {
+      const consentResource = getConsentToDisclose({ patientId: createdPatientId });
+
+      createConsentMutation.mutate(consentResource);
+    }
+  }, [createConsentMutation, createdPatientId]);
+
   return (
     <>
-      <Stack.Screen />
+      <Stack.Screen options={{ gestureEnabled: signUpState === 'basic-info' }} />
       {match(signUpState)
         .with('basic-info', () => (
           <BasicInfo
@@ -71,8 +92,15 @@ const SignUp = () => {
             isMutating={createPatientMutation.isPending}
           />
         ))
-        .with('consents', () => <Consents onContinue={() => setSignUpState('done')} />)
-        .with('done', () => <Complete patientId={createdPatientId!} />)
+        .with('consents', () =>
+          createdPatientId ? (
+            <Consents
+              onContinue={handleConsentsContinue}
+              patientId={createdPatientId}
+              isMutating={createConsentMutation.isPending}
+            />
+          ) : null,
+        )
         .otherwise(() => null)}
     </>
   );

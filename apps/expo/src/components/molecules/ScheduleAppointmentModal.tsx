@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { ActivityIndicator, Modal, ScrollView, View } from 'react-native';
+import { ActivityIndicator, Modal, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getLocationAddress } from '@/fhirpath/location';
 import { getPractitionerName } from '@/fhirpath/practitioner';
 import { usePractitioner } from '@/hooks/usePractitioner';
@@ -75,7 +76,7 @@ export const ScheduleAppointmentModal = ({
       onRequestClose={onClose}
     >
       <ScreenView>
-        <ScrollView className="flex h-full">
+        <KeyboardAwareScrollView className="flex h-full">
           {isLoading ? (
             <ActivityIndicator />
           ) : (
@@ -160,7 +161,7 @@ export const ScheduleAppointmentModal = ({
               </View>
             </>
           )}
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </ScreenView>
     </Modal>
   );

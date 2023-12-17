@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
+import { RadioButton } from '@/components/atoms/RadioButton';
 import { Text } from '@/components/atoms/Text';
 import { TextInput } from '@/components/atoms/TextInput';
 import { ScreenView } from '@/components/molecules/ScreenView';
@@ -32,10 +32,18 @@ export const BasicInfo = ({
   } = useForm<BasicInfoFormType>({
     resolver: zodResolver(BasicInfoFormSchema),
     mode: 'onChange',
+    defaultValues: {
+      dateOfBirth: new Date('1996-07-19T00:00:00.0Z'),
+      gender: 'male',
+      email: 'matt@asdf.com',
+      lastName: 'Default',
+      firstName: 'Matt',
+    },
   });
 
   const currentBirthDate = watch('dateOfBirth');
   const dobState = getFieldState('dateOfBirth');
+  const currentGender = watch('gender');
 
   const onSubmit = useCallback(
     (form: BasicInfoFormType) => {
@@ -43,8 +51,6 @@ export const BasicInfo = ({
     },
     [onContinue],
   );
-
-  const [genderDropdownOpen, setGenderDropdownOpen] = useState(false);
 
   return (
     <ScreenView>
@@ -141,36 +147,22 @@ export const BasicInfo = ({
           </View>
           <View>
             <Text className="mb-2 pl-1 text-xl">Gender</Text>
-            <Controller
-              name="gender"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <DropDownPicker
-                  open={genderDropdownOpen}
-                  value={value}
-                  items={genderOptions.map((option) => ({ label: option, value: option }))}
-                  setOpen={setGenderDropdownOpen}
-                  style={{
-                    backgroundColor: palette.coolGray[100],
-                  }}
-                  listItemContainerStyle={{
-                    backgroundColor: palette.coolGray[50],
-                    borderWidth: 0,
-                  }}
-                  textStyle={{
-                    fontFamily: 'OpenSans_400Regular',
-                  }}
-                  scrollViewProps={{
-                    className: 'border-none',
-                  }}
-                  // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  setValue={() => {}}
-                  onSelectItem={(item) => onChange(item.value)}
-                  placeholder="Select one..."
-                  listMode="SCROLLVIEW"
+            <View className="flex flex-row justify-evenly">
+              {genderOptions.map((gender) => (
+                <Controller
+                  key={gender}
+                  control={control}
+                  name="gender"
+                  render={({ field: { onChange } }) => (
+                    <RadioButton
+                      label={gender}
+                      onPress={() => onChange(gender)}
+                      selected={currentGender === gender}
+                    />
+                  )}
                 />
-              )}
-            />
+              ))}
+            </View>
           </View>
         </View>
         <View className="mt-8 flex flex-row gap-8">
