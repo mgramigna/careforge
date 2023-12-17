@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
@@ -11,9 +12,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
 
-import { BasicInfoFormSchema, type BasicInfoFormType } from './types';
+import { BasicInfoFormSchema, genderOptions, type BasicInfoFormType } from './types';
 
-export const BasicInfo = ({ onContinue }: { onContinue: (form: BasicInfoFormType) => void }) => {
+export const BasicInfo = ({
+  onContinue,
+  isMutating,
+}: {
+  isMutating?: boolean;
+  onContinue: (form: BasicInfoFormType) => void;
+}) => {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const {
     control,
@@ -22,12 +29,6 @@ export const BasicInfo = ({ onContinue }: { onContinue: (form: BasicInfoFormType
     watch,
     getFieldState,
   } = useForm<BasicInfoFormType>({
-    defaultValues: {
-      firstName: 'Matt',
-      lastName: 'Test',
-      email: 'matttext@example.com',
-      dateOfBirth: new Date('1996-07-19'),
-    },
     resolver: zodResolver(BasicInfoFormSchema),
     mode: 'onChange',
   });
@@ -41,6 +42,8 @@ export const BasicInfo = ({ onContinue }: { onContinue: (form: BasicInfoFormType
     },
     [onContinue],
   );
+
+  const [genderDropdownOpen, setGenderDropdownOpen] = useState(false);
 
   return (
     <ScreenView>
@@ -135,6 +138,39 @@ export const BasicInfo = ({ onContinue }: { onContinue: (form: BasicInfoFormType
               )}
             />
           </View>
+          <View>
+            <Text className="mb-2 pl-1 text-xl">Gender</Text>
+            <Controller
+              name="gender"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <DropDownPicker
+                  open={genderDropdownOpen}
+                  value={value}
+                  items={genderOptions.map((option) => ({ label: option, value: option }))}
+                  setOpen={setGenderDropdownOpen}
+                  style={{
+                    backgroundColor: palette.coolGray[100],
+                  }}
+                  listItemContainerStyle={{
+                    backgroundColor: palette.coolGray[50],
+                    borderWidth: 0,
+                  }}
+                  textStyle={{
+                    fontFamily: 'OpenSans_400Regular',
+                  }}
+                  scrollViewProps={{
+                    className: 'border-none',
+                  }}
+                  // eslint-disable-next-line @typescript-eslint/no-empty-function
+                  setValue={() => {}}
+                  onSelectItem={(item) => onChange(item.value)}
+                  placeholder="Select one..."
+                  listMode="SCROLLVIEW"
+                />
+              )}
+            />
+          </View>
         </View>
         <View className="mt-8 flex flex-row gap-8">
           <View className="flex-1">
@@ -143,7 +179,12 @@ export const BasicInfo = ({ onContinue }: { onContinue: (form: BasicInfoFormType
             </Link>
           </View>
           <View className="flex-1">
-            <Button disabled={!isValid} text="Continue" onPress={handleSubmit(onSubmit)} />
+            <Button
+              disabled={!isValid}
+              text="Continue"
+              onPress={handleSubmit(onSubmit)}
+              isLoading={isMutating}
+            />
           </View>
         </View>
       </ScrollView>

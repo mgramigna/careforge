@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, Keyboard, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import { Link, Redirect } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
@@ -52,6 +52,8 @@ const SignIn = () => {
 
       if (result) {
         signIn(result.id);
+      } else {
+        Alert.alert('Unable to locate account with that email address');
       }
     },
     [signIn],

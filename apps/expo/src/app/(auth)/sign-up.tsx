@@ -3,72 +3,54 @@ import { Alert } from 'react-native';
 import { Stack } from 'expo-router';
 import { BasicInfo } from '@/components/templates/SignUp/BasicInfo';
 import { Complete } from '@/components/templates/SignUp/Complete';
-import { Demographics } from '@/components/templates/SignUp/Demographics';
-import {
-  type BasicInfoFormType,
-  type DemographicsFormType,
-} from '@/components/templates/SignUp/types';
+import { Consents } from '@/components/templates/SignUp/Consents';
+import { type BasicInfoFormType } from '@/components/templates/SignUp/types';
 import { api } from '@/utils/api';
 import { getPatientResource } from '@/utils/fhir';
 import { match } from 'ts-pattern';
 
-interface OverallSignUpForm {
-  basicInfo?: BasicInfoFormType;
-  demographics?: DemographicsFormType;
-}
-
-type SignUpState = 'basic-info' | 'demographics' | 'consents' | 'done';
+type SignUpState = 'basic-info' | 'consents' | 'done';
 
 const SignUp = () => {
-  const [formState, setFormState] = useState<OverallSignUpForm>({});
   const [signUpState, setSignUpState] = useState<SignUpState>('basic-info');
-  const [createdPatientId, _setCreatedPatientId] = useState<string>();
+  const [createdPatientId, setCreatedPatientId] = useState<string>();
 
   const createPatientMutation = api.patient.create.useMutation({
-    onSuccess: () => {
+    onSuccess: (patientId) => {
       setSignUpState('consents');
+      setCreatedPatientId(patientId);
     },
     onError: () => {
       Alert.alert('Something went wrong');
     },
   });
 
-  const handleBasicInfoContinue = useCallback((basicInfo: BasicInfoFormType) => {
-    setFormState((current) => ({ ...current, basicInfo: { ...basicInfo } }));
-    setSignUpState('demographics');
-  }, []);
+  const handleBasicInfoContinue = useCallback(
+    (basicInfo: BasicInfoFormType) => {
+      const patient = getPatientResource({
+        firstName: basicInfo.firstName,
+        lastName: basicInfo.lastName,
+        dateOfBirth: basicInfo.dateOfBirth,
+        gender: basicInfo.gender,
+        email: basicInfo.email,
+      });
 
-  const handleDemographicsContinue = useCallback(
-    (demographics: DemographicsFormType) => {
-      setFormState((current) => ({ ...current, demographics: { ...demographics } }));
-
-      if (formState.basicInfo) {
-        const patient = getPatientResource({
-          firstName: formState.basicInfo.firstName,
-          lastName: formState.basicInfo.lastName,
-          dateOfBirth: formState.basicInfo.dateOfBirth,
-          gender: demographics.gender,
-          email: formState.basicInfo.email,
-        });
-
-        createPatientMutation.mutate(patient);
-      }
+      createPatientMutation.mutate(patient);
     },
-    [formState, createPatientMutation],
+    [createPatientMutation],
   );
 
   return (
     <>
       <Stack.Screen />
       {match(signUpState)
-        .with('basic-info', () => <BasicInfo onContinue={handleBasicInfoContinue} />)
-        .with('demographics', () => (
-          <Demographics
-            onContinue={handleDemographicsContinue}
-            onBack={() => setSignUpState('basic-info')}
+        .with('basic-info', () => (
+          <BasicInfo
+            onContinue={handleBasicInfoContinue}
             isMutating={createPatientMutation.isPending}
           />
         ))
+        .with('consents', () => <Consents onContinue={() => setSignUpState('done')} />)
         .with('done', () => <Complete patientId={createdPatientId!} />)
         .otherwise(() => null)}
     </>
