@@ -32,13 +32,6 @@ export const BasicInfo = ({
   } = useForm<BasicInfoFormType>({
     resolver: zodResolver(BasicInfoFormSchema),
     mode: 'onChange',
-    defaultValues: {
-      dateOfBirth: new Date('1996-07-19T00:00:00.0Z'),
-      gender: 'male',
-      email: 'matt@asdf.com',
-      lastName: 'Default',
-      firstName: 'Matt',
-    },
   });
 
   const currentBirthDate = watch('dateOfBirth');
