@@ -2,10 +2,16 @@ import { type Gender } from '@/components/templates/SignUp/types';
 import dayjs from 'dayjs';
 import { match } from 'ts-pattern';
 
-import { type Appointment, type Communication, type Patient } from '@careforge/canvas';
+import {
+  type Appointment,
+  type CareTeam,
+  type Communication,
+  type Patient,
+} from '@careforge/canvas';
 
 import {
   HARDCODED_OFFICE_LOCATION_ID_FOR_CREATE,
+  MG_PRACTITIONER_ID,
   OFFICE_VISIT_CODE,
   TELEHEALTH_VISIT_CODE,
 } from './constants';
@@ -153,6 +159,37 @@ export function getPatientResource({
         system: 'email',
         value: email,
         use: 'home',
+      },
+    ],
+  };
+}
+
+export function getCareTeamResource({ patientId }: { patientId: string }): Omit<CareTeam, 'id'> {
+  return {
+    resourceType: 'CareTeam' as const,
+    status: 'active',
+    subject: {
+      reference: `Patient/${patientId}`,
+      type: 'Patient',
+    },
+    participant: [
+      {
+        role: [
+          {
+            coding: [
+              {
+                system: 'http://snomed.info/sct',
+                code: '446050000',
+                display: 'Primary care physician',
+              },
+            ],
+          },
+        ],
+        member: {
+          reference: `Practitioner/${MG_PRACTITIONER_ID}`,
+          type: 'Practitioner',
+          display: 'Matthew Gramigna MD',
+        },
       },
     ],
   };
