@@ -6,7 +6,7 @@ import { Complete } from '@/components/templates/SignUp/Complete';
 import { Consents } from '@/components/templates/SignUp/Consents';
 import { type BasicInfoFormType } from '@/components/templates/SignUp/types';
 import { api } from '@/utils/api';
-import { getPatientResource } from '@/utils/fhir';
+import { getCareTeamResource, getPatientResource } from '@/utils/fhir';
 import { match } from 'ts-pattern';
 
 type SignUpState = 'basic-info' | 'consents' | 'done';
@@ -15,13 +15,34 @@ const SignUp = () => {
   const [signUpState, setSignUpState] = useState<SignUpState>('basic-info');
   const [createdPatientId, setCreatedPatientId] = useState<string>();
 
+  const createCareteamMutation = api.careteam.update.useMutation({
+    onSuccess: () => {
+      setSignUpState('consents');
+    },
+    onError: (e) => {
+      Alert.alert('Something went wrong');
+      Alert.alert(e.message);
+    },
+  });
+
+  const createCareteamForNewPatient = useCallback(
+    (patientId: string) => {
+      const careteamResource = getCareTeamResource({ patientId });
+
+      createCareteamMutation.mutate({ resource: careteamResource, id: careteamResource.id });
+    },
+    [createCareteamMutation],
+  );
+
   const createPatientMutation = api.patient.create.useMutation({
     onSuccess: (patientId) => {
       setSignUpState('consents');
       setCreatedPatientId(patientId);
+      createCareteamForNewPatient(patientId);
     },
-    onError: () => {
+    onError: (e) => {
       Alert.alert('Something went wrong');
+      Alert.alert(e.message);
     },
   });
 

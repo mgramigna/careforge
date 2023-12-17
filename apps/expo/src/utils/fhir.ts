@@ -164,9 +164,10 @@ export function getPatientResource({
   };
 }
 
-export function getCareTeamResource({ patientId }: { patientId: string }): Omit<CareTeam, 'id'> {
+export function getCareTeamResource({ patientId }: { patientId: string }): CareTeam {
   return {
     resourceType: 'CareTeam' as const,
+    id: patientId,
     status: 'active',
     subject: {
       reference: `Patient/${patientId}`,

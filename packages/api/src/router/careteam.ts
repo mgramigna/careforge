@@ -37,7 +37,7 @@ export const createCareTeamRouter = ({
       .mutation(async ({ ctx, input }) => {
         const result = await careTeamService.update({
           resource: {
-            ...input,
+            ...input.resource,
             id: input.id,
           },
           accessToken: ctx.accessToken,

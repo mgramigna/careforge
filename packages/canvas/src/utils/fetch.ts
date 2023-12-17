@@ -93,7 +93,8 @@ export async function makeFhirUpdateRequest<T>(args: {
   body?: T;
 }): Promise<Result<null, string>> {
   try {
-    await fetch(args.path, {
+    console.log(`[canvas] PUT ${args.path}`);
+    const response = await fetch(args.path, {
       headers: {
         Authorization: `Bearer ${args.token}`,
         'Content-Type': 'application/json',
@@ -101,6 +102,12 @@ export async function makeFhirUpdateRequest<T>(args: {
       method: 'PUT',
       body: JSON.stringify(args.body),
     });
+
+    console.log(`[canvas] ${response.status}`);
+
+    if (!response.ok) {
+      console.log(`[canvas] ERROR: ${await response.text()}`);
+    }
 
     return ok(null);
   } catch (e) {
