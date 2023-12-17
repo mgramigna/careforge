@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import { Alert, Keyboard, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Link, Redirect } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
@@ -72,7 +73,7 @@ const SignIn = () => {
   return (
     <ScreenView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <ScrollView showsVerticalScrollIndicator={false} className="h-full">
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} className="h-full">
           <>
             <Text className="mt-12 text-center text-6xl" heading>
               Careforge
@@ -117,7 +118,7 @@ const SignIn = () => {
               </View>
             </View>
           </>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </TouchableWithoutFeedback>
     </ScreenView>
   );

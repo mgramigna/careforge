@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
@@ -47,7 +48,7 @@ export const BasicInfo = ({
 
   return (
     <ScreenView>
-      <ScrollView showsVerticalScrollIndicator={false} className="h-full">
+      <KeyboardAwareScrollView showsVerticalScrollIndicator={false} className="h-full">
         <Text className="text-3xl" weight="bold">
           Sign Up
         </Text>
@@ -187,7 +188,7 @@ export const BasicInfo = ({
             />
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </ScreenView>
   );
 };
