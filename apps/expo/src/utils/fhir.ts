@@ -1,4 +1,8 @@
-import { type Appointment, type Communication } from '@careforge/canvas';
+import { type Gender } from '@/components/templates/SignUp/types';
+import dayjs from 'dayjs';
+import { match } from 'ts-pattern';
+
+import { type Appointment, type Communication, type Patient } from '@careforge/canvas';
 
 import {
   HARDCODED_OFFICE_LOCATION_ID_FOR_CREATE,
@@ -106,6 +110,49 @@ export function getAppointmentResource({
           reference: `Patient/${patientId}`,
           type: 'Patient',
         },
+      },
+    ],
+  };
+}
+
+export function getPatientResource({
+  firstName,
+  lastName,
+  gender,
+  dateOfBirth,
+  email,
+}: {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: Date;
+  gender: Gender;
+  email: string;
+}): Omit<Patient, 'id' | 'identifier'> {
+  return {
+    resourceType: 'Patient' as const,
+    gender,
+    birthDate: dayjs(dateOfBirth).format('YYYY-MM-DD'),
+    name: [
+      {
+        use: 'official',
+        family: lastName,
+        given: [firstName],
+      },
+    ],
+    extension: [
+      {
+        url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex',
+        valueCode: match(gender)
+          .with('male', () => 'M')
+          .with('female', () => 'F')
+          .otherwise(() => 'UNK'),
+      },
+    ],
+    telecom: [
+      {
+        system: 'email',
+        value: email,
+        use: 'home',
       },
     ],
   };

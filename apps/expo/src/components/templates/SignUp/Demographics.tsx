@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
@@ -12,9 +12,11 @@ import { DemographicsFormSchema, genderOptions, type DemographicsFormType } from
 export const Demographics = ({
   onContinue,
   onBack,
+  isMutating,
 }: {
   onContinue: (form: DemographicsFormType) => void;
   onBack: () => void;
+  isMutating?: boolean;
 }) => {
   const {
     control,
@@ -60,8 +62,19 @@ export const Demographics = ({
             />
           )}
         />
-        <Button disabled={!isValid} text="Continue" onPress={handleSubmit(onSubmit)} />
-        <Button text="Back" variant="secondary" onPress={onBack} />
+        <View className="mt-8 flex flex-row gap-8">
+          <View className="flex-1">
+            <Button text="Back" variant="secondary" onPress={onBack} />
+          </View>
+          <View className="flex-1">
+            <Button
+              disabled={!isValid}
+              text="Continue"
+              onPress={handleSubmit(onSubmit)}
+              isLoading={isMutating}
+            />
+          </View>
+        </View>
       </ScrollView>
     </ScreenView>
   );

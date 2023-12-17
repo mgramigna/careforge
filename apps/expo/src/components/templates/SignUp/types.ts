@@ -12,6 +12,7 @@ export const BasicInfoFormSchema = z.object({
 export type BasicInfoFormType = z.infer<typeof BasicInfoFormSchema>;
 
 export const genderOptions = ['male', 'female', 'other', 'unknown'] as const;
+export type Gender = (typeof genderOptions)[number];
 
 export const DemographicsFormSchema = z.object({
   gender: z.enum(genderOptions),

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { Alert } from 'react-native';
 import { Stack } from 'expo-router';
 import { BasicInfo } from '@/components/templates/SignUp/BasicInfo';
 import { Complete } from '@/components/templates/SignUp/Complete';
@@ -7,6 +8,8 @@ import {
   type BasicInfoFormType,
   type DemographicsFormType,
 } from '@/components/templates/SignUp/types';
+import { api } from '@/utils/api';
+import { getPatientResource } from '@/utils/fhir';
 import { match } from 'ts-pattern';
 
 interface OverallSignUpForm {
@@ -17,19 +20,42 @@ interface OverallSignUpForm {
 type SignUpState = 'basic-info' | 'demographics' | 'consents' | 'done';
 
 const SignUp = () => {
-  const [_formState, setFormState] = useState<OverallSignUpForm>({});
+  const [formState, setFormState] = useState<OverallSignUpForm>({});
   const [signUpState, setSignUpState] = useState<SignUpState>('basic-info');
   const [createdPatientId, _setCreatedPatientId] = useState<string>();
+
+  const createPatientMutation = api.patient.create.useMutation({
+    onSuccess: () => {
+      setSignUpState('consents');
+    },
+    onError: () => {
+      Alert.alert('Something went wrong');
+    },
+  });
 
   const handleBasicInfoContinue = useCallback((basicInfo: BasicInfoFormType) => {
     setFormState((current) => ({ ...current, basicInfo: { ...basicInfo } }));
     setSignUpState('demographics');
   }, []);
 
-  const handleDemographicsContinue = useCallback((demographics: DemographicsFormType) => {
-    setFormState((current) => ({ ...current, demographics: { ...demographics } }));
-    setSignUpState('consents');
-  }, []);
+  const handleDemographicsContinue = useCallback(
+    (demographics: DemographicsFormType) => {
+      setFormState((current) => ({ ...current, demographics: { ...demographics } }));
+
+      if (formState.basicInfo) {
+        const patient = getPatientResource({
+          firstName: formState.basicInfo.firstName,
+          lastName: formState.basicInfo.lastName,
+          dateOfBirth: formState.basicInfo.dateOfBirth,
+          gender: demographics.gender,
+          email: formState.basicInfo.email,
+        });
+
+        createPatientMutation.mutate(patient);
+      }
+    },
+    [formState, createPatientMutation],
+  );
 
   return (
     <>
@@ -40,6 +66,7 @@ const SignUp = () => {
           <Demographics
             onContinue={handleDemographicsContinue}
             onBack={() => setSignUpState('basic-info')}
+            isMutating={createPatientMutation.isPending}
           />
         ))
         .with('done', () => <Complete patientId={createdPatientId!} />)

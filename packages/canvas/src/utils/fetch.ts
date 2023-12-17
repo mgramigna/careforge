@@ -12,12 +12,19 @@ export async function makeFhirGetRequest<T>(
   const queryString = args.query ? `?${args.query}` : '';
 
   try {
+    console.log(`[canvas] GET ${args.path}${queryString}`);
     const response = await fetch(`${args.path}${queryString}`, {
       headers: {
         Authorization: `Bearer ${args.token}`,
       },
       method: 'GET',
     });
+
+    console.log(`[canvas] ${response.status}`);
+
+    if (!response.ok) {
+      console.log(`[canvas] ERROR: ${await response.text()}`);
+    }
 
     return ok(schema.parse(await response.json()));
   } catch (e) {
@@ -40,6 +47,7 @@ export async function makeFhirCreateRequest<T>(args: {
   body?: T;
 }): Promise<Result<string, string>> {
   try {
+    console.log(`[canvas] POST ${args.path}`);
     const response = await fetch(args.path, {
       headers: {
         Authorization: `Bearer ${args.token}`,
@@ -48,6 +56,12 @@ export async function makeFhirCreateRequest<T>(args: {
       method: 'POST',
       body: JSON.stringify(args.body),
     });
+
+    console.log(`[canvas] ${response.status}`);
+
+    if (!response.ok) {
+      console.log(`[canvas] ERROR: ${await response.text()}`);
+    }
 
     const location = response.headers.get('location');
 

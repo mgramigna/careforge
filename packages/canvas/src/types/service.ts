@@ -9,7 +9,7 @@ interface ReadArgs extends BaseArgs {
 }
 
 interface CreateArgs<T> extends BaseArgs {
-  resource: Omit<T, 'id'>;
+  resource: Partial<T>;
 }
 
 interface UpdateArgs<T> extends BaseArgs {

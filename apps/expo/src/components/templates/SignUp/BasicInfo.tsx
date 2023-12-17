@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
 import { TextInput } from '@/components/atoms/TextInput';
@@ -23,8 +24,8 @@ export const BasicInfo = ({ onContinue }: { onContinue: (form: BasicInfoFormType
   } = useForm<BasicInfoFormType>({
     defaultValues: {
       firstName: 'Matt',
-      lastName: 'Newpatient',
-      email: 'mattnew@example.com',
+      lastName: 'Test',
+      email: 'matttext@example.com',
       dateOfBirth: new Date('1996-07-19'),
     },
     resolver: zodResolver(BasicInfoFormSchema),
@@ -134,7 +135,16 @@ export const BasicInfo = ({ onContinue }: { onContinue: (form: BasicInfoFormType
               )}
             />
           </View>
-          <Button disabled={!isValid} text="Continue" onPress={handleSubmit(onSubmit)} />
+        </View>
+        <View className="mt-8 flex flex-row gap-8">
+          <View className="flex-1">
+            <Link href=".." asChild>
+              <Button text="Back" variant="secondary" />
+            </Link>
+          </View>
+          <View className="flex-1">
+            <Button disabled={!isValid} text="Continue" onPress={handleSubmit(onSubmit)} />
+          </View>
         </View>
       </ScrollView>
     </ScreenView>

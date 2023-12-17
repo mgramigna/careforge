@@ -20,7 +20,7 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
       return result.value;
     }),
     create: authedProcedure
-      .input(PatientSchema.omit({ id: true }))
+      .input(PatientSchema.omit({ id: true, identifier: true }))
       .mutation(async ({ ctx, input }) => {
         const result = await patientService.create({
           resource: input,
