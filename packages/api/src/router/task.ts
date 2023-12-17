@@ -31,7 +31,7 @@ export const createTaskRouter = ({ taskService }: { taskService: TaskServiceType
       .mutation(async ({ ctx, input }) => {
         const result = await taskService.update({
           resource: {
-            ...input,
+            ...input.resource,
             id: input.id,
           },
           accessToken: ctx.accessToken,

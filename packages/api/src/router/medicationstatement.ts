@@ -52,7 +52,7 @@ export const createMedicationStatementRouter = ({
       .mutation(async ({ ctx, input }) => {
         const result = await medicationStatementService.update({
           resource: {
-            ...input,
+            ...input.resource,
             id: input.id,
           },
           accessToken: ctx.accessToken,

@@ -52,7 +52,7 @@ export const createAllergyIntoleranceRouter = ({
       .mutation(async ({ ctx, input }) => {
         const result = await allergyIntoleranceService.update({
           resource: {
-            ...input,
+            ...input.resource,
             id: input.id,
           },
           accessToken: ctx.accessToken,

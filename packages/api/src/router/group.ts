@@ -44,7 +44,7 @@ export const createGroupRouter = ({ groupService }: { groupService: GroupService
       .mutation(async ({ ctx, input }) => {
         const result = await groupService.update({
           resource: {
-            ...input,
+            ...input.resource,
             id: input.id,
           },
           accessToken: ctx.accessToken,

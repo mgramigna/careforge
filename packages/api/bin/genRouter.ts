@@ -61,7 +61,7 @@ export const create${resourceType}Router = ({ ${
           resourceType.charAt(0).toLowerCase() + resourceType.slice(1)
         }Service.update({
           resource: {
-            ...input,
+            ...input.resource,
             id: input.id,
           },
           accessToken: ctx.accessToken,

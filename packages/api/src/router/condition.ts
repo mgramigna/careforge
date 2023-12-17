@@ -52,7 +52,7 @@ export const createConditionRouter = ({
       .mutation(async ({ ctx, input }) => {
         const result = await conditionService.update({
           resource: {
-            ...input,
+            ...input.resource,
             id: input.id,
           },
           accessToken: ctx.accessToken,
