@@ -160,13 +160,22 @@ const Messages = () => {
               }
             }}
           />
-          <TouchableOpacity disabled={messageText === ''} onPress={sendMessage}>
-            <Ionicons
-              name={messageText !== '' ? 'arrow-forward-circle' : 'arrow-forward-circle-outline'}
-              size={32}
-              className="px-6"
-              color={palette.cyan[600]}
-            />
+          <TouchableOpacity
+            disabled={sendMessageMutation.isPending || messageText === ''}
+            onPress={sendMessage}
+          >
+            {sendMessageMutation.isPending ? (
+              <View className="px-6">
+                <ActivityIndicator />
+              </View>
+            ) : (
+              <Ionicons
+                name={messageText !== '' ? 'arrow-forward-circle' : 'arrow-forward-circle-outline'}
+                size={32}
+                className="px-6"
+                color={palette.cyan[600]}
+              />
+            )}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
