@@ -1,16 +1,25 @@
 import React, { Fragment } from 'react';
-import { ActivityIndicator, Linking, ScrollView, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Linking,
+  Pressable,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
 import { Text } from '@/components/atoms/Text';
 import { AllergyDetail } from '@/components/molecules/AllergyDetail';
 import { ImmunizationDetail } from '@/components/molecules/ImmunizationDetail';
+import { LabDetail } from '@/components/molecules/LabDetail';
 import { MedicationDetail } from '@/components/molecules/MedicationDetail';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { HomeAppointmentList } from '@/components/organisms/HomeAppointmentList';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
+import { getPDFUrl } from '@/fhirpath/documentreference';
 import { getFirstName } from '@/fhirpath/patient';
 import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
@@ -63,6 +72,16 @@ const Home = () => {
       },
     );
 
+  const { data: labDocumentBundle, isLoading: labsLoading } = api.documentreference.search.useQuery(
+    {
+      patient: patientId!,
+      category: 'labreport',
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
+
   if (isLoading) {
     return (
       <ScreenView>
@@ -100,6 +119,26 @@ const Home = () => {
           <Link href="/appointments/" asChild>
             <Button text="Schedule Appointment" className="mt-4" />
           </Link>
+        </View>
+        <View className="mt-24">
+          <View className="mb-4 flex flex-row items-center">
+            <Ionicons name="flask" size={24} color={palette.purple[300]} />
+            <Text className="ml-2 text-3xl">My Labs</Text>
+          </View>
+          {labsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
+          {!labsLoading && (labDocumentBundle?.total ?? 0) > 0 ? (
+            <View className="flex gap-4">
+              {labDocumentBundle?.entry?.map(({ resource }) => (
+                <Fragment key={resource.id}>
+                  <LabDetail documentReference={resource} />
+                </Fragment>
+              ))}
+            </View>
+          ) : (
+            <View className="flex h-24 w-full items-center justify-center">
+              <Text italic>No Recent Labs</Text>
+            </View>
+          )}
         </View>
         <View className="mt-24">
           <View className="mb-4 flex flex-row items-center">

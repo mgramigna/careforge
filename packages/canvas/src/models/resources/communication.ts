@@ -7,7 +7,7 @@ import { createDomainResourceSchema } from '../util/domainresource';
 import { BundleSchema } from './bundle';
 
 export const CommunicationSchema = createDomainResourceSchema('Communication').extend({
-  status: z.literal('unknown'),
+  status: z.enum(['unknown', 'in-progress', 'completed']),
   sent: DateTimeSchema.optional(),
   received: DateTimeSchema.optional(),
   recipient: ReferenceSchema.array(),

@@ -85,7 +85,7 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
               with <Text>{practitioner ? getPractitionerName(practitioner) : ''}</Text>
             </Text>
           </View>
-          <Ionicons name="open-outline" size={24} color={palette.coolGray[600]} />
+          <Ionicons name="calendar" size={24} color={palette.cyan[700]} />
         </View>
       </TouchableOpacity>
       <AppointmentDetailModal
