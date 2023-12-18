@@ -2,7 +2,7 @@
 import { ExpoConfig } from '@expo/config';
 
 const defineConfig = (): ExpoConfig => ({
-  name: 'expo',
+  name: 'Careforge',
   slug: 'careforge',
   scheme: 'expo',
   version: '0.1.0',
