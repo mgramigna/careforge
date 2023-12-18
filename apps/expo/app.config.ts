@@ -6,6 +6,11 @@ const defineConfig = (): ExpoConfig => ({
   scheme: 'expo',
   version: '0.1.0',
   orientation: 'portrait',
+  splash: {
+    image: './assets/icon.png',
+    resizeMode: 'contain',
+    backgroundColor: '#F5F7FA',
+  },
   icon: './assets/icon.png',
   userInterfaceStyle: 'light',
   updates: {
