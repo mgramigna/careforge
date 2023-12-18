@@ -1,3 +1,4 @@
+import { type InsuranceFormType } from '@/components/organisms/InsuranceForm';
 import { type Gender } from '@/components/templates/SignUp/types';
 import dayjs from 'dayjs';
 import { match } from 'ts-pattern';
@@ -7,6 +8,7 @@ import {
   type CareTeam,
   type Communication,
   type Consent,
+  type Coverage,
   type Patient,
 } from '@careforge/canvas';
 
@@ -223,5 +225,66 @@ export function getConsentToDisclose({ patientId }: { patientId: string }): Omit
         start: dayjs().format('YYYY-MM-DD'),
       },
     },
+  };
+}
+
+export function getCoverageResource({
+  payorId,
+  groupId,
+  coverageStartDate,
+  memberId,
+  patientId,
+  order,
+  id,
+}: InsuranceFormType & { patientId: string; order?: number; id?: string }):
+  | Omit<Coverage, 'id'>
+  | Coverage {
+  return {
+    resourceType: 'Coverage' as const,
+    ...(id && { id }),
+    status: 'active',
+    subscriber: {
+      reference: `Patient/${patientId}`,
+      type: 'Patient',
+    },
+    subscriberId: memberId,
+    beneficiary: {
+      reference: `Patient/${patientId}`,
+      type: 'Patient',
+    },
+    relationship: {
+      coding: [
+        {
+          system: 'http://hl7.org/fhir/ValueSet/subscriber-relationship',
+          code: 'self',
+          display: 'Self',
+        },
+      ],
+    },
+    period: {
+      start: dayjs(coverageStartDate).format('YYYY-MM-DD'),
+    },
+    payor: [
+      {
+        reference: `Organization/${payorId}`,
+        type: 'Organization',
+      },
+    ],
+    ...(groupId && {
+      class: [
+        {
+          type: {
+            coding: [
+              {
+                system: 'http://hl7.org/fhir/ValueSet/coverage-class',
+                code: 'group',
+              },
+            ],
+          },
+          value: '54321',
+        },
+      ],
+    }),
+    order: order ?? 1,
   };
 }
