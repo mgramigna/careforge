@@ -27,7 +27,7 @@ export default function AppLayout() {
         screenOptions={{
           headerShown: false,
           tabBarLabel: () => null,
-          tabBarStyle: { backgroundColor: palette.coolGray[100] },
+          tabBarStyle: { backgroundColor: palette.coolGray[700] },
         }}
       >
         <Tabs.Screen
@@ -37,7 +37,7 @@ export default function AppLayout() {
               <Ionicons
                 name="home"
                 size={32}
-                color={focused ? palette.pink[500] : palette.coolGray[300]}
+                color={focused ? palette.pink[300] : palette.coolGray[300]}
               />
             ),
           }}
@@ -49,7 +49,7 @@ export default function AppLayout() {
               <Ionicons
                 name="chatbox-ellipses"
                 size={32}
-                color={focused ? palette.pink[500] : palette.coolGray[300]}
+                color={focused ? palette.pink[300] : palette.coolGray[300]}
               />
             ),
           }}
@@ -61,7 +61,7 @@ export default function AppLayout() {
               <Ionicons
                 name="calendar"
                 size={32}
-                color={focused ? palette.pink[500] : palette.coolGray[300]}
+                color={focused ? palette.pink[300] : palette.coolGray[300]}
               />
             ),
           }}
@@ -73,7 +73,7 @@ export default function AppLayout() {
               <Ionicons
                 name="person-circle"
                 size={32}
-                color={focused ? palette.pink[500] : palette.coolGray[300]}
+                color={focused ? palette.pink[300] : palette.coolGray[300]}
               />
             ),
           }}

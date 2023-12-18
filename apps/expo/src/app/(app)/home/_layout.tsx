@@ -1,11 +1,16 @@
 import { Stack } from 'expo-router';
+import { palette } from '@/theme/colors';
 
 const TabLayout = () => {
   return (
     <Stack
       screenOptions={{
         presentation: 'modal',
-        headerShown: false,
+        headerTitle: '',
+        headerStyle: {
+          backgroundColor: palette.coolGray[700],
+        },
+        headerTintColor: palette.pink[300],
       }}
     />
   );

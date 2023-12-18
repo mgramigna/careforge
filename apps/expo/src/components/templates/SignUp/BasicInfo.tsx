@@ -108,11 +108,11 @@ export const BasicInfo = ({
             <Text className="mb-2 pl-1 text-xl">Date of Birth</Text>
             <TouchableOpacity onPress={() => setDatePickerOpen((curr) => !curr)}>
               {!dobState.isDirty ? (
-                <Text className="bg-coolGray-100 border-coolGray-300 text-coolGray-300 rounded-md border p-6">
+                <Text className="bg-coolGray-600 border-coolGray-300 text-coolGray-200 rounded-md border p-6">
                   __ / __ / ____
                 </Text>
               ) : (
-                <Text className="bg-coolGray-100 rounded-md p-6">
+                <Text className="bg-coolGray-600 border-coolGray-300 rounded-md border p-6">
                   {dayjs(currentBirthDate).format('MM/DD/YYYY')}
                 </Text>
               )}
@@ -122,10 +122,13 @@ export const BasicInfo = ({
               name="dateOfBirth"
               render={({ field: { onChange, value } }) => (
                 <DateTimePickerModal
-                  textColor={palette.coolGray[900]}
-                  pickerContainerStyleIOS={{ backgroundColor: palette.coolGray[50] }}
+                  textColor={palette.coolGray[50]}
+                  pickerComponentStyleIOS={{
+                    backgroundColor: palette.coolGray[700],
+                  }}
+                  pickerContainerStyleIOS={{ backgroundColor: palette.coolGray[700] }}
                   isVisible={datePickerOpen}
-                  buttonTextColorIOS={palette.pink[500]}
+                  buttonTextColorIOS={palette.pink[300]}
                   date={value}
                   mode="date"
                   onConfirm={(date) => {

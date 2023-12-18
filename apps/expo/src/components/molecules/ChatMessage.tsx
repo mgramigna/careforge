@@ -18,15 +18,15 @@ export const ChatMessage = ({
   return (
     <View
       className={cn(
-        'bg-coolGray-100 w-3/4 rounded-xl p-6',
-        isSentByPatient ? 'self-end bg-cyan-300' : 'self-start',
+        'bg-coolGray-700 w-3/4 rounded-xl p-6',
+        isSentByPatient ? 'self-end bg-cyan-700' : 'self-start',
       )}
     >
       <View className="flex flex-row justify-between">
         <Text weight="bold" className="text-sm">
           {senderName}
         </Text>
-        <Text className="text-coolGray-500 text-sm">{dayjs(timestamp).format('hh:mm a')}</Text>
+        <Text className="text-coolGray-200 text-sm">{dayjs(timestamp).format('hh:mm a')}</Text>
       </View>
       <View className="mt-4">
         <Text className="text-lg">{messageText}</Text>

@@ -78,7 +78,7 @@ const SignIn = () => {
             <Text className="mt-12 text-center text-6xl" heading>
               Careforge
             </Text>
-            <Text className="text-coolGray-400 mt-4 text-center text-lg">
+            <Text className="text-coolGray-200 mt-4 text-center text-lg">
               Log in to start owning your health data
             </Text>
             <View className="mt-28">

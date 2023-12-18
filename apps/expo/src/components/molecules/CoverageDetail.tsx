@@ -53,7 +53,7 @@ export const CoverageDetail = ({
           setInsuranceModalOpen(true);
         }}
       >
-        <View className="border-coolGray-300 bg-coolGray-100 h-52 w-full rounded-md border p-4">
+        <View className="border-coolGray-300 bg-coolGray-700 h-52 w-full rounded-md border p-4">
           <View className="flex flex-1 justify-between">
             <View>
               <View className="flex flex-row items-center gap-2">

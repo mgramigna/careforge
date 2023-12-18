@@ -113,13 +113,13 @@ export const InsuranceForm = ({
             render={({ field: { onChange, onBlur, value } }) => (
               <AutocompleteDropdown
                 textInputProps={{
-                  className: 'bg-coolGray-100',
+                  className: 'bg-coolGray-600 text-coolGray-50',
                 }}
                 rightButtonsContainerStyle={{
-                  backgroundColor: palette.coolGray[100],
+                  backgroundColor: palette.coolGray[600],
                 }}
                 containerStyle={{
-                  backgroundColor: palette.coolGray[100],
+                  backgroundColor: palette.coolGray[600],
                 }}
                 dataSet={suggestionsList}
                 onBlur={onBlur}
@@ -136,10 +136,11 @@ export const InsuranceForm = ({
                 inputContainerStyle={{}}
                 suggestionsListTextStyle={{
                   fontFamily: 'OpenSans_400Regular',
+                  color: palette.coolGray[50],
                 }}
                 suggestionsListContainerStyle={{
                   marginTop: -64,
-                  backgroundColor: palette.coolGray[50],
+                  backgroundColor: palette.coolGray[800],
                 }}
               />
             )}
@@ -184,7 +185,7 @@ export const InsuranceForm = ({
             Coverage Start Date<Text className="text-red-500">*</Text>
           </Text>
           <TouchableOpacity onPress={() => setDatePickerOpen((curr) => !curr)}>
-            <Text className="bg-coolGray-100 border-coolGray-300 rounded-md border p-6">
+            <Text className="bg-coolGray-600 border-coolGray-300 rounded-md border p-6">
               {dayjs(currentCoverageStartDate).format('MM/DD/YYYY')}
             </Text>
           </TouchableOpacity>
@@ -193,10 +194,13 @@ export const InsuranceForm = ({
             name="coverageStartDate"
             render={({ field: { onChange, value } }) => (
               <DateTimePickerModal
-                textColor={palette.coolGray[900]}
-                pickerContainerStyleIOS={{ backgroundColor: palette.coolGray[50] }}
+                textColor={palette.coolGray[50]}
+                pickerComponentStyleIOS={{
+                  backgroundColor: palette.coolGray[700],
+                }}
+                pickerContainerStyleIOS={{ backgroundColor: palette.coolGray[700] }}
                 isVisible={datePickerOpen}
-                buttonTextColorIOS={palette.pink[500]}
+                buttonTextColorIOS={palette.pink[300]}
                 date={value}
                 mode="date"
                 onConfirm={(date) => {

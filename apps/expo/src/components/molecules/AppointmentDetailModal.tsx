@@ -64,7 +64,7 @@ export const AppointmentDetailModal = ({
       onRequestClose={onClose}
     >
       <ScreenView>
-        <ScrollView className="bg-coolGray-50 h-full">
+        <ScrollView className="h-full">
           <View>
             <Text weight="bold" className="mb-4 text-3xl">
               Appointment

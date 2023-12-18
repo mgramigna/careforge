@@ -27,7 +27,7 @@ export const LabDetail = ({ documentReference }: { documentReference: DocumentRe
 
   return (
     <TouchableOpacity onPress={() => (pdfUrl ? Linking.openURL(pdfUrl) : undefined)}>
-      <View className="bg-coolGray-100 border-coolGray-300 flex flex-row items-center justify-between rounded-md border px-4 py-8">
+      <View className="bg-coolGray-700 border-coolGray-300 flex flex-row items-center justify-between rounded-md border px-4 py-8">
         <View className="flex flex-row items-center">
           <Ionicons name="flask" size={18} color={palette.coolGray[500]} />
           <View className="pl-2">

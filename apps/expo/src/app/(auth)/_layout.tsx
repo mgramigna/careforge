@@ -10,7 +10,7 @@ export default function AuthLayout() {
           headerBackTitle: 'Back',
           headerTitle: '',
           headerStyle: {
-            backgroundColor: palette.coolGray[200],
+            backgroundColor: palette.coolGray[700],
           },
           presentation: 'modal',
         }}

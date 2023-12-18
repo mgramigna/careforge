@@ -1,12 +1,5 @@
 import React, { Fragment } from 'react';
-import {
-  ActivityIndicator,
-  Linking,
-  Pressable,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Linking, ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
@@ -19,7 +12,6 @@ import { ScreenView } from '@/components/molecules/ScreenView';
 import { HomeAppointmentList } from '@/components/organisms/HomeAppointmentList';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
-import { getPDFUrl } from '@/fhirpath/documentreference';
 import { getFirstName } from '@/fhirpath/patient';
 import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
@@ -103,7 +95,7 @@ const Home = () => {
         </View>
         <View className="mt-24">
           <View className="mb-4 flex flex-row items-center">
-            <Ionicons name="calendar" size={24} color={palette.purple[300]} />
+            <Ionicons name="calendar" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Appointments</Text>
           </View>
           {appointmentsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
@@ -122,7 +114,7 @@ const Home = () => {
         </View>
         <View className="mt-24">
           <View className="mb-4 flex flex-row items-center">
-            <Ionicons name="flask" size={24} color={palette.purple[300]} />
+            <Ionicons name="flask" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Labs</Text>
           </View>
           {labsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
@@ -142,7 +134,7 @@ const Home = () => {
         </View>
         <View className="mt-24">
           <View className="mb-4 flex flex-row items-center">
-            <MaterialCommunityIcons name="allergy" size={24} color={palette.purple[300]} />
+            <MaterialCommunityIcons name="allergy" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Allergies</Text>
           </View>
           {allergiesLoading && <Skeleton className="bg-coolGray-400 h-24" />}
@@ -163,7 +155,7 @@ const Home = () => {
         </View>
         <View className="mt-24">
           <View className="mb-4 flex flex-row items-center">
-            <MaterialCommunityIcons name="pill" size={24} color={palette.purple[300]} />
+            <MaterialCommunityIcons name="pill" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Medications</Text>
           </View>
           {medicationsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
@@ -184,7 +176,7 @@ const Home = () => {
         </View>
         <View className="mt-24">
           <View className="mb-4 flex flex-row items-center">
-            <MaterialCommunityIcons name="needle" size={24} color={palette.purple[300]} />
+            <MaterialCommunityIcons name="needle" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Vaccines</Text>
           </View>
           {vaccinesLoading && <Skeleton className="bg-coolGray-400 h-24" />}

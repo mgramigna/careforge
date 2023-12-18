@@ -23,12 +23,14 @@ export const Checkbox = ({
             checked && 'bg-cyan-500',
           )}
         >
-          <Ionicons
-            name="checkmark"
-            color={palette.coolGray[50]}
-            className={cn('m-auto')}
-            size={20}
-          />
+          {checked && (
+            <Ionicons
+              name="checkmark"
+              color={palette.coolGray[50]}
+              className={cn('m-auto')}
+              size={20}
+            />
+          )}
         </View>
         <Text className="ml-2">{label}</Text>
       </View>

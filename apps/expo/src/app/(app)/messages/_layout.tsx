@@ -8,9 +8,9 @@ const TabLayout = () => {
         headerBackTitle: 'Back',
         headerTitle: '',
         headerStyle: {
-          backgroundColor: palette.coolGray[200],
+          backgroundColor: palette.coolGray[700],
         },
-        headerTintColor: palette.pink[500],
+        headerTintColor: palette.pink[300],
       }}
     />
   );

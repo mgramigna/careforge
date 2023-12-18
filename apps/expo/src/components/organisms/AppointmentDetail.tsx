@@ -73,7 +73,7 @@ export const AppointmentDetail = ({ appointment }: { appointment: Appointment })
           setDetailModalVisible(true);
         }}
       >
-        <View className="bg-coolGray-100 border-coolGray-300 flex flex-row justify-between rounded-md border px-8 py-4">
+        <View className="bg-coolGray-700 border-coolGray-300 flex flex-row justify-between rounded-md border px-8 py-4">
           <View className="">
             {appointment.start &&
               appointment.end &&
