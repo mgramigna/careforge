@@ -7,6 +7,9 @@
       "node": "18.16.1",
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://canvas-challenge-nextjs.vercel.app"
       }
     },
     "development": {

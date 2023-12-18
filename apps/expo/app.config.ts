@@ -2,7 +2,7 @@ import { type ExpoConfig } from '@expo/config';
 
 const defineConfig = (): ExpoConfig => ({
   name: 'expo',
-  slug: 'expo',
+  slug: 'careforge',
   scheme: 'expo',
   version: '0.1.0',
   orientation: 'portrait',
@@ -13,15 +13,11 @@ const defineConfig = (): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'your.bundle.identifier',
+    bundleIdentifier: 'com.careforge.app',
     supportsTablet: true,
   },
   android: {
-    package: 'your.bundle.identifier',
-    adaptiveIcon: {
-      // foregroundImage: './assets/icon.png',
-      // backgroundColor: '#1F104A',
-    },
+    package: 'com.careforge.app',
   },
   extra: {
     eas: {
