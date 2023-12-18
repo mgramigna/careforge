@@ -30,8 +30,8 @@ const getBaseUrl = () => {
   const debuggerHost = Constants.expoConfig?.hostUri;
   const localhost = debuggerHost?.split(':')[0];
 
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}/api/trpc`;
+  if (process.env.NODE_ENV === 'production' && process.env.EXPO_PUBLIC_API_URL) {
+    return `${process.env.EXPO_PUBLIC_API_URL}/api/trpc`;
   }
 
   if (!localhost) {
