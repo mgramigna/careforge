@@ -4,12 +4,12 @@ import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
 import { Text } from '@/components/atoms/Text';
-import { AllergyDetail } from '@/components/molecules/AllergyDetail';
-import { ImmunizationDetail } from '@/components/molecules/ImmunizationDetail';
-import { LabDetail } from '@/components/molecules/LabDetail';
-import { MedicationDetail } from '@/components/molecules/MedicationDetail';
 import { ScreenView } from '@/components/molecules/ScreenView';
+import { AllergyDetail } from '@/components/organisms/AllergyDetail';
 import { HomeAppointmentList } from '@/components/organisms/HomeAppointmentList';
+import { ImmunizationDetail } from '@/components/organisms/ImmunizationDetail';
+import { LabDetail } from '@/components/organisms/LabDetail';
+import { MedicationDetail } from '@/components/organisms/MedicationDetail';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
 import { getFirstName } from '@/fhirpath/patient';
@@ -93,7 +93,7 @@ const Home = () => {
           </Text>
           <Text>{dayjs(new Date()).format('dddd, MMM DD')}</Text>
         </View>
-        <View className="mt-24">
+        <View className="mt-12">
           <View className="mb-4 flex flex-row items-center">
             <Ionicons name="calendar" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Appointments</Text>
@@ -112,7 +112,7 @@ const Home = () => {
             <Button text="Schedule Appointment" className="mt-4" />
           </Link>
         </View>
-        <View className="mt-24">
+        <View className="mt-12">
           <View className="mb-4 flex flex-row items-center">
             <Ionicons name="flask" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Labs</Text>
@@ -132,18 +132,20 @@ const Home = () => {
             </View>
           )}
         </View>
-        <View className="mt-24">
+        <View className="mt-12">
           <View className="mb-4 flex flex-row items-center">
             <MaterialCommunityIcons name="allergy" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Allergies</Text>
           </View>
           {allergiesLoading && <Skeleton className="bg-coolGray-400 h-24" />}
           {!allergiesLoading && (allergyBundle?.total ?? 0) > 0 ? (
-            allergyBundle?.entry?.map(({ resource }) => (
-              <Fragment key={resource.id}>
-                <AllergyDetail allergyIntolerance={resource} />
-              </Fragment>
-            ))
+            <View className="flex gap-4">
+              {allergyBundle?.entry?.map(({ resource }) => (
+                <Fragment key={resource.id}>
+                  <AllergyDetail allergyIntolerance={resource} />
+                </Fragment>
+              ))}
+            </View>
           ) : (
             <View className="flex h-24 w-full items-center justify-center">
               <Text italic>No known allergies</Text>
@@ -153,18 +155,20 @@ const Home = () => {
             <Button text="Update Allergies" className="mt-4" />
           </Link>
         </View>
-        <View className="mt-24">
+        <View className="mt-12">
           <View className="mb-4 flex flex-row items-center">
             <MaterialCommunityIcons name="pill" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Medications</Text>
           </View>
           {medicationsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
           {!medicationsLoading && (medicationStatementBundle?.total ?? 0) > 0 ? (
-            medicationStatementBundle?.entry?.map(({ resource }) => (
-              <Fragment key={resource.id}>
-                <MedicationDetail medicationStatement={resource} />
-              </Fragment>
-            ))
+            <View className="flex gap-4">
+              {medicationStatementBundle?.entry?.map(({ resource }) => (
+                <Fragment key={resource.id}>
+                  <MedicationDetail medicationStatement={resource} />
+                </Fragment>
+              ))}
+            </View>
           ) : (
             <View className="flex h-24 w-full items-center justify-center">
               <Text italic>No current medications</Text>
@@ -174,18 +178,20 @@ const Home = () => {
             <Button text="Update Medications" className="mt-4" />
           </Link>
         </View>
-        <View className="mt-24">
+        <View className="mt-12">
           <View className="mb-4 flex flex-row items-center">
             <MaterialCommunityIcons name="needle" size={24} color={palette.purple[200]} />
             <Text className="ml-2 text-3xl">My Vaccines</Text>
           </View>
           {vaccinesLoading && <Skeleton className="bg-coolGray-400 h-24" />}
           {!vaccinesLoading && (immunizationsBundle?.total ?? 0) > 0 ? (
-            immunizationsBundle?.entry?.map(({ resource }) => (
-              <Fragment key={resource.id}>
-                <ImmunizationDetail immunization={resource} />
-              </Fragment>
-            ))
+            <View className="flex gap-4">
+              {immunizationsBundle?.entry?.map(({ resource }) => (
+                <Fragment key={resource.id}>
+                  <ImmunizationDetail immunization={resource} />
+                </Fragment>
+              ))}
+            </View>
           ) : (
             <View className="flex h-24 w-full items-center justify-center">
               <Text italic>No vaccines on record</Text>

@@ -1,9 +1,10 @@
-import { View } from 'react-native';
 import { getMedicationDisplay } from '@/fhirpath/medicationstatement';
+import { palette } from '@/theme/colors';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { type MedicationStatement } from '@careforge/canvas';
 
-import { Text } from '../atoms/Text';
+import { DetailCard } from '../molecules/DetailCard';
 
 export const MedicationDetail = ({
   medicationStatement,
@@ -13,8 +14,9 @@ export const MedicationDetail = ({
   const medicationName = getMedicationDisplay(medicationStatement);
 
   return (
-    <View>
-      <Text className="text-xl">{medicationName}</Text>
-    </View>
+    <DetailCard
+      text={medicationName}
+      leftIcon={<MaterialCommunityIcons name="pill" size={18} color={palette.coolGray[500]} />}
+    />
   );
 };

@@ -10,8 +10,8 @@ import dayjs from 'dayjs';
 import { type Coverage } from '@careforge/canvas';
 
 import { Text } from '../atoms/Text';
+import { AddEditInsuranceModal } from '../molecules/AddEditInsuranceModal';
 import { type InsuranceFormType } from '../organisms/InsuranceForm';
-import { AddEditInsuranceModal } from './AddEditInsuranceModal';
 
 export const CoverageDetail = ({
   coverage,
@@ -57,7 +57,7 @@ export const CoverageDetail = ({
           <View className="flex flex-1 justify-between">
             <View>
               <View className="flex flex-row items-center gap-2">
-                <Ionicons name="medkit" size={32} color={palette.purple[300]} />
+                <Ionicons name="medkit" size={32} color={palette.purple[200]} />
                 <Text className="text-2xl" weight="bold">
                   {getPayorName(coverage)}
                 </Text>
