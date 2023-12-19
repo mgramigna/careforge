@@ -89,6 +89,16 @@ const Appointments = () => {
                     }}
                     mode="date"
                     selectedItemColor={palette.pink[500]}
+                    headerTextStyle={{
+                      color: palette.coolGray[50],
+                    }}
+                    calendarTextStyle={{
+                      color: palette.coolGray[50],
+                    }}
+                    weekDaysTextStyle={{
+                      color: palette.coolGray[50],
+                    }}
+                    headerButtonColor={palette.coolGray[50]}
                   />
                   <Button
                     text="Cancel"
