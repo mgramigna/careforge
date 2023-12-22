@@ -19,11 +19,11 @@ export const DetailCard = ({
       <View className="bg-coolGray-700 border-coolGray-300 flex flex-row items-center justify-between rounded-md border px-4 py-8">
         <View className="flex flex-row items-center">
           {leftIcon}
-          <View className="pl-2 pr-2">
+          <View className="max-w-xs pl-2">
             <Text className="text-lg">{text}</Text>
           </View>
-          {rightIcon}
         </View>
+        {rightIcon}
       </View>
     </TouchableOpacity>
   );
