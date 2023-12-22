@@ -20,10 +20,7 @@
     },
     "preview": {
       "extends": "base",
-      "distribution": "internal",
-      "ios": {
-        "simulator": true
-      }
+      "distribution": "internal"
     },
     "production": {
       "extends": "base"
