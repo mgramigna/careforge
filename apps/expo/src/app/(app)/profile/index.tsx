@@ -84,7 +84,7 @@ const Profile = () => {
             />
           </TouchableOpacity>
         </View>
-        <View className="mt-24">
+        <View className="mt-12">
           <Button onPress={signOut} variant="secondary" text="Log Out" />
         </View>
       </ScrollView>

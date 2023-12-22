@@ -129,6 +129,11 @@ const Appointments = () => {
             </TouchableOpacity>
           </View>
           {slotsLoading && <ActivityIndicator />}
+          {slots?.total === 0 && (
+            <Text italic className="text-center text-xl">
+              No available appointments
+            </Text>
+          )}
           <FlatList
             showsVerticalScrollIndicator={false}
             className="pb-20"

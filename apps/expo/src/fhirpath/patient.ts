@@ -1,3 +1,4 @@
+import { GENDER_CODE_TO_DISPLAY, type GenderCode, type GenderIdentity } from '@/types/patient';
 import fhirpath from 'fhirpath';
 
 import { type Patient } from '@careforge/canvas';
@@ -49,6 +50,8 @@ export function getPhone(patient: Patient): string | undefined {
 
 const RACE_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race';
 const ETHNICITY_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity';
+const GENDER_IDENTITY_EXTENSION_URL =
+  'http://hl7.org/fhir/us/core/StructureDefinition/us-core-genderIdentity';
 
 export function getRaces(patient: Patient): string[] {
   const races = fhirpath.evaluate(
@@ -66,4 +69,15 @@ export function getEthnicities(patient: Patient): string[] {
   ) as string[];
 
   return races;
+}
+
+export function getGenderIdentity(patient: Patient): GenderIdentity | undefined {
+  const [code] = fhirpath.evaluate(
+    patient,
+    `extension.where(url='${GENDER_IDENTITY_EXTENSION_URL}').valueCodeableConcept.coding.first().code`,
+  ) as GenderCode[];
+
+  if (!code) return undefined;
+
+  return GENDER_CODE_TO_DISPLAY[code];
 }

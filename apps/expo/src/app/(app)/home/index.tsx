@@ -201,7 +201,7 @@ const Home = () => {
           )}
           <Button
             text="Find Vaccines"
-            className="mt-4"
+            className="mb-24 mt-4"
             onPress={() => Linking.openURL('https://www.vaccines.gov')}
           />
         </View>

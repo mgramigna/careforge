@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Button } from '@/components/atoms/Button';
+import { Skeleton } from '@/components/atoms/Skeleton';
 import { Text } from '@/components/atoms/Text';
 import { AddEditInsuranceModal } from '@/components/molecules/AddEditInsuranceModal';
 import { ScreenView } from '@/components/molecules/ScreenView';
@@ -16,7 +17,7 @@ const Billing = () => {
   const { patientId } = useAuth();
   const [insuranceModalOpen, setInsuranceModalOpen] = useState(false);
 
-  const { data: coverageBundle } = api.coverage.search.useQuery(
+  const { data: coverageBundle, isLoading: coverageLoading } = api.coverage.search.useQuery(
     {
       patient: patientId!,
     },
@@ -65,13 +66,15 @@ const Billing = () => {
             </Text>
           </View>
           <View className="mt-8 flex gap-4">
-            {coverageBundle?.entry
-              ?.filter(({ resource }) => resource.status === 'active')
-              .map(({ resource }) => (
-                <Fragment key={resource.id}>
-                  <CoverageDetail coverage={resource} patientId={patientId} />
-                </Fragment>
-              ))}
+            {coverageLoading && <Skeleton className="bg-coolGray-200 h-52 w-full" />}
+            {!coverageLoading &&
+              coverageBundle?.entry
+                ?.filter(({ resource }) => resource.status === 'active')
+                .map(({ resource }) => (
+                  <Fragment key={resource.id}>
+                    <CoverageDetail coverage={resource} patientId={patientId} />
+                  </Fragment>
+                ))}
           </View>
           <View className="mt-8">
             <Button text="Add New Insurance" onPress={() => setInsuranceModalOpen(true)} />

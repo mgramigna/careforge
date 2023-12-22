@@ -24,7 +24,7 @@ export const ConsentDetail = ({ consent }: { consent: Consent }) => {
         text={`${getConsentName(consent)} (${
           consent.status === 'active' ? 'Accepted' : 'Rejected'
         })`}
-        rightIcon={<Ionicons name="document" size={24} color={palette.cyan[700]} />}
+        leftIcon={<Ionicons name="document" size={24} color={palette.cyan[700]} />}
         onPress={() => setIsOpen(true)}
       />
       <Modal
