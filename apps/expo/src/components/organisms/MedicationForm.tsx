@@ -54,15 +54,11 @@ export const MedicationForm = ({
         _text: q.toLowerCase(),
       });
 
-      console.log(result);
-
       const suggestions =
         result?.entry?.map(({ resource }) => ({
           id: resource.id,
           title: getMedicationDisplay(resource) ?? '',
         })) ?? [];
-
-      console.log(suggestions);
 
       setSuggestionsList(suggestions);
       setLoading(false);

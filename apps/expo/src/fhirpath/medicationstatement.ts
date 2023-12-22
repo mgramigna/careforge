@@ -10,3 +10,9 @@ export function getMedicationDisplay(medicationStatement: MedicationStatement): 
 
   return display ?? null;
 }
+
+export function getDosageText(medicationStatement: MedicationStatement): string | undefined {
+  const [text] = fhirpath.evaluate(medicationStatement, 'dosage.first().text') as string[];
+
+  return text;
+}

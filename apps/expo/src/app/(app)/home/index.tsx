@@ -163,11 +163,13 @@ const Home = () => {
           {medicationsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
           {!medicationsLoading && (medicationStatementBundle?.total ?? 0) > 0 ? (
             <View className="flex gap-4">
-              {medicationStatementBundle?.entry?.map(({ resource }) => (
-                <Fragment key={resource.id}>
-                  <MedicationDetail medicationStatement={resource} />
-                </Fragment>
-              ))}
+              {medicationStatementBundle?.entry
+                ?.filter(({ resource }) => resource.status !== 'entered-in-error')
+                .map(({ resource }) => (
+                  <Fragment key={resource.id}>
+                    <MedicationDetail medicationStatement={resource} />
+                  </Fragment>
+                ))}
             </View>
           ) : (
             <View className="flex h-24 w-full items-center justify-center">
