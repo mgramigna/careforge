@@ -161,7 +161,7 @@ export const BasicInfo = ({
             </View>
           </View>
         </View>
-        <View className="mt-8 flex flex-row gap-8">
+        <View className="mt-8 flex flex-row gap-8 pb-24">
           <View className="flex-1">
             <Link href=".." asChild>
               <Button text="Back" variant="secondary" />
