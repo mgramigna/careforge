@@ -16,6 +16,7 @@ import { type Coverage } from '@careforge/canvas';
 import { Button } from '../atoms/Button';
 import { Text } from '../atoms/Text';
 import { TextInput } from '../atoms/TextInput';
+import { InputLabel } from '../molecules/InputLabel';
 
 const InsuranceFormSchema = z.object({
   payorId: z.string(),
@@ -104,9 +105,7 @@ export const InsuranceForm = ({
       </Text>
       <View className="mt-8 flex gap-8">
         <View>
-          <Text className="mb-2 pl-1 text-xl">
-            Insurance Provider<Text className="text-red-500">*</Text>
-          </Text>
+          <InputLabel label="Insurance Provider" required />
           <Controller
             control={control}
             name="payorId"
@@ -147,9 +146,7 @@ export const InsuranceForm = ({
           />
         </View>
         <View>
-          <Text className="mb-2 pl-1 text-xl">
-            Member ID<Text className="text-red-500">*</Text>
-          </Text>
+          <InputLabel label="Member ID" required />
           <Controller
             control={control}
             name="memberId"
@@ -165,7 +162,7 @@ export const InsuranceForm = ({
           />
         </View>
         <View>
-          <Text className="mb-2 pl-1 text-xl">Group ID</Text>
+          <InputLabel label="Group ID" />
           <Controller
             control={control}
             name="groupId"
@@ -181,9 +178,7 @@ export const InsuranceForm = ({
           />
         </View>
         <View>
-          <Text className="mb-2 pl-1 text-xl">
-            Coverage Start Date<Text className="text-red-500">*</Text>
-          </Text>
+          <InputLabel label="Coverage Start Date" required />
           <TouchableOpacity onPress={() => setDatePickerOpen((curr) => !curr)}>
             <Text className="bg-coolGray-600 border-coolGray-300 rounded-md border p-6">
               {dayjs(currentCoverageStartDate).format('MM/DD/YYYY')}

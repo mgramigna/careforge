@@ -5,6 +5,7 @@ import { Link, Redirect } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Text } from '@/components/atoms/Text';
 import { TextInput } from '@/components/atoms/TextInput';
+import { InputLabel } from '@/components/molecules/InputLabel';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/utils/api';
@@ -82,7 +83,7 @@ const SignIn = () => {
               Log in to start owning your health data
             </Text>
             <View className="mt-28">
-              <Text className="mb-2 pl-1 text-xl">Email</Text>
+              <InputLabel label="Email" required />
               <Controller
                 control={control}
                 name="email"

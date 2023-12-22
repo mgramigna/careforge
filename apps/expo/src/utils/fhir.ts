@@ -142,12 +142,14 @@ export function getPatientResource({
   gender,
   dateOfBirth,
   email,
+  phoneNumber,
 }: {
   firstName: string;
   lastName: string;
   dateOfBirth: Date;
   gender: Gender;
   email: string;
+  phoneNumber: string;
 }): Omit<Patient, 'id' | 'identifier'> {
   return {
     resourceType: 'Patient' as const,
@@ -170,6 +172,11 @@ export function getPatientResource({
       },
     ],
     telecom: [
+      {
+        system: 'phone',
+        value: phoneNumber,
+        use: 'mobile',
+      },
       {
         system: 'email',
         value: email,

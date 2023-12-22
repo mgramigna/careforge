@@ -12,6 +12,7 @@ import { z } from 'zod';
 
 import { Button } from '../atoms/Button';
 import { TextInput } from '../atoms/TextInput';
+import { InputLabel } from '../molecules/InputLabel';
 
 const MedicationFormSchema = z.object({
   medicationResourceId: z.string(),
@@ -77,9 +78,7 @@ export const MedicationForm = ({
       </Text>
       <View className="mt-8 flex gap-8">
         <View>
-          <Text className="mb-2 pl-1 text-xl">
-            Medication<Text className="text-red-500">*</Text>
-          </Text>
+          <InputLabel label="Medication" required />
           <Controller
             control={control}
             name="medicationResourceId"
@@ -120,9 +119,7 @@ export const MedicationForm = ({
           />
         </View>
         <View>
-          <Text className="mb-2 pl-1 text-xl">
-            How much are you taking?<Text className="text-red-500">*</Text>
-          </Text>
+          <InputLabel label="How much are you taking?" required />
           <Controller
             control={control}
             name="dosageText"
@@ -138,9 +135,7 @@ export const MedicationForm = ({
           />
         </View>
         <View>
-          <Text className="mb-2 pl-1 text-xl">
-            How often are you taking it?<Text className="text-red-500">*</Text>
-          </Text>
+          <InputLabel label="How often are you taking it?" required />
           <Controller
             control={control}
             name="timingText"

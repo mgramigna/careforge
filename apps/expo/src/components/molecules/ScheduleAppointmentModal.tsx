@@ -16,6 +16,7 @@ import { Button } from '../atoms/Button';
 import { RadioButton } from '../atoms/RadioButton';
 import { Text } from '../atoms/Text';
 import { TextInput } from '../atoms/TextInput';
+import { InputLabel } from './InputLabel';
 import { ScreenView } from './ScreenView';
 
 const ConfirmAppointmentFormSchema = z.object({
@@ -97,10 +98,7 @@ export const ScheduleAppointmentModal = ({
                 </Text>
               </View>
               <View className="mt-8">
-                <Text className="mb-2 pl-1 text-xl">
-                  In a few words, tell us what you'd like to focus on in your appointment (E.g.
-                  "general check up", "back pain")
-                </Text>
+                <InputLabel label='In a few words, tell us what you would like to focus on in your appointment (E.g. "general check up", "back pain")' />
                 <Controller
                   control={control}
                   name="reasonText"
@@ -117,9 +115,10 @@ export const ScheduleAppointmentModal = ({
                 />
               </View>
               <View className="mt-8">
-                <Text className="mb-2 pl-1 text-xl">
-                  Would you prefer an office visit in the clinic, or a telehealth visit?
-                </Text>
+                <InputLabel
+                  label="Would you prefer an office visit in the clinic, or a telehealth visit?"
+                  required
+                />
                 <View className="flex flex-row justify-evenly">
                   <Controller
                     control={control}

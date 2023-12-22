@@ -5,3 +5,5 @@ export const ContactPointSchema = z.object({
   value: z.string(),
   use: z.enum(['home', 'work', 'temp', 'old', 'mobile']).optional(),
 });
+
+export type ContactPoint = z.infer<typeof ContactPointSchema>;

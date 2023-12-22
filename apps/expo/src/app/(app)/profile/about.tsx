@@ -100,7 +100,7 @@ const About = () => {
             </Text>
             <View>
               {goalsLoading && <Skeleton className="bg-coolGray-200 h-10 w-full" />}
-              {!goalsLoading &&
+              {!goalsLoading && (goalBundle?.total ?? 0) > 0 ? (
                 goalBundle?.entry
                   ?.filter(
                     ({ resource }) => getCodeFromConcept(resource.achievementStatus) !== 'achieved',
@@ -116,7 +116,12 @@ const About = () => {
                         <Text className="text-lg">{goal.description.text}</Text>
                       </View>
                     </View>
-                  ))}
+                  ))
+              ) : (
+                <View className="flex h-24 w-full items-center justify-center">
+                  <Text italic>No goals recorded</Text>
+                </View>
+              )}
               <View className="mt-8">
                 <Button text="Add Goal" onPress={() => setGoalModalOpen(true)} />
               </View>

@@ -9,7 +9,7 @@ import {
 import { type Patient } from '@careforge/canvas';
 
 import { Chip } from '../atoms/Chip';
-import { Text } from '../atoms/Text';
+import { InputLabel } from '../molecules/InputLabel';
 
 export const DemographicsInfo = ({ patient }: { patient: Patient }) => {
   const races = getRaceDisplays(patient);
@@ -21,7 +21,7 @@ export const DemographicsInfo = ({ patient }: { patient: Patient }) => {
       <View className="flex gap-8">
         {genderIdentity && (
           <View>
-            <Text className="mb-2 pl-1 text-2xl">Gender Identity</Text>
+            <InputLabel label="Gender Identity" />
             <View className="flex flex-row">
               <Chip text={genderIdentity} />
             </View>
@@ -29,7 +29,7 @@ export const DemographicsInfo = ({ patient }: { patient: Patient }) => {
         )}
         {races.length > 0 && (
           <View>
-            <Text className="mb-2 pl-1 text-2xl">Race</Text>
+            <InputLabel label="Race" />
             <View className="flex flex-row flex-wrap gap-2">
               {races.map((race) => (
                 <Fragment key={race}>
@@ -41,7 +41,7 @@ export const DemographicsInfo = ({ patient }: { patient: Patient }) => {
         )}
         {ethnicities.length > 0 && (
           <View>
-            <Text className="mb-2 pl-1 text-2xl">Ethnicity</Text>
+            <InputLabel label="Ethnicity" />
             <View className="flex flex-row flex-wrap gap-2">
               {ethnicities.map((ethnicity) => (
                 <Fragment key={ethnicity}>

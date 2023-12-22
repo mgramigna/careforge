@@ -42,7 +42,7 @@ export const Consents = ({
             label="I agree to the above consents"
           />
         </View>
-        <View className="mt-8 flex flex-row gap-8">
+        <View className="mt-8 flex flex-row gap-8 pb-24">
           <View className="flex-1">
             <Button
               disabled={!agreed}

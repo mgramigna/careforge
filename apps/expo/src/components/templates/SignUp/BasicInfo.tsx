@@ -7,6 +7,7 @@ import { Button } from '@/components/atoms/Button';
 import { RadioButton } from '@/components/atoms/RadioButton';
 import { Text } from '@/components/atoms/Text';
 import { TextInput } from '@/components/atoms/TextInput';
+import { InputLabel } from '@/components/molecules/InputLabel';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { palette } from '@/theme/colors';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -53,7 +54,7 @@ export const BasicInfo = ({
         </Text>
         <View className="mt-8 flex gap-8">
           <View>
-            <Text className="mb-2 pl-1 text-xl">First Name</Text>
+            <InputLabel label="First Name" required />
             <Controller
               control={control}
               name="firstName"
@@ -69,7 +70,7 @@ export const BasicInfo = ({
             />
           </View>
           <View>
-            <Text className="mb-2 pl-1 text-xl">Last Name</Text>
+            <InputLabel label="Last Name" required />
             <Controller
               control={control}
               name="lastName"
@@ -85,7 +86,7 @@ export const BasicInfo = ({
             />
           </View>
           <View>
-            <Text className="mb-2 pl-1 text-xl">Email</Text>
+            <InputLabel label="Email" required />
             <Controller
               control={control}
               name="email"
@@ -105,7 +106,26 @@ export const BasicInfo = ({
             />
           </View>
           <View>
-            <Text className="mb-2 pl-1 text-xl">Date of Birth</Text>
+            <InputLabel label="Phone Number" required />
+            <Controller
+              control={control}
+              name="phoneNumber"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  hasError={!!errors.phoneNumber}
+                  textContentType="telephoneNumber"
+                  keyboardType="number-pad"
+                  autoComplete="tel"
+                  placeholder="Enter phone number..."
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </View>
+          <View>
+            <InputLabel label="Date of Birth" required />
             <TouchableOpacity onPress={() => setDatePickerOpen((curr) => !curr)}>
               {!dobState.isDirty ? (
                 <Text className="bg-coolGray-600 border-coolGray-300 text-coolGray-200 rounded-md border p-6">
@@ -142,7 +162,7 @@ export const BasicInfo = ({
             />
           </View>
           <View>
-            <Text className="mb-2 pl-1 text-xl">Gender</Text>
+            <InputLabel label="Gender" required />
             <View className="flex flex-row justify-evenly">
               {genderOptions.map((gender) => (
                 <Controller

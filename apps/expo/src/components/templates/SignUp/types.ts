@@ -11,6 +11,9 @@ export const BasicInfoFormSchema = z.object({
   email: z.string().email().min(1),
   dateOfBirth: z.date(),
   gender: z.enum(genderOptions),
+  phoneNumber: z
+    .string()
+    .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, 'Invalid phone number'),
 });
 
 export type BasicInfoFormType = z.infer<typeof BasicInfoFormSchema>;

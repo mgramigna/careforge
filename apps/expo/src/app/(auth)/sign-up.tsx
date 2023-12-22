@@ -67,6 +67,7 @@ const SignUp = () => {
         dateOfBirth: basicInfo.dateOfBirth,
         gender: basicInfo.gender,
         email: basicInfo.email,
+        phoneNumber: basicInfo.phoneNumber,
       });
 
       createPatientMutation.mutate(patient);
