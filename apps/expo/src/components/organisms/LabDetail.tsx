@@ -3,7 +3,7 @@ import { getPDFUrl } from '@/fhirpath/documentreference';
 import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
 import { getIdPartFromReference } from '@/utils/fhir';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
 import { type DocumentReference } from '@careforge/canvas';
