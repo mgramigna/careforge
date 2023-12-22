@@ -5,7 +5,7 @@ const defineConfig = (): ExpoConfig => ({
   name: 'Careforge',
   slug: 'careforge',
   scheme: 'expo',
-  version: '0.2.3',
+  version: '0.2.4',
   orientation: 'portrait',
   splash: {
     image: './assets/icon.png',
