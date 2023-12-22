@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
+import { router } from 'expo-router';
 import { api } from '@/utils/api';
 import { getAppointmentResource } from '@/utils/fhir';
 import dayjs from 'dayjs';
@@ -26,6 +27,7 @@ export const SlotDetail = ({
       await utils.appointment.search.invalidate();
       await utils.appointment.get.invalidate();
       setScheduleModalOpen(false);
+      router.push('/home/');
     },
   });
 
