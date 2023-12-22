@@ -9,6 +9,7 @@ import {
   type Communication,
   type Consent,
   type Coverage,
+  type MedicationStatement,
   type Patient,
 } from '@careforge/canvas';
 
@@ -286,5 +287,38 @@ export function getCoverageResource({
       ],
     }),
     order: order ?? 1,
+  };
+}
+
+export function getMedicationStatement({
+  patientId,
+  medicationId,
+  dosageText,
+}: {
+  patientId: string;
+  medicationId: string;
+  dosageText: string;
+}): Omit<MedicationStatement, 'id'> {
+  const now = dayjs().toISOString();
+  return {
+    resourceType: 'MedicationStatement' as const,
+    status: 'active',
+    medicationReference: {
+      type: 'Medication',
+      reference: `Medication/${medicationId}`,
+    },
+    subject: {
+      reference: `Patient/${patientId}`,
+      type: 'Patient',
+    },
+    effectivePeriod: {
+      start: now,
+    },
+    dateAsserted: now,
+    dosage: [
+      {
+        text: dosageText,
+      },
+    ],
   };
 }
