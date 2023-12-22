@@ -24,6 +24,7 @@ const defineConfig = (): ExpoConfig => ({
   },
   android: {
     package: 'com.careforge.app',
+    versionCode: 2,
   },
   extra: {
     eas: {
