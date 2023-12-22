@@ -7,3 +7,9 @@ export function getConsentName(consent: Consent): string {
 
   return name ?? 'Unknown Consent';
 }
+
+export function getConsentCode(consent: Consent): string {
+  const [code] = fhirpath.evaluate(consent, 'category.coding.code') as string[];
+
+  return code!;
+}
