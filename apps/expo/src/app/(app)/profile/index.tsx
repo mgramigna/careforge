@@ -33,7 +33,7 @@ const Profile = () => {
       <ScrollView showsVerticalScrollIndicator={false} className="h-full">
         <View className="flex flex-row items-center gap-8">
           {photoUrl && <PatientAvatar photoUrl={photoUrl} />}
-          <Text className="text-3xl" weight="bold">
+          <Text className="text-2xl" weight="bold">
             {getFullName(patient)}
           </Text>
         </View>

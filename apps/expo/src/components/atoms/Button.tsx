@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { Text } from './Text';
 
-const buttonVariants = cva('rounded-md p-6 inline-flex justify-center flex-row items-center', {
+const buttonVariants = cva('rounded-md p-6 justify-center flex-row items-center', {
   variants: {
     variant: {
       default: 'bg-pink-500',
