@@ -203,6 +203,7 @@ const Home = () => {
             text="Find Vaccines"
             className="mb-24 mt-4"
             onPress={() => Linking.openURL('https://www.vaccines.gov')}
+            rightIcon={<Ionicons name="open-outline" color={palette.coolGray[50]} size={24} />}
           />
         </View>
       </ScrollView>
