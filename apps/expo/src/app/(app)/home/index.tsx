@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { ActivityIndicator, Linking, ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
@@ -72,6 +72,14 @@ const Home = () => {
     {
       enabled: !!patientId,
     },
+  );
+
+  const filteredMedicationStatements = useMemo(
+    () =>
+      medicationStatementBundle?.entry?.filter(
+        ({ resource }) => resource.status !== 'entered-in-error',
+      ) ?? [],
+    [medicationStatementBundle],
   );
 
   if (isLoading) {
@@ -161,15 +169,13 @@ const Home = () => {
             <Text className="ml-2 text-3xl">My Medications</Text>
           </View>
           {medicationsLoading && <Skeleton className="bg-coolGray-400 h-24" />}
-          {!medicationsLoading && (medicationStatementBundle?.total ?? 0) > 0 ? (
+          {!medicationsLoading && filteredMedicationStatements.length > 0 ? (
             <View className="flex gap-4">
-              {medicationStatementBundle?.entry
-                ?.filter(({ resource }) => resource.status !== 'entered-in-error')
-                .map(({ resource }) => (
-                  <Fragment key={resource.id}>
-                    <MedicationDetail medicationStatement={resource} />
-                  </Fragment>
-                ))}
+              {filteredMedicationStatements.map(({ resource }) => (
+                <Fragment key={resource.id}>
+                  <MedicationDetail medicationStatement={resource} />
+                </Fragment>
+              ))}
             </View>
           ) : (
             <View className="flex h-24 w-full items-center justify-center">

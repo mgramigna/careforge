@@ -19,6 +19,14 @@ export const DemographicsInfo = ({ patient }: { patient: Patient }) => {
   return (
     <>
       <View className="flex gap-8">
+        {genderIdentity && (
+          <View>
+            <Text className="mb-2 pl-1 text-2xl">Gender Identity</Text>
+            <View className="flex flex-row">
+              <Chip text={genderIdentity} />
+            </View>
+          </View>
+        )}
         {races.length > 0 && (
           <View>
             <Text className="mb-2 pl-1 text-2xl">Race</Text>
@@ -40,14 +48,6 @@ export const DemographicsInfo = ({ patient }: { patient: Patient }) => {
                   <Chip text={ethnicity} />
                 </Fragment>
               ))}
-            </View>
-          </View>
-        )}
-        {genderIdentity && (
-          <View>
-            <Text className="mb-2 pl-1 text-2xl">Gender Identity</Text>
-            <View className="flex flex-row">
-              <Chip text={genderIdentity} />
             </View>
           </View>
         )}
