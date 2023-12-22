@@ -10,7 +10,9 @@ const Allergy = () => {
   return patientId ? (
     <ScreenView>
       <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
-        <Text>allergy</Text>
+        <Text className="mt-8 text-xl">
+          To update your allergies, please reach out to your care team
+        </Text>
       </ScrollView>
     </ScreenView>
   ) : null;
