@@ -80,7 +80,7 @@ export const CoverageDetail = ({
                   )}
                 </View>
                 <View>
-                  <Ionicons name="pencil" size={24} color={palette.coolGray[500]} />
+                  <Ionicons name="pencil" size={24} color={palette.cyan[700]} />
                 </View>
               </View>
             </View>

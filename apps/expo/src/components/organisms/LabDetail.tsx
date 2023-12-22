@@ -29,9 +29,7 @@ export const LabDetail = ({ documentReference }: { documentReference: DocumentRe
   return (
     <DetailCard
       leftIcon={<Ionicons name="flask" size={18} color={palette.coolGray[500]} />}
-      rightIcon={
-        <MaterialCommunityIcons name="file-download-outline" size={24} color={palette.cyan[700]} />
-      }
+      rightIcon={<Ionicons name="cloud-download-outline" size={24} color={palette.cyan[700]} />}
       onPress={() => (pdfUrl ? Linking.openURL(pdfUrl) : undefined)}
       text={
         <>
