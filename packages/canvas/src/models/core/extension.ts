@@ -9,7 +9,7 @@ const BaseExtensionSchema = z.object({
   valueCodeableConcept: z
     .object({
       coding: z.array(CodingSchema),
-      text: z.string(),
+      text: z.string().optional(),
     })
     .optional(),
   valueReference: z
@@ -26,3 +26,5 @@ const BaseExtensionSchema = z.object({
 export const ExtensionSchema = BaseExtensionSchema.extend({
   extension: z.lazy(() => BaseExtensionSchema.array().optional()),
 });
+
+export type Extension = z.infer<typeof ExtensionSchema>;

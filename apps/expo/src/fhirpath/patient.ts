@@ -1,4 +1,13 @@
-import { GENDER_CODE_TO_DISPLAY, type GenderCode, type GenderIdentity } from '@/types/patient';
+import {
+  ETHNICITY_EXTENSION_URL,
+  GENDER_CODE_TO_DISPLAY,
+  GENDER_IDENTITY_EXTENSION_URL,
+  RACE_EXTENSION_URL,
+  type EthnicityCode,
+  type GenderCode,
+  type GenderIdentity,
+  type RaceCode,
+} from '@/types/patient';
 import fhirpath from 'fhirpath';
 
 import { type Patient } from '@careforge/canvas';
@@ -48,12 +57,7 @@ export function getPhone(patient: Patient): string | undefined {
   return phone;
 }
 
-const RACE_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race';
-const ETHNICITY_EXTENSION_URL = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity';
-const GENDER_IDENTITY_EXTENSION_URL =
-  'http://hl7.org/fhir/us/core/StructureDefinition/us-core-genderIdentity';
-
-export function getRaces(patient: Patient): string[] {
+export function getRaceDisplays(patient: Patient): string[] {
   const races = fhirpath.evaluate(
     patient,
     `extension.where(url='${RACE_EXTENSION_URL}').extension.where(url='ombCategory').valueCoding.display`,
@@ -62,7 +66,7 @@ export function getRaces(patient: Patient): string[] {
   return races;
 }
 
-export function getEthnicities(patient: Patient): string[] {
+export function getEthnicityDisplays(patient: Patient): string[] {
   const races = fhirpath.evaluate(
     patient,
     `extension.where(url='${ETHNICITY_EXTENSION_URL}').extension.where(url='ombCategory').valueCoding.display`,
@@ -71,13 +75,35 @@ export function getEthnicities(patient: Patient): string[] {
   return races;
 }
 
-export function getGenderIdentity(patient: Patient): GenderIdentity | undefined {
+export function getGenderIdentityCode(patient: Patient): GenderCode | undefined {
   const [code] = fhirpath.evaluate(
     patient,
     `extension.where(url='${GENDER_IDENTITY_EXTENSION_URL}').valueCodeableConcept.coding.first().code`,
   ) as GenderCode[];
 
-  if (!code) return undefined;
+  return code;
+}
 
-  return GENDER_CODE_TO_DISPLAY[code];
+export function getRaceCodes(patient: Patient): RaceCode[] {
+  const races = fhirpath.evaluate(
+    patient,
+    `extension.where(url='${RACE_EXTENSION_URL}').extension.where(url='ombCategory').valueCoding.code`,
+  ) as RaceCode[];
+
+  return races;
+}
+
+export function getEthnicityCodes(patient: Patient): EthnicityCode[] {
+  const races = fhirpath.evaluate(
+    patient,
+    `extension.where(url='${ETHNICITY_EXTENSION_URL}').extension.where(url='ombCategory').valueCoding.code`,
+  ) as EthnicityCode[];
+
+  return races;
+}
+
+export function getGenderIdentityDisplay(patient: Patient): GenderIdentity | undefined {
+  const code = getGenderIdentityCode(patient);
+
+  return code ? GENDER_CODE_TO_DISPLAY[code] : undefined;
 }

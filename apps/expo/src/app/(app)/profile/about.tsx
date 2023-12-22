@@ -12,8 +12,16 @@ import { DemographicsInfo } from '@/components/organisms/DemographicsInfo';
 import { usePatient } from '@/context/PatientContext';
 import { getCodeFromConcept } from '@/fhirpath/utils';
 import { palette } from '@/theme/colors';
+import {
+  ETHNICITY_EXTENSION_URL,
+  GENDER_IDENTITY_EXTENSION_URL,
+  RACE_EXTENSION_URL,
+} from '@/types/patient';
 import { api } from '@/utils/api';
+import { getEthnicityExtension, getGenderIdentityExtension, getRaceExtension } from '@/utils/fhir';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import { type Extension } from '@careforge/canvas';
 
 const About = () => {
   const [goalModalOpen, setGoalModalOpen] = useState(false);
@@ -41,9 +49,36 @@ const About = () => {
     },
   });
 
-  const handleDemographicsSave = useCallback((_form: DemographicsFormType) => {
-    Alert.alert('TODO: update patient resource');
-  }, []);
+  const handleDemographicsSave = useCallback(
+    (form: DemographicsFormType) => {
+      const raceExtension = getRaceExtension({ raceCodes: form.race });
+      const ethnicityExtension = getEthnicityExtension({ ethnicityCodes: form.ethnicity });
+      const genderIdentityExtension = getGenderIdentityExtension({
+        genderCode: form.genderIdentity,
+      });
+
+      const newPatientExtension: Extension[] = [
+        ...(patient?.extension?.filter(
+          ({ url }) =>
+            url !== RACE_EXTENSION_URL &&
+            url !== ETHNICITY_EXTENSION_URL &&
+            url !== GENDER_IDENTITY_EXTENSION_URL,
+        ) ?? []),
+        ...(raceExtension ? [raceExtension] : []),
+        ...(ethnicityExtension ? [ethnicityExtension] : []),
+        ...(genderIdentityExtension ? [genderIdentityExtension] : []),
+      ];
+
+      updatePatientMutation.mutate({
+        id: patient!.id,
+        resource: {
+          ...patient,
+          extension: newPatientExtension,
+        },
+      });
+    },
+    [patient, updatePatientMutation],
+  );
 
   if (isLoading) {
     return (

@@ -1,5 +1,15 @@
 import { type InsuranceFormType } from '@/components/organisms/InsuranceForm';
 import { type Gender } from '@/components/templates/SignUp/types';
+import {
+  ETHNICITY_CODESYSTEM_URI,
+  ETHNICITY_EXTENSION_URL,
+  GENDER_IDENTITY_EXTENSION_URL,
+  RACE_CODESYSTEM_URI,
+  RACE_EXTENSION_URL,
+  type EthnicityCode,
+  type GenderCode,
+  type RaceCode,
+} from '@/types/patient';
 import dayjs from 'dayjs';
 import { match } from 'ts-pattern';
 
@@ -9,6 +19,7 @@ import {
   type Communication,
   type Consent,
   type Coverage,
+  type Extension,
   type MedicationStatement,
   type Patient,
 } from '@careforge/canvas';
@@ -320,5 +331,59 @@ export function getMedicationStatement({
         text: dosageText,
       },
     ],
+  };
+}
+
+export function getRaceExtension({ raceCodes }: { raceCodes?: RaceCode[] }): Extension | undefined {
+  if (!raceCodes) return undefined;
+
+  return {
+    url: RACE_EXTENSION_URL,
+    extension: raceCodes.map((code) => ({
+      url: 'ombCategory',
+      valueCoding: {
+        system: RACE_CODESYSTEM_URI,
+        code,
+      },
+    })),
+  };
+}
+
+export function getEthnicityExtension({
+  ethnicityCodes,
+}: {
+  ethnicityCodes?: EthnicityCode[];
+}): Extension | undefined {
+  if (!ethnicityCodes) return undefined;
+
+  return {
+    url: ETHNICITY_EXTENSION_URL,
+    extension: ethnicityCodes.map((code) => ({
+      url: 'ombCategory',
+      valueCoding: {
+        system: ETHNICITY_CODESYSTEM_URI,
+        code,
+      },
+    })),
+  };
+}
+
+export function getGenderIdentityExtension({
+  genderCode,
+}: {
+  genderCode?: GenderCode;
+}): Extension | undefined {
+  if (!genderCode) return undefined;
+
+  return {
+    url: GENDER_IDENTITY_EXTENSION_URL,
+    valueCodeableConcept: {
+      coding: [
+        {
+          system: 'http://snomed.info/sct',
+          code: genderCode,
+        },
+      ],
+    },
   };
 }
