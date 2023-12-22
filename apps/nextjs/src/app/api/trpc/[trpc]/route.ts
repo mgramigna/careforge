@@ -59,7 +59,8 @@ const handler = async (req: NextRequest) => {
 
   const response = await fetchRequestHandler({
     endpoint: '/api/trpc',
-    // @ts-expect-error router types get mad
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     router: appRouter,
     req,
     createContext: () =>
