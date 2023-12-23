@@ -30,11 +30,11 @@ export const LocationService = ({ baseUrl }: { baseUrl: string }): LocationServi
   };
 
   const create: LocationServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: LocationServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: LocationServiceType['search'] = async ({ accessToken, args }) => {

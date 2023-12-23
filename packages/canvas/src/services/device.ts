@@ -24,11 +24,11 @@ export const DeviceService = ({ baseUrl }: { baseUrl: string }): DeviceServiceTy
   };
 
   const create: DeviceServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: DeviceServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: DeviceServiceType['search'] = async ({ accessToken, args }) => {

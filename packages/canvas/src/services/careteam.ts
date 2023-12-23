@@ -30,7 +30,7 @@ export const CareTeamService = ({ baseUrl }: { baseUrl: string }): CareTeamServi
   };
 
   const create: CareTeamServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: CareTeamServiceType['update'] = async ({ resource, accessToken }) => {

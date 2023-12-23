@@ -44,7 +44,7 @@ export const PaymentNoticeService = ({
   };
 
   const update: PaymentNoticeServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: PaymentNoticeServiceType['search'] = async ({ accessToken, args }) => {

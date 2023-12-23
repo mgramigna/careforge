@@ -30,11 +30,11 @@ export const CarePlanService = ({ baseUrl }: { baseUrl: string }): CarePlanServi
   };
 
   const create: CarePlanServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: CarePlanServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: CarePlanServiceType['search'] = async ({ accessToken, args }) => {

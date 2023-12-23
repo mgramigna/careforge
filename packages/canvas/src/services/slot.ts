@@ -14,15 +14,15 @@ export type SlotServiceType = Service<Slot, SlotSearchArgs, SlotBundle, never, n
 
 export const SlotService = ({ baseUrl }: { baseUrl: string }): SlotServiceType => {
   const read: SlotServiceType['read'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const create: SlotServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: SlotServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: SlotServiceType['search'] = async ({ accessToken, args }) => {

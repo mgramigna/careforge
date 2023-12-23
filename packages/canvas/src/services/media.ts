@@ -34,7 +34,7 @@ export const MediaService = ({ baseUrl }: { baseUrl: string }): MediaServiceType
   };
 
   const update: MediaServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: MediaServiceType['search'] = async ({ accessToken, args }) => {

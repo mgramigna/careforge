@@ -34,11 +34,11 @@ export const DocumentReferenceService = ({
   };
 
   const create: DocumentReferenceServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: DocumentReferenceServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: DocumentReferenceServiceType['search'] = async ({ accessToken, args }) => {

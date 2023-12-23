@@ -34,11 +34,11 @@ export const MedicationRequestService = ({
   };
 
   const create: MedicationRequestServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: MedicationRequestServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: MedicationRequestServiceType['search'] = async ({ accessToken, args }) => {

@@ -18,7 +18,7 @@ export const CoverageEligibilityRequestService = ({
   baseUrl: string;
 }): CoverageEligibilityRequestServiceType => {
   const read: CoverageEligibilityRequestServiceType['read'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const create: CoverageEligibilityRequestServiceType['create'] = async ({
@@ -35,11 +35,11 @@ export const CoverageEligibilityRequestService = ({
   };
 
   const update: CoverageEligibilityRequestServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: CoverageEligibilityRequestServiceType['search'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   return {

@@ -30,11 +30,11 @@ export const ImmunizationService = ({ baseUrl }: { baseUrl: string }): Immunizat
   };
 
   const create: ImmunizationServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: ImmunizationServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: ImmunizationServiceType['search'] = async ({ accessToken, args }) => {

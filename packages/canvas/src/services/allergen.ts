@@ -30,11 +30,11 @@ export const AllergenService = ({ baseUrl }: { baseUrl: string }): AllergenServi
   };
 
   const create: AllergenServiceType['create'] = async () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: AllergenServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: AllergenServiceType['search'] = async ({ accessToken, args }) => {

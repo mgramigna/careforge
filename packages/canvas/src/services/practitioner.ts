@@ -30,11 +30,11 @@ export const PractitionerService = ({ baseUrl }: { baseUrl: string }): Practitio
   };
 
   const create: PractitionerServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: PractitionerServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: PractitionerServiceType['search'] = async ({ accessToken, args }) => {

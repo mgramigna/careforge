@@ -34,7 +34,7 @@ export const ConsentService = ({ baseUrl }: { baseUrl: string }): ConsentService
   };
 
   const update: ConsentServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: ConsentServiceType['search'] = async ({ accessToken, args }) => {

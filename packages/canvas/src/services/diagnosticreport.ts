@@ -34,11 +34,11 @@ export const DiagnosticReportService = ({
   };
 
   const create: DiagnosticReportServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: DiagnosticReportServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: DiagnosticReportServiceType['search'] = async ({ accessToken, args }) => {

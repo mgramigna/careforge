@@ -40,7 +40,7 @@ export const ObservationService = ({ baseUrl }: { baseUrl: string }): Observatio
   };
 
   const update: ObservationServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: ObservationServiceType['search'] = async ({ accessToken, args }) => {

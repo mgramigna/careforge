@@ -24,11 +24,11 @@ export const GoalService = ({ baseUrl }: { baseUrl: string }): GoalServiceType =
   };
 
   const create: GoalServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: GoalServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: GoalServiceType['search'] = async ({ accessToken, args }) => {

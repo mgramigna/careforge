@@ -1,5 +1,7 @@
 import { type Result } from 'neverthrow';
 
+import { type CanvasError } from './errors';
+
 interface BaseArgs {
   accessToken: string;
 }
@@ -21,8 +23,8 @@ interface SearchArgs<T> extends BaseArgs {
 }
 
 export interface Service<TResource, TSearchArgs, TSearchOutput, TCreateArgs, TUpdateArgs> {
-  read: (args: ReadArgs) => Promise<Result<TResource, string>>;
-  create: (args: CreateArgs<TCreateArgs>) => Promise<Result<string, string>>;
-  update: (args: UpdateArgs<TUpdateArgs>) => Promise<Result<null, string>>;
-  search: (args: SearchArgs<TSearchArgs>) => Promise<Result<TSearchOutput, string>>;
+  read: (args: ReadArgs) => Promise<Result<TResource, CanvasError>>;
+  create: (args: CreateArgs<TCreateArgs>) => Promise<Result<string, CanvasError>>;
+  update: (args: UpdateArgs<TUpdateArgs>) => Promise<Result<null, CanvasError>>;
+  search: (args: SearchArgs<TSearchArgs>) => Promise<Result<TSearchOutput, CanvasError>>;
 }

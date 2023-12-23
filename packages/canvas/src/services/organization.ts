@@ -30,11 +30,11 @@ export const OrganizationService = ({ baseUrl }: { baseUrl: string }): Organizat
   };
 
   const create: OrganizationServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: OrganizationServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: OrganizationServiceType['search'] = async ({ accessToken, args }) => {

@@ -30,11 +30,11 @@ export const ProcedureService = ({ baseUrl }: { baseUrl: string }): ProcedureSer
   };
 
   const create: ProcedureServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: ProcedureServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: ProcedureServiceType['search'] = async ({ accessToken, args }) => {

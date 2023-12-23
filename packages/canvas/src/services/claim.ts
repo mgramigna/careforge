@@ -8,7 +8,7 @@ export type ClaimServiceType = Service<Claim, never, never, Claim, never>;
 
 export const ClaimService = ({ baseUrl }: { baseUrl: string }): ClaimServiceType => {
   const read: ClaimServiceType['read'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const create: ClaimServiceType['create'] = async ({ resource, accessToken }) => {
@@ -22,11 +22,11 @@ export const ClaimService = ({ baseUrl }: { baseUrl: string }): ClaimServiceType
   };
 
   const update: ClaimServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: ClaimServiceType['search'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   return {

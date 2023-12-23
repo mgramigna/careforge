@@ -44,7 +44,7 @@ export const CommunicationService = ({
   };
 
   const update: CommunicationServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: CommunicationServiceType['search'] = async ({ accessToken, args }) => {

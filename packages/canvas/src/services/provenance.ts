@@ -30,11 +30,11 @@ export const ProvenanceService = ({ baseUrl }: { baseUrl: string }): ProvenanceS
   };
 
   const create: ProvenanceServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: ProvenanceServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: ProvenanceServiceType['search'] = async ({ accessToken, args }) => {

@@ -20,15 +20,15 @@ export type ScheduleServiceType = Service<
 
 export const ScheduleService = ({ baseUrl }: { baseUrl: string }): ScheduleServiceType => {
   const read: ScheduleServiceType['read'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const create: ScheduleServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: ScheduleServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: ScheduleServiceType['search'] = async ({ accessToken, args }) => {

@@ -30,11 +30,11 @@ export const MedicationService = ({ baseUrl }: { baseUrl: string }): MedicationS
   };
 
   const create: MedicationServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: MedicationServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: MedicationServiceType['search'] = async ({ accessToken, args }) => {

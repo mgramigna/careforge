@@ -34,11 +34,11 @@ export const QuestionnaireService = ({
   };
 
   const create: QuestionnaireServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: QuestionnaireServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: QuestionnaireServiceType['search'] = async ({ accessToken, args }) => {

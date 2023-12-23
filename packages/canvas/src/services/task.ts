@@ -14,7 +14,11 @@ export type TaskServiceType = Service<Task, TaskSearchArgs, TaskBundle, Task, Ta
 
 export const TaskService = ({ baseUrl }: { baseUrl: string }): TaskServiceType => {
   const read: TaskServiceType['read'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(
+      err({
+        errorType: 'UNSUPPORTED',
+      }),
+    );
   };
 
   const create: TaskServiceType['create'] = async ({ resource, accessToken }) => {

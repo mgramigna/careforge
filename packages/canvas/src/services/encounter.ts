@@ -30,11 +30,11 @@ export const EncounterService = ({ baseUrl }: { baseUrl: string }): EncounterSer
   };
 
   const create: EncounterServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: EncounterServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: EncounterServiceType['search'] = async ({ accessToken, args }) => {

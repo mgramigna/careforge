@@ -1,6 +1,8 @@
 import { err, ok, type Result } from 'neverthrow';
 import { ZodError, type ZodType, type ZodTypeDef } from 'zod';
 
+import { type CanvasError } from '../types/errors';
+
 export async function makeFhirGetRequest<T>(
   schema: ZodType<T, ZodTypeDef, T>,
   args: {
@@ -8,7 +10,7 @@ export async function makeFhirGetRequest<T>(
     token: string;
     query?: string;
   },
-): Promise<Result<T, string>> {
+): Promise<Result<T, CanvasError>> {
   const queryString = args.query ? `?${args.query}` : '';
 
   try {
@@ -28,16 +30,23 @@ export async function makeFhirGetRequest<T>(
 
     return ok(schema.parse(await response.json()));
   } catch (e) {
-    // TODO: fill these in
     if (e instanceof ZodError) {
-      return err('parse');
+      return err({
+        errorType: 'PARSE',
+        details: e.message,
+      });
     }
 
     if (e instanceof Error) {
-      return err(e.message);
+      return err({
+        errorType: 'UNKNOWN',
+        details: e.message,
+      });
     }
 
-    return err('bad');
+    return err({
+      errorType: 'UNKNOWN',
+    });
   }
 }
 
@@ -45,7 +54,7 @@ export async function makeFhirCreateRequest<T>(args: {
   path: string;
   token: string;
   body?: T;
-}): Promise<Result<string, string>> {
+}): Promise<Result<string, CanvasError>> {
   try {
     console.log(`[canvas] POST ${args.path}`);
     const response = await fetch(args.path, {
@@ -66,7 +75,10 @@ export async function makeFhirCreateRequest<T>(args: {
     const location = response.headers.get('location');
 
     if (!location) {
-      return err('todo');
+      return err({
+        errorType: 'INTERNAL',
+        details: 'Could not parse location from response headers',
+      });
     }
 
     const locationWithoutHistory = location.replace(/\/_history.*/, '');
@@ -74,16 +86,23 @@ export async function makeFhirCreateRequest<T>(args: {
 
     return ok(id);
   } catch (e) {
-    // TODO: fill these in
     if (e instanceof ZodError) {
-      return err('bad');
+      return err({
+        errorType: 'PARSE',
+        details: e.message,
+      });
     }
 
     if (e instanceof Error) {
-      return err(e.message);
+      return err({
+        errorType: 'UNKNOWN',
+        details: e.message,
+      });
     }
 
-    return err('bad');
+    return err({
+      errorType: 'UNKNOWN',
+    });
   }
 }
 
@@ -91,7 +110,7 @@ export async function makeFhirUpdateRequest<T>(args: {
   path: string;
   token: string;
   body?: T;
-}): Promise<Result<null, string>> {
+}): Promise<Result<null, CanvasError>> {
   try {
     console.log(`[canvas] PUT ${args.path}`);
     const response = await fetch(args.path, {
@@ -111,15 +130,22 @@ export async function makeFhirUpdateRequest<T>(args: {
 
     return ok(null);
   } catch (e) {
-    // TODO: fill these in
     if (e instanceof ZodError) {
-      return err('bad');
+      return err({
+        errorType: 'PARSE',
+        details: e.message,
+      });
     }
 
     if (e instanceof Error) {
-      return err(e.message);
+      return err({
+        errorType: 'UNKNOWN',
+        details: e.message,
+      });
     }
 
-    return err('bad');
+    return err({
+      errorType: 'UNKNOWN',
+    });
   }
 }

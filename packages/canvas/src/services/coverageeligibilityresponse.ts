@@ -24,15 +24,15 @@ export const CoverageEligibilityResponseService = ({
   baseUrl: string;
 }): CoverageEligibilityResponseServiceType => {
   const read: CoverageEligibilityResponseServiceType['read'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const create: CoverageEligibilityResponseServiceType['create'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const update: CoverageEligibilityResponseServiceType['update'] = () => {
-    return Promise.resolve(err('NOT_SUPPORTED'));
+    return Promise.resolve(err({ errorType: 'UNSUPPORTED' }));
   };
 
   const search: CoverageEligibilityResponseServiceType['search'] = async ({
