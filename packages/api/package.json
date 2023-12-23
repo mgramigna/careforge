@@ -17,6 +17,7 @@
     "@trpc/server": "next",
     "dotenv": "^16.3.1",
     "superjson": "2.2.0",
+    "ts-pattern": "^5.0.5",
     "zod": "^3.22.2"
   },
   "devDependencies": {

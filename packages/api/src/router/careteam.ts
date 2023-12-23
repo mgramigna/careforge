@@ -7,6 +7,7 @@ import {
 } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createCareTeamRouter = ({
   careTeamService,
@@ -21,10 +22,9 @@ export const createCareTeamRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     update: authedProcedure
@@ -44,10 +44,9 @@ export const createCareTeamRouter = ({
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     search: authedProcedure.input(CareTeamSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -57,10 +56,9 @@ export const createCareTeamRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

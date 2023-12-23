@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { ConsentSchema, ConsentSearchArgsSchema, type ConsentServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createConsentRouter = ({ consentService }: { consentService: ConsentServiceType }) => {
   return createTRPCRouter({
@@ -13,10 +14,9 @@ export const createConsentRouter = ({ consentService }: { consentService: Consen
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     create: authedProcedure
@@ -28,10 +28,9 @@ export const createConsentRouter = ({ consentService }: { consentService: Consen
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     search: authedProcedure.input(ConsentSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -41,10 +40,9 @@ export const createConsentRouter = ({ consentService }: { consentService: Consen
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

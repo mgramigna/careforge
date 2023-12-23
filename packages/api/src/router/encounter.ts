@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { EncounterSearchArgsSchema, type EncounterServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createEncounterRouter = ({
   encounterService,
@@ -17,10 +18,9 @@ export const createEncounterRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     search: authedProcedure.input(EncounterSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -30,10 +30,9 @@ export const createEncounterRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

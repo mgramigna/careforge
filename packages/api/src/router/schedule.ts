@@ -1,6 +1,7 @@
 import { type ScheduleServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createScheduleRouter = ({
   scheduleService,
@@ -15,10 +16,9 @@ export const createScheduleRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

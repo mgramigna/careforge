@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { MedicationSearchArgsSchema, type MedicationServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createMedicationRouter = ({
   medicationService,
@@ -17,10 +18,9 @@ export const createMedicationRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     search: authedProcedure.input(MedicationSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -30,10 +30,9 @@ export const createMedicationRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

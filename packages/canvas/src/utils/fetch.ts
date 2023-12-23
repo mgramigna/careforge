@@ -2,6 +2,7 @@ import { err, ok, type Result } from 'neverthrow';
 import { ZodError, type ZodType, type ZodTypeDef } from 'zod';
 
 import { type CanvasError } from '../types/errors';
+import { getCanvasErrorFromResponse } from './errors';
 
 export async function makeFhirGetRequest<T>(
   schema: ZodType<T, ZodTypeDef, T>,
@@ -25,7 +26,7 @@ export async function makeFhirGetRequest<T>(
     console.log(`[canvas] ${response.status}`);
 
     if (!response.ok) {
-      console.log(`[canvas] ERROR: ${await response.text()}`);
+      return getCanvasErrorFromResponse(response);
     }
 
     return ok(schema.parse(await response.json()));
@@ -69,7 +70,7 @@ export async function makeFhirCreateRequest<T>(args: {
     console.log(`[canvas] ${response.status}`);
 
     if (!response.ok) {
-      console.log(`[canvas] ERROR: ${await response.text()}`);
+      return getCanvasErrorFromResponse(response);
     }
 
     const location = response.headers.get('location');
@@ -125,7 +126,7 @@ export async function makeFhirUpdateRequest<T>(args: {
     console.log(`[canvas] ${response.status}`);
 
     if (!response.ok) {
-      console.log(`[canvas] ERROR: ${await response.text()}`);
+      return getCanvasErrorFromResponse(response);
     }
 
     return ok(null);

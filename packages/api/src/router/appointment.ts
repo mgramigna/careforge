@@ -7,6 +7,7 @@ import {
 } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createAppointmentRouter = ({
   appointmentService,
@@ -21,10 +22,9 @@ export const createAppointmentRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     create: authedProcedure
@@ -36,10 +36,9 @@ export const createAppointmentRouter = ({
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     update: authedProcedure
@@ -59,10 +58,9 @@ export const createAppointmentRouter = ({
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     search: authedProcedure.input(AppointmentSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -72,10 +70,9 @@ export const createAppointmentRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { QuestionnaireSearchArgsSchema, type QuestionnaireServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createQuestionnaireRouter = ({
   questionnaireService,
@@ -17,10 +18,9 @@ export const createQuestionnaireRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     search: authedProcedure.input(QuestionnaireSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -30,10 +30,9 @@ export const createQuestionnaireRouter = ({
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

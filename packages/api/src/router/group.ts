@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { GroupSchema, GroupSearchArgsSchema, type GroupServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createGroupRouter = ({ groupService }: { groupService: GroupServiceType }) => {
   return createTRPCRouter({
@@ -13,10 +14,9 @@ export const createGroupRouter = ({ groupService }: { groupService: GroupService
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     create: authedProcedure
@@ -28,10 +28,9 @@ export const createGroupRouter = ({ groupService }: { groupService: GroupService
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     update: authedProcedure
@@ -51,10 +50,9 @@ export const createGroupRouter = ({ groupService }: { groupService: GroupService
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     search: authedProcedure.input(GroupSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -64,10 +62,9 @@ export const createGroupRouter = ({ groupService }: { groupService: GroupService
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

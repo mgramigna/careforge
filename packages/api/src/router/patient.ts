@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { PatientSchema, PatientSearchArgsSchema, type PatientServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createPatientRouter = ({ patientService }: { patientService: PatientServiceType }) => {
   return createTRPCRouter({
@@ -13,10 +14,9 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     create: authedProcedure
@@ -28,9 +28,9 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
         });
 
         if (result.isErr()) {
-          throw new Error(`[${result.error.errorType}] - ${result.error.details}`);
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     update: authedProcedure
@@ -50,10 +50,9 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     search: authedProcedure.input(PatientSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -63,11 +62,9 @@ export const createPatientRouter = ({ patientService }: { patientService: Patien
       });
 
       if (result.isErr()) {
-        // TODO
-        console.error(result.error);
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { TaskSchema, TaskSearchArgsSchema, type TaskServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createTaskRouter = ({ taskService }: { taskService: TaskServiceType }) => {
   return createTRPCRouter({
@@ -15,10 +16,9 @@ export const createTaskRouter = ({ taskService }: { taskService: TaskServiceType
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     update: authedProcedure
@@ -38,10 +38,9 @@ export const createTaskRouter = ({ taskService }: { taskService: TaskServiceType
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     search: authedProcedure.input(TaskSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -51,10 +50,9 @@ export const createTaskRouter = ({ taskService }: { taskService: TaskServiceType
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });

@@ -15,6 +15,7 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "neverthrow": "^6.1.0",
+    "ts-pattern": "^5.0.5",
     "zod": "^3.22.2"
   },
   "devDependencies": {

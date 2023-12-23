@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { MediaSchema, MediaSearchArgsSchema, type MediaServiceType } from '@careforge/canvas';
 
 import { authedProcedure, createTRPCRouter } from '../trpc';
+import { handleApiError } from '../util/errors';
 
 export const createMediaRouter = ({ mediaService }: { mediaService: MediaServiceType }) => {
   return createTRPCRouter({
@@ -13,10 +14,9 @@ export const createMediaRouter = ({ mediaService }: { mediaService: MediaService
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
     create: authedProcedure
@@ -28,10 +28,9 @@ export const createMediaRouter = ({ mediaService }: { mediaService: MediaService
         });
 
         if (result.isErr()) {
-          // TODO
-          return null;
+          const trpcError = handleApiError(result.error);
+          throw trpcError;
         }
-
         return result.value;
       }),
     search: authedProcedure.input(MediaSearchArgsSchema).query(async ({ ctx, input }) => {
@@ -41,10 +40,9 @@ export const createMediaRouter = ({ mediaService }: { mediaService: MediaService
       });
 
       if (result.isErr()) {
-        // TODO
-        return null;
+        const trpcError = handleApiError(result.error);
+        throw trpcError;
       }
-
       return result.value;
     }),
   });
