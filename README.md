@@ -39,6 +39,37 @@ Made with:
 3. Run `pnpm dev` from the root
 4. Open the Expo Go app to load the React Native application on your device
 
+### Navigating the Codebase
+
+```
+.
+├── apps
+│   ├── expo
+│   │   └── src
+│   │       ├── app        --> app routes using expo-router
+│   │       ├── components --> React components used throughout the app
+│   │       ├── fhirpath   --> fhirpath helpers for extracting strings from FHIR resources
+│   │       ├── theme      --> Color palette used from tailwind config
+│   │       └── ...
+│   └── nextjs             --> Nextjs serverless API handlers
+├── packages
+│   ├── api
+│   │   └── src
+│   │       ├── router     --> tRPC routers for each FHIR resource
+│   │       └── ...
+│   └── canvas
+│       └── src
+│           ├── models     --> Zod Schemas/TypeScript types for each FHIR Resource
+│           ├── services   --> Services for each FHIR resource
+│           └── ...
+└── tooling
+    ├── eslint             --> Shared eslint config
+    ├── github             --> GitHub actions/CI utils
+    ├── prettier           --> Shared prettier config
+    ├── tailwind           --> Shared tailwind config
+    └── typescript         --> Shared TypeScript config
+```
+
 ### Testing
 
 1. Run the model transformation unit tests with `pnpm -F canvas test`
