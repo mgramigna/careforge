@@ -6,9 +6,9 @@ import { Skeleton } from '@/components/atoms/Skeleton';
 import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { AllergyDetail } from '@/components/organisms/AllergyDetail';
+import { DocumentDownloadCard } from '@/components/organisms/DocumentDownloadCard';
 import { HomeAppointmentList } from '@/components/organisms/HomeAppointmentList';
 import { ImmunizationDetail } from '@/components/organisms/ImmunizationDetail';
-import { LabDetail } from '@/components/organisms/LabDetail';
 import { MedicationDetail } from '@/components/organisms/MedicationDetail';
 import { useAuth } from '@/context/AuthContext';
 import { usePatient } from '@/context/PatientContext';
@@ -130,7 +130,10 @@ const Home = () => {
             <View className="flex gap-4">
               {labDocumentBundle?.entry?.map(({ resource }) => (
                 <Fragment key={resource.id}>
-                  <LabDetail documentReference={resource} />
+                  <DocumentDownloadCard
+                    documentReference={resource}
+                    leftIcon={<Ionicons name="flask" size={18} color={palette.coolGray[500]} />}
+                  />
                 </Fragment>
               ))}
             </View>

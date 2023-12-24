@@ -6,16 +6,29 @@ import { Text } from '@/components/atoms/Text';
 import { AddEditInsuranceModal } from '@/components/molecules/AddEditInsuranceModal';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { CoverageDetail } from '@/components/organisms/CoverageDetail';
+import { DocumentDownloadCard } from '@/components/organisms/DocumentDownloadCard';
 import { type InsuranceFormType } from '@/components/organisms/InsuranceForm';
 import { useAuth } from '@/context/AuthContext';
+import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
 import { getCoverageResource } from '@/utils/fhir';
+import { Ionicons } from '@expo/vector-icons';
 
 import { type Coverage } from '@careforge/canvas';
 
 const Billing = () => {
   const { patientId } = useAuth();
   const [insuranceModalOpen, setInsuranceModalOpen] = useState(false);
+
+  const { data: invoiceBundle, isLoading: invoicesLoading } = api.documentreference.search.useQuery(
+    {
+      category: 'invoicefull',
+      patient: patientId!,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
 
   const { data: coverageBundle, isLoading: coverageLoading } = api.coverage.search.useQuery(
     {
@@ -56,9 +69,25 @@ const Billing = () => {
             </Text>
           </View>
           <View className="mt-8">
-            <Text className="text-center text-xl" italic>
-              No current bills
-            </Text>
+            {invoicesLoading && <Skeleton className="bg-coolGray-400 h-24" />}
+            {!invoicesLoading && (invoiceBundle?.total ?? 0) > 0 ? (
+              <View className="flex gap-4">
+                {invoiceBundle?.entry?.map(({ resource }) => (
+                  <Fragment key={resource.id}>
+                    <DocumentDownloadCard
+                      documentReference={resource}
+                      leftIcon={
+                        <Ionicons size={18} color={palette.coolGray[500]} name="card-outline" />
+                      }
+                    />
+                  </Fragment>
+                ))}
+              </View>
+            ) : (
+              <View className="flex h-24 w-full items-center justify-center">
+                <Text italic>No current bills</Text>
+              </View>
+            )}
           </View>
           <View className="mt-8">
             <Text className="text-3xl" weight="bold">

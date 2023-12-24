@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react';
 import { Linking } from 'react-native';
 import { getPDFUrl } from '@/fhirpath/documentreference';
 import { palette } from '@/theme/colors';
@@ -11,7 +12,13 @@ import { type DocumentReference } from '@careforge/canvas';
 import { Text } from '../atoms/Text';
 import { DetailCard } from '../molecules/DetailCard';
 
-export const LabDetail = ({ documentReference }: { documentReference: DocumentReference }) => {
+export const DocumentDownloadCard = ({
+  documentReference,
+  leftIcon,
+}: {
+  documentReference: DocumentReference;
+  leftIcon?: ReactNode;
+}) => {
   const pdfUrl = getPDFUrl(documentReference);
   const organizationId = documentReference.custodian?.reference
     ? getIdPartFromReference(documentReference.custodian.reference)
@@ -28,7 +35,7 @@ export const LabDetail = ({ documentReference }: { documentReference: DocumentRe
 
   return (
     <DetailCard
-      leftIcon={<Ionicons name="flask" size={18} color={palette.coolGray[500]} />}
+      leftIcon={leftIcon}
       rightIcon={<Ionicons name="cloud-download-outline" size={24} color={palette.cyan[700]} />}
       onPress={() => (pdfUrl ? Linking.openURL(pdfUrl) : undefined)}
       text={
