@@ -46,7 +46,7 @@ Made with:
 ├── apps
 │   ├── expo
 │   │   └── src
-│   │       ├── app        --> app routes using expo-router
+│   │       ├── app        --> app screens using expo-router
 │   │       ├── components --> React components used throughout the app
 │   │       ├── fhirpath   --> fhirpath helpers for extracting strings from FHIR resources
 │   │       ├── theme      --> Color palette used from tailwind config
