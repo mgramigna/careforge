@@ -1,5 +1,5 @@
-import React, { Fragment, useMemo } from 'react';
-import { ActivityIndicator, Linking, ScrollView, View } from 'react-native';
+import React, { Fragment, useCallback, useMemo } from 'react';
+import { ActivityIndicator, Alert, Linking, RefreshControl, ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
@@ -22,49 +22,70 @@ const Home = () => {
   const { patientId } = useAuth();
   const { patient, isLoading } = usePatient();
 
-  const { data: appointmentBundle, isLoading: appointmentsLoading } =
-    api.appointment.search.useQuery(
-      {
-        patient: `Patient/${patientId!}`,
-        _sort: 'date',
-        date: `ge${dayjs().format('YYYY-MM-DD')}`,
-      },
-      {
-        enabled: !!patientId,
-      },
-    );
+  const {
+    data: appointmentBundle,
+    isLoading: appointmentsLoading,
+    refetch: refetchAppointments,
+    isRefetching: appointmentsRefetching,
+  } = api.appointment.search.useQuery(
+    {
+      patient: `Patient/${patientId!}`,
+      _sort: 'date',
+      date: `ge${dayjs().format('YYYY-MM-DD')}`,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
 
-  const { data: allergyBundle, isLoading: allergiesLoading } =
-    api.allergyintolerance.search.useQuery(
-      {
-        patient: patientId!,
-      },
-      {
-        enabled: !!patientId,
-      },
-    );
+  const {
+    data: allergyBundle,
+    isLoading: allergiesLoading,
+    refetch: refetchAllergies,
+    isRefetching: allergiesRefetching,
+  } = api.allergyintolerance.search.useQuery(
+    {
+      patient: patientId!,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
 
-  const { data: medicationStatementBundle, isLoading: medicationsLoading } =
-    api.medicationstatement.search.useQuery(
-      {
-        patient: patientId!,
-      },
-      {
-        enabled: !!patientId,
-      },
-    );
+  const {
+    data: medicationStatementBundle,
+    isLoading: medicationsLoading,
+    refetch: refetchMedications,
+    isRefetching: medicationsRefetching,
+  } = api.medicationstatement.search.useQuery(
+    {
+      patient: patientId!,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
 
-  const { data: immunizationsBundle, isLoading: vaccinesLoading } =
-    api.immunization.search.useQuery(
-      {
-        patient: patientId!,
-      },
-      {
-        enabled: !!patientId,
-      },
-    );
+  const {
+    data: immunizationsBundle,
+    isLoading: vaccinesLoading,
+    refetch: refetchVaccines,
+    isRefetching: vaccinesRefetching,
+  } = api.immunization.search.useQuery(
+    {
+      patient: patientId!,
+    },
+    {
+      enabled: !!patientId,
+    },
+  );
 
-  const { data: labDocumentBundle, isLoading: labsLoading } = api.documentreference.search.useQuery(
+  const {
+    data: labDocumentBundle,
+    isLoading: labsLoading,
+    refetch: refetchLabs,
+    isRefetching: labsRefetching,
+  } = api.documentreference.search.useQuery(
     {
       patient: patientId!,
       category: 'labreport',
@@ -82,6 +103,16 @@ const Home = () => {
     [medicationStatementBundle],
   );
 
+  const onRefresh = useCallback(() => {
+    Promise.all([
+      refetchAppointments(),
+      refetchMedications(),
+      refetchLabs(),
+      refetchVaccines(),
+      refetchAllergies(),
+    ]).catch(() => Alert.alert('Error refreshing data'));
+  }, [refetchAppointments, refetchMedications, refetchLabs, refetchVaccines, refetchAllergies]);
+
   if (isLoading) {
     return (
       <ScreenView>
@@ -94,7 +125,23 @@ const Home = () => {
 
   return patient ? (
     <ScreenView>
-      <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="h-full"
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={
+              appointmentsRefetching ||
+              allergiesRefetching ||
+              medicationsRefetching ||
+              labsRefetching ||
+              vaccinesRefetching
+            }
+            onRefresh={onRefresh}
+            tintColor={palette.coolGray[50]}
+          />
+        }
+      >
         <View className="flex w-full flex-row items-center justify-between">
           <Text className="text-3xl" weight="bold">
             Hello, {getFirstName(patient)}

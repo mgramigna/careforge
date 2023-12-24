@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { Alert, RefreshControl, ScrollView, View } from 'react-native';
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
 import { Text } from '@/components/atoms/Text';
@@ -20,7 +20,12 @@ const Billing = () => {
   const { patientId } = useAuth();
   const [insuranceModalOpen, setInsuranceModalOpen] = useState(false);
 
-  const { data: invoiceBundle, isLoading: invoicesLoading } = api.documentreference.search.useQuery(
+  const {
+    data: invoiceBundle,
+    isLoading: invoicesLoading,
+    refetch: refetchInvoices,
+    isRefetching: invoicesRefetching,
+  } = api.documentreference.search.useQuery(
     {
       category: 'invoicefull',
       patient: patientId!,
@@ -30,7 +35,12 @@ const Billing = () => {
     },
   );
 
-  const { data: coverageBundle, isLoading: coverageLoading } = api.coverage.search.useQuery(
+  const {
+    data: coverageBundle,
+    isLoading: coverageLoading,
+    refetch: refetchCoverage,
+    isRefetching: coverageRefetching,
+  } = api.coverage.search.useQuery(
     {
       patient: patientId!,
     },
@@ -59,10 +69,26 @@ const Billing = () => {
     [createCoverageMutation, patientId],
   );
 
+  const onRefresh = useCallback(() => {
+    Promise.all([refetchInvoices(), refetchCoverage()]).catch(() =>
+      Alert.alert('Error refreshing data'),
+    );
+  }, [refetchInvoices, refetchCoverage]);
+
   return patientId ? (
     <>
       <ScreenView>
-        <ScrollView className="h-full">
+        <ScrollView
+          className="h-full"
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={invoicesRefetching || coverageRefetching}
+              onRefresh={onRefresh}
+              tintColor={palette.coolGray[50]}
+            />
+          }
+        >
           <View>
             <Text className="text-3xl" weight="bold">
               My Bills

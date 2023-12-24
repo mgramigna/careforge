@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import { ActivityIndicator, Alert, RefreshControl, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
@@ -29,7 +29,12 @@ const About = () => {
 
   const { patient, isLoading } = usePatient();
 
-  const { data: goalBundle, isLoading: goalsLoading } = api.goal.search.useQuery(
+  const {
+    data: goalBundle,
+    isLoading: goalsLoading,
+    refetch: refetchGoals,
+    isRefetching: goalsRefetching,
+  } = api.goal.search.useQuery(
     {
       patient: patient!.id,
     },
@@ -48,6 +53,10 @@ const About = () => {
       Alert.alert('Something went wrong');
     },
   });
+
+  const onRefresh = useCallback(() => {
+    refetchGoals().catch(() => Alert.alert('Error fetching goals'));
+  }, [refetchGoals]);
 
   const handleDemographicsSave = useCallback(
     (form: DemographicsFormType) => {
@@ -93,7 +102,17 @@ const About = () => {
   return patient ? (
     <>
       <ScreenView>
-        <KeyboardAwareScrollView className="h-full" showsVerticalScrollIndicator={false}>
+        <KeyboardAwareScrollView
+          className="h-full"
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={goalsRefetching}
+              onRefresh={onRefresh}
+              tintColor={palette.coolGray[50]}
+            />
+          }
+        >
           <View>
             <Text className="text-3xl" weight="bold">
               Healthcare Goals

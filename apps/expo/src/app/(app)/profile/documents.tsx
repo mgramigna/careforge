@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { Text } from '@/components/atoms/Text';
 import { ScreenView } from '@/components/molecules/ScreenView';
 import { ConsentDetail } from '@/components/organisms/ConsentDetail';
@@ -20,7 +20,7 @@ const Documents = () => {
 
   return patientId ? (
     <ScreenView>
-      <View className="h-full">
+      <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
         <Text className="text-2xl" weight="bold">
           Documents
         </Text>
@@ -33,7 +33,7 @@ const Documents = () => {
               </Fragment>
             ))}
         </View>
-      </View>
+      </ScrollView>
     </ScreenView>
   ) : null;
 };
