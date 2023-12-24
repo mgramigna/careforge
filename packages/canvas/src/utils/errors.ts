@@ -14,6 +14,7 @@ export async function getCanvasErrorFromResponse(
     .returnType<Err<never, CanvasError>>()
     .with(400, () => err({ errorType: 'BAD_REQUEST' as const, details: responseText }))
     .with(404, () => err({ errorType: 'NOT_FOUND' as const, details: responseText }))
+    .with(422, () => err({ errorType: 'PARSE' as const, details: responseText }))
     .with(500, () => err({ errorType: 'INTERNAL' as const, details: responseText }))
     .otherwise(() =>
       err({

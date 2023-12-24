@@ -5,6 +5,10 @@ import { Skeleton } from '@/components/atoms/Skeleton';
 import { Text } from '@/components/atoms/Text';
 import { AddEditInsuranceModal } from '@/components/molecules/AddEditInsuranceModal';
 import { ScreenView } from '@/components/molecules/ScreenView';
+import {
+  SubmitPaymentModal,
+  type PaymentFormType,
+} from '@/components/molecules/SubmitPaymentModal';
 import { CoverageDetail } from '@/components/organisms/CoverageDetail';
 import { DocumentDownloadCard } from '@/components/organisms/DocumentDownloadCard';
 import { type InsuranceFormType } from '@/components/organisms/InsuranceForm';
@@ -13,12 +17,14 @@ import { palette } from '@/theme/colors';
 import { api } from '@/utils/api';
 import { getCoverageResource } from '@/utils/fhir';
 import { Ionicons } from '@expo/vector-icons';
+import dayjs from 'dayjs';
 
 import { type Coverage } from '@careforge/canvas';
 
 const Billing = () => {
   const { patientId } = useAuth();
   const [insuranceModalOpen, setInsuranceModalOpen] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
   const {
     data: invoiceBundle,
@@ -57,6 +63,22 @@ const Billing = () => {
     },
   });
 
+  const createPaymentMutation = api.paymentnotice.create.useMutation({
+    onSuccess: async () => {
+      await utils.documentreference.search.invalidate({
+        category: 'invoicefull',
+      });
+      setPaymentModalOpen(false);
+    },
+    onError: (error) => {
+      if (error.data?.code === 'UNPROCESSABLE_CONTENT') {
+        Alert.alert('Submitted amount must be less than or equal to the amount owed');
+      } else {
+        Alert.alert('Something went wrong');
+      }
+    },
+  });
+
   const handleCoverageSave = useCallback(
     (form: InsuranceFormType) => {
       const coverage = getCoverageResource({
@@ -67,6 +89,26 @@ const Billing = () => {
       createCoverageMutation.mutate(coverage);
     },
     [createCoverageMutation, patientId],
+  );
+
+  const handlePaymentSubmit = useCallback(
+    (form: PaymentFormType) => {
+      createPaymentMutation.mutate({
+        resourceType: 'PaymentNotice',
+        status: 'active',
+        request: {
+          reference: `Patient/${patientId}`,
+        },
+        created: dayjs().toISOString(),
+        payment: {},
+        recipient: {},
+        amount: {
+          value: parseFloat(form.amount),
+          currency: 'USD',
+        },
+      });
+    },
+    [createPaymentMutation, patientId],
   );
 
   const onRefresh = useCallback(() => {
@@ -115,6 +157,11 @@ const Billing = () => {
               </View>
             )}
           </View>
+          {(invoiceBundle?.total ?? 0) > 0 && (
+            <View className="mt-8">
+              <Button text="Pay Bills" onPress={() => setPaymentModalOpen(true)} />
+            </View>
+          )}
           <View className="mt-8">
             <Text className="text-3xl" weight="bold">
               My Insurance
@@ -131,15 +178,22 @@ const Billing = () => {
                   </Fragment>
                 ))}
           </View>
-          <View className="mt-8">
+          <View className="mt-8 pb-24">
             <Button text="Add New Insurance" onPress={() => setInsuranceModalOpen(true)} />
           </View>
         </ScrollView>
       </ScreenView>
+      <SubmitPaymentModal
+        isOpen={paymentModalOpen}
+        onClose={() => setPaymentModalOpen(false)}
+        onSubmit={handlePaymentSubmit}
+        isMutating={createPaymentMutation.isPending}
+      />
       <AddEditInsuranceModal
         isOpen={insuranceModalOpen}
         onClose={() => setInsuranceModalOpen(false)}
         onSubmit={handleCoverageSave}
+        isMutating={createCoverageMutation.isPending}
       />
     </>
   ) : null;
