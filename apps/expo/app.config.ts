@@ -5,7 +5,7 @@ const defineConfig = (): ExpoConfig => ({
   name: 'Careforge',
   slug: 'careforge',
   scheme: 'expo',
-  version: '0.3.0',
+  version: '0.3.1',
   orientation: 'portrait',
   splash: {
     image: './assets/icon.png',
@@ -24,7 +24,7 @@ const defineConfig = (): ExpoConfig => ({
   },
   android: {
     package: 'com.careforge.app',
-    versionCode: 3,
+    versionCode: 4,
   },
   extra: {
     eas: {
